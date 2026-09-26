@@ -1,6 +1,9 @@
 # java-deadlock-bench
 
-This repository provides the MutationGenerator, Parser and other scripts used in the paper.
+This repository provides the whole framework and pipeline for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
+
+## Stages & Pipeline
+MutationGenerator -> Parsers -> Merger -> dataset
 
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate
@@ -29,7 +32,7 @@ Supported Java features:
 - new Thread(...) / Runnable anonymous class
 - Object / custom lock object(static field) / ReentrantLock
 
-### ParserB
+### ParserB.java
 Supported Java features:
 - new Thread(Lambda Expression)
 - Object / custom lock object(instance field)
