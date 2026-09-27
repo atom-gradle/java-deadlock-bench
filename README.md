@@ -27,11 +27,18 @@ Not supported:
 - wait / notify
 - Other JUC utilities (ReadWriteLock, StampedLock, Semaphore, etc.)
 
+How to use?
+```bash
+python MutationGenerator.py
+```
+
 ### ParserA.java
 Supported Java features:
 - new Thread(...) / Runnable anonymous class
 - Object / custom lock object(static field) / ReentrantLock
+
 How to use?
+
 1.Cloning https://github.com/pascal-lab/Tai-e-assignments to local
 ```bash
 git clone https://github.com/pascal-lab/Tai-e-assignments
@@ -59,6 +66,11 @@ Supported Java features:
 
 ### Merger.py
 merges output from ParserA and ParserB into one single txt file
+
+How to use?
+```bash
+python Merger.py
+```
 
 ### train.py
 This is a PyTorch Geometric script for heterogeneous GNN-based deadlock ranking, using two node types (lock and acq) and four edge types.
