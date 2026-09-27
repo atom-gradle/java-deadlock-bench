@@ -3,7 +3,7 @@
 This repository provides the whole framework and pipeline for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Stages & Pipeline
-MutationGenerator -> Parsers -> Merger -> dataset -> GNN training
+MutationGenerator -> Parsers -> Merger -> dataset -> evaluation(ML/GNN)
 
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate
@@ -27,10 +27,30 @@ Not supported:
 - wait / notify
 - Other JUC utilities (ReadWriteLock, StampedLock, Semaphore, etc.)
 
-### ParserA
+### ParserA.java
 Supported Java features:
 - new Thread(...) / Runnable anonymous class
 - Object / custom lock object(static field) / ReentrantLock
+How to use?
+1.Cloning https://github.com/pascal-lab/Tai-e-assignments to local
+```bash
+git clone https://github.com/pascal-lab/Tai-e-assignments
+```
+
+2.Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
+```bash
+cp ParserA.java /Tai-e-assignments-main/A6/tai-e/src/main/java/pascal/taie/analysis/pta/cs/
+
+3.Rename this file to Solver.java
+```bash
+rename ParserA.java Solver.java
+```
+
+4.run
+```bash
+java -cp "build\classes\java\main;lib\tai-e-assignment.jar;..\..\lib\dependencies.jar" pascal.taie.Assignment -cp src/test/resources/pta/cspta -m DeadlockSample
+```
+`DeadlockSample` is a class file
 
 ### ParserB.java
 Supported Java features:
@@ -77,7 +97,10 @@ Model and args saved to a .pt file.
 Args: epochs, batch_size, lr, hidden_dim, num_layers, threshold, seed, save path.
 Loads train/val/test dirs, prints label distributions, trains, evaluates, and saves the best model.
 
+### evaluate.py
+This script evaluates the quanlity of data and compares ML and GNN.
+
 ## Acknowledgements
 This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the static analysis framework.
-The parser in `parser-a/` is adapted from Tai-e's [educational assignments 6(A6)](https://tai-e.pascal-lab.net/pa6.html), which are also licensed under LGPL 3.0.
-The parser in `parser-b/` is built based on [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/).
+`ParserA.java` is adapted from Tai-e's [educational assignments 6(A6)](https://tai-e.pascal-lab.net/pa6.html), which are also licensed under LGPL 3.0.
+`ParserB.java` is built based on [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/).
