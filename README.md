@@ -43,11 +43,12 @@ How to use?
 ```bash
 git clone https://github.com/pascal-lab/Tai-e-assignments.git
 unzip Tai-e-assignments..zip
-``
+```
 
 2.Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
 ```bash
 cp ParserA.java /Tai-e-assignments-main/A6/tai-e/src/main/java/pascal/taie/analysis/pta/cs/
+```
 
 3.Delete original file and Rename this file to "Solver.java"
 ```bash
@@ -59,6 +60,7 @@ rename ParserA.java Solver.java
 ```bash
 java -cp "build\classes\java\main;lib\tai-e-assignment.jar;..\..\lib\dependencies.jar" pascal.taie.Assignment -cp src/test/resources/pta/cspta -m DeadlockSample
 ```
+
 Note: `DeadlockSample` is a class file you want to analyze
 
 ### ParserB.java
