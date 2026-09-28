@@ -25,11 +25,28 @@ Supported Java features:
 
 Not supported:
 - wait / notify
-- Other JUC utilities (ReadWriteLock, StampedLock, Semaphore, etc.)
+- Other JUC utilities (ReadWriteLock, StampedLock, Semaphore, etc)
 
 How to use?
+
 ```bash
-python MutationGenerator.py
+python MutationGenerator.py --working-dir "YOUR_WORKING_DIR"
+```
+
+Here we chose `Apache Collections`, `Disruptor`, `JCTools`, `Jsoup`, and `RxJava`. Five well-known projects in total.
+The program's output goes like this.
+```
+[INFO] found 6 projects: ['commons-collections-master', 'disruptor-master', 'JCTools-master', 'jsoup-master', 'mutated-1790596294435', 'RxJava-4.x']
+[INFO] commons-collections-master: found 370 java files in D:\Projects\commons-collections-master\src\main\java
+[INFO] disruptor-master: found 71 java files in D:\Projects\disruptor-master\src\main\java
+[INFO] JCTools-master: found 137 java files in D:\Projects\JCTools-master\jctools-core\src\main\java
+[INFO] jsoup-master: found 98 java files in D:\Projects\jsoup-master\src\main\java
+[SKIP] mutated-1790596294435: no src dir
+[INFO] RxJava-4.x: found 942 java files in D:\Projects\RxJava-4.x\src\main\java
+[INFO] report written to ./mutated-1790597547531\mutation_report.json
+[INFO] mutated 58 classes
+
+Process finished, with exit code 0.
 ```
 
 ### ParserA.java
