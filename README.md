@@ -55,31 +55,31 @@ Specialized for the following Java features:
 - synchronized blocks and methods
 - Object / custom lock object(static field) / ReentrantLock
 
-How to use?
+### How to use?
 
-1.Cloning https://github.com/pascal-lab/Tai-e-assignments to local and unzip
+1. Cloning https://github.com/pascal-lab/Tai-e-assignments to local and unzip
 ```bash
 git clone https://github.com/pascal-lab/Tai-e-assignments.git
 unzip Tai-e-assignments..zip
 ```
 
-2.Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
+2. Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
 ```bash
 cp ParserA.java /Tai-e-assignments-main/A6/tai-e/src/main/java/pascal/taie/analysis/pta/cs/
 ```
 
-3.Delete original file and Rename this file to "Solver.java"
+3. Delete original file and Rename this file to "Solver.java"
 ```bash
 rm -rf Solver.java
 rename ParserA.java Solver.java
 ```
 
-4.run
+4. run
 ```bash
 java -cp "build\classes\java\main;lib\tai-e-assignment.jar;..\..\lib\dependencies.jar" pascal.taie.Assignment -cp src/test/resources/pta/cspta -m DeadlockSample
 ```
 
-Note: `DeadlockSample` is a class file you want to analyze
+Note: `DeadlockSample` is a class file or harness you want to analyze (must contains **main()** entry method)
 
 ### ParserB.java
 Supported Java features:
@@ -87,12 +87,15 @@ Supported Java features:
 - synchronized blocks and methods
 - Object / custom lock object(instance field)
 
+### How to use?
+
+
 ### Merger.py
-This script merges output from ParserA and ParserB into one single txt file
+This script merges output(.txt) from ParserA and ParserB into one single txt file. It automatically correct the index of data into sequence.
 
 How to use?
 ```bash
-python Merger.py
+python Merger.py --input-dir "YOUR_INPUT_DIR"
 ```
 
 ### train.py
