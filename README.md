@@ -33,8 +33,9 @@ python MutationGenerator.py
 ```
 
 ### ParserA.java
-Supported Java features:
+Specialized for the following Java features:
 - new Thread(...) / Runnable anonymous class
+- synchronized blocks and methods
 - Object / custom lock object(static field) / ReentrantLock
 
 How to use?
@@ -66,10 +67,11 @@ Note: `DeadlockSample` is a class file you want to analyze
 ### ParserB.java
 Supported Java features:
 - new Thread(Lambda Expression)
+- synchronized blocks and methods
 - Object / custom lock object(instance field)
 
 ### Merger.py
-merges output from ParserA and ParserB into one single txt file
+This script merges output from ParserA and ParserB into one single txt file
 
 How to use?
 ```bash
