@@ -32,8 +32,13 @@ How to use?
 ```bash
 python MutationGenerator.py --working-dir "YOUR_WORKING_DIR"
 ```
+Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like 
+-JavaProjects
+|-Disruptor
+|-Agrona
+|-RxJava
 
-Here we chose `Apache Collections`, `Disruptor`, `JCTools`, `Jsoup`, and `RxJava`. Five well-known projects in total.
+Here we chose `Apache Collections`, `Disruptor`, `JCTools`, `Jsoup`, and `RxJava` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
 ```
 [INFO] found 6 projects: ['commons-collections-master', 'disruptor-master', 'JCTools-master', 'jsoup-master', 'mutated-1790596294435', 'RxJava-4.x']
@@ -48,6 +53,9 @@ The program's output goes like this.
 
 Process finished, with exit code 0.
 ```
+
+Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
+or "src" is not directly settled in project root folder.
 
 ### ParserA.java
 Specialized for the following Java features:
