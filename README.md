@@ -96,6 +96,55 @@ Supported Java features:
 - Object / custom lock object(instance field)
 
 ### How to use?
+1. compile
+```bash
+javac -cp "*" ParserB.java
+```
+
+2. update(override) classes in [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/)
+```bash
+jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisition.class ParserB$LockOrderEdge.class
+```
+
+3. extract tai-e-analyses.yml from tai-e-0.5.4.jar and modify tai-e-analyses.yml to enable features for our analysis
+```
+- description: whole-program pointer analysis
+  analysisClass: pascal.taie.analysis.pta.PointerAnalysis
+  id: pta
+  options:
+    cs: ci # | k-[obj|type|call][-k'h]
+    only-app: true # only analyze application code
+    implicit-entries: true # analyze implicit entries
+    distinguish-string-constants: reflection # (distinguish reflection-relevant
+    # string constants, i.e., class, method, and field names)
+    # | null (do not distinguish any string constants)
+    # | app (distinguish string constants in application code)
+    # | all (distinguish all string constants)
+    # | <predicate-class-name>
+    merge-string-objects: true
+    merge-string-builders: true
+    merge-exception-objects: true
+    handle-invokedynamic: true
+    propagate-types: [ reference ] # ,null,int,long,...(other primitive types)
+    advanced: null # specify advanced analysis:
+    # zipper | zipper-e | zipper-e=PV
+    # scaler | scaler=TST
+    # mahjong | collection
+    dump: false # whether dump points-to results (with contexts)
+    dump-ci: false # whether dump points-to results (without contexts)
+    dump-yaml: false # whether dump points-to results in yaml format
+    expected-file: null # path of expected file for comparing results
+    reflection-inference: string-constant # | solar | null
+    reflection-log: null # path to reflection log, required when reflection option is log
+    taint-config: null # path (of dir/file) to config file of taint analysis,
+    taint-config-providers: [ ] # class names of taint config provider classes
+    # when this path/provider is given, taint analysis will be enabled
+    taint-interactive-mode: false # whether enable interactive mode for taint analysis
+    spring: false # whether enable Spring Framework analysis (DI + WEC)
+    plugins: [ MyPlugin ] # | [ pluginClass, ... ]
+    time-limit: -1 # set time limit (in seconds) for pointer analysis,
+    # -1 means no time limit
+```
 
 
 ### Merger.py
@@ -155,3 +204,5 @@ This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the stati
 `ParserA.java` is adapted from Tai-e's [educational assignments 6(A6)](https://tai-e.pascal-lab.net/pa6.html), which are also licensed under LGPL 3.0.
 
 `ParserB.java` is built based on [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/).
+
+Here we extend sincere gratitude to Tan Tian and Yue Li from Nanjing University who developed Tai-E the excellent framework.
