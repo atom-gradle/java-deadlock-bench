@@ -2,8 +2,8 @@
 
 This repository provides the whole framework and pipeline for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
-## Stages & Pipeline
-MutationGenerator -> Parsers -> Merger -> dataset -> evaluation(ML/GNN)
+## Pipeline
+MutationGenerator -> Two Parsers -> Merger -> dataset -> evaluation(ML/GNN) -> training & comparision
 
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate
@@ -39,17 +39,19 @@ Supported Java features:
 
 How to use?
 
-1.Cloning https://github.com/pascal-lab/Tai-e-assignments to local
+1.Cloning https://github.com/pascal-lab/Tai-e-assignments to local and unzip
 ```bash
-git clone https://github.com/pascal-lab/Tai-e-assignments
-```
+git clone https://github.com/pascal-lab/Tai-e-assignments.git
+unzip Tai-e-assignments..zip
+``
 
 2.Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
 ```bash
 cp ParserA.java /Tai-e-assignments-main/A6/tai-e/src/main/java/pascal/taie/analysis/pta/cs/
 
-3.Rename this file to Solver.java
+3.Delete original file and Rename this file to "Solver.java"
 ```bash
+rm -rf Solver.java
 rename ParserA.java Solver.java
 ```
 
@@ -57,7 +59,7 @@ rename ParserA.java Solver.java
 ```bash
 java -cp "build\classes\java\main;lib\tai-e-assignment.jar;..\..\lib\dependencies.jar" pascal.taie.Assignment -cp src/test/resources/pta/cspta -m DeadlockSample
 ```
-`DeadlockSample` is a class file
+Note: `DeadlockSample` is a class file you want to analyze
 
 ### ParserB.java
 Supported Java features:
@@ -111,8 +113,13 @@ Loads train/val/test dirs, prints label distributions, trains, evaluates, and sa
 
 ### evaluate.py
 This script evaluates the quanlity of data and compares ML and GNN.
+- Does not use CYCLE_FEATURES as model input (to avoid label leakage)
+- Structure-based deduplication + structure-grouped LOSO cross-validation
+- Rule-based baseline + statistical baseline + heterogeneous GNN comparison
 
 ## Acknowledgements
 This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the static analysis framework.
+
 `ParserA.java` is adapted from Tai-e's [educational assignments 6(A6)](https://tai-e.pascal-lab.net/pa6.html), which are also licensed under LGPL 3.0.
+
 `ParserB.java` is built based on [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/).
