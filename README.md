@@ -10,7 +10,7 @@ MutationGenerator -> Two Parsers -> Merger -> dataset -> evaluation(ML/GNN) -> t
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate reproducible samples.
 
-Supported:
+Functions:
 - Find classes containing lock fields / synchronized blocks
 - Replace the lock variable inside synchronized(...)
 - Reassign non-final lock fields
@@ -158,7 +158,7 @@ java -cp "*"
 ---
 
 ### Merger.py
-This script merges output(.txt) from ParserA and ParserB into one single txt file. It automatically correct the index of data into sequence.
+This script merges output(.txt) from ParserA and ParserB into one single txt file while automatically correcting the index of data into sequence.
 
 How to use?
 ```bash
@@ -219,4 +219,4 @@ This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the stati
 
 `ParserB.java` is built based on [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/).
 
-Here we extend sincere gratitude to Tan Tian and Yue Li from Nanjing University who developed Tai-E the excellent framework.
+Here we extend sincere gratitude to Tian Tan and Yue Li from Nanjing University who developed Tai-E the excellent framework.
