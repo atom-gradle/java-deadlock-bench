@@ -57,6 +57,11 @@ Process finished, with exit code 0.
 Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
 or "src" is not directly settled in project root folder.
 
+If you want to retain all original classes in Java project for convinient replacement and compile, then add this param `--retain-all-classes`
+```bash
+python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
+```
+
 ---
 
 ### ParserA.java
