@@ -5,6 +5,8 @@ This repository provides the whole framework and tools for deadlock bench, inclu
 ## Pipeline
 MutationGenerator -> Two Parsers -> Merger -> dataset -> evaluation(ML/GNN) -> training & comparision
 
+---
+
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate reproducible samples.
 
@@ -55,6 +57,8 @@ Process finished, with exit code 0.
 Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
 or "src" is not directly settled in project root folder.
 
+---
+
 ### ParserA.java
 Specialized for the following Java features:
 - new Thread(...) / Runnable anonymous class
@@ -86,6 +90,8 @@ java -cp "build\classes\java\main;lib\tai-e-assignment.jar;..\..\lib\dependencie
 ```
 
 Note: `DeadlockSample` is a class file or harness you want to analyze (must contains **main()** entry method)
+
+---
 
 ### ParserB.java
 Supported Java features:
@@ -149,6 +155,7 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
 java -cp "*" 
 ```
 
+---
 
 ### Merger.py
 This script merges output(.txt) from ParserA and ParserB into one single txt file. It automatically correct the index of data into sequence.
@@ -157,6 +164,8 @@ How to use?
 ```bash
 python Merger.py --input-dir "YOUR_INPUT_DIR"
 ```
+
+---
 
 ### train.py
 This is a PyTorch Geometric script for heterogeneous GNN-based deadlock ranking, using two node types (lock and acq) and four edge types.
@@ -194,6 +203,8 @@ Model and args saved to a .pt file.
 4. Main (main)
 Args: epochs, batch_size, lr, hidden_dim, num_layers, threshold, seed, save path.
 Loads train/val/test dirs, prints label distributions, trains, evaluates, and saves the best model.
+
+---
 
 ### evaluate.py
 This script evaluates the quanlity of data and compares ML and GNN.
