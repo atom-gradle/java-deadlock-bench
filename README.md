@@ -1,13 +1,12 @@
 # java-deadlock-bench
 
-This repository provides the whole framework and pipeline for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
+This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Pipeline
 MutationGenerator -> Two Parsers -> Merger -> dataset -> evaluation(ML/GNN) -> training & comparision
 
 ### MutationGenerator.py
-Perform lock-related mutations on plain Java projects to generate
-reproducible samples.
+Perform lock-related mutations on plain Java projects to generate reproducible samples.
 
 Supported:
 - Find classes containing lock fields / synchronized blocks
@@ -41,14 +40,13 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 Here we chose `Apache Collections`, `Disruptor`, `JCTools`, `Jsoup`, and `RxJava` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
 ```
-[INFO] found 6 projects: ['commons-collections-master', 'disruptor-master', 'JCTools-master', 'jsoup-master', 'mutated-1790596294435', 'RxJava-4.x']
+[INFO] found 5 projects: ['commons-collections-master', 'disruptor-master', 'JCTools-master', 'jsoup-master', 'RxJava-4.x']
 [INFO] commons-collections-master: found 370 java files in D:\Projects\commons-collections-master\src\main\java
 [INFO] disruptor-master: found 71 java files in D:\Projects\disruptor-master\src\main\java
 [INFO] JCTools-master: found 137 java files in D:\Projects\JCTools-master\jctools-core\src\main\java
 [INFO] jsoup-master: found 98 java files in D:\Projects\jsoup-master\src\main\java
-[SKIP] mutated-1790596294435: no src dir
 [INFO] RxJava-4.x: found 942 java files in D:\Projects\RxJava-4.x\src\main\java
-[INFO] report written to ./mutated-1790597547531\mutation_report.json
+[INFO] report written to ./mutated-1790643322161\mutation_report.json
 [INFO] mutated 58 classes
 
 Process finished, with exit code 0.
@@ -68,7 +66,7 @@ Specialized for the following Java features:
 1. Cloning https://github.com/pascal-lab/Tai-e-assignments to local and unzip
 ```bash
 git clone https://github.com/pascal-lab/Tai-e-assignments.git
-unzip Tai-e-assignments..zip
+unzip Tai-e-assignments.zip
 ```
 
 2. Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
@@ -144,6 +142,11 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
     plugins: [ MyPlugin ] # | [ pluginClass, ... ]
     time-limit: -1 # set time limit (in seconds) for pointer analysis,
     # -1 means no time limit
+```
+
+4. run
+```bash
+java -cp "*" 
 ```
 
 
