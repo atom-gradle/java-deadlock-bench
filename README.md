@@ -33,13 +33,14 @@ How to use?
 ```bash
 python MutationGenerator.py --working-dir "YOUR_WORKING_DIR"
 ```
+
 Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like 
 -JavaProjects
 |-Disruptor
 |-Agrona
 |-RxJava
 
-Here we chose `Apache Collections`, `Disruptor`, `JCTools`, `Jsoup`, and `RxJava` thanks to their clear project structure and few dependencies.
+Here we chose `Apache Collections`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
 ```
 [INFO] found 5 projects: ['commons-collections-master', 'disruptor-master', 'JCTools-master', 'jsoup-master', 'RxJava-4.x']
@@ -150,10 +151,9 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
     # when this path/provider is given, taint analysis will be enabled
     taint-interactive-mode: false # whether enable interactive mode for taint analysis
     spring: false # whether enable Spring Framework analysis (DI + WEC)
-    plugins: [ MyPlugin ] # | [ pluginClass, ... ]
-    time-limit: -1 # set time limit (in seconds) for pointer analysis,
-    # -1 means no time limit
 ```
+    **plugins: [ MyPlugin ] # | [ pluginClass, ... ]**
+    ...
 
 4. run
 ```bash
@@ -162,7 +162,7 @@ java -cp "*"
 
 ---
 
-### Merger.py
+### RunnerAndMerger.py
 This script merges output(.txt) from ParserA and ParserB into one single txt file while automatically correcting the index of data into sequence.
 
 How to use?
@@ -216,6 +216,8 @@ This script evaluates the quanlity of data and compares ML and GNN.
 - Does not use CYCLE_FEATURES as model input (to avoid label leakage)
 - Structure-based deduplication + structure-grouped LOSO cross-validation
 - Rule-based baseline + statistical baseline + heterogeneous GNN comparison
+
+---
 
 ## Acknowledgements
 This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the static analysis framework.
