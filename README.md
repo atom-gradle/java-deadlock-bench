@@ -31,7 +31,7 @@ Not supported:
 How to use?
 
 ```bash
-python MutationGenerator.py --working-dir "YOUR_WORKING_DIR"
+python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
 ```
 
 Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like 
@@ -76,7 +76,7 @@ Specialized for the following Java features:
 1. Cloning https://github.com/pascal-lab/Tai-e-assignments to local and unzip
 ```bash
 git clone https://github.com/pascal-lab/Tai-e-assignments.git
-unzip Tai-e-assignments.zip
+unzip Tai-e-assignments-main.zip
 ```
 
 2. Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
@@ -122,8 +122,10 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
   analysisClass: pascal.taie.analysis.pta.PointerAnalysis
   id: pta
   options:
-    cs: ci # | k-[obj|type|call][-k'h]
-    only-app: true # only analyze application code
+```
+    **cs: ci # | k-[obj|type|call][-k'h]**
+    **only-app: true # only analyze application code**
+```
     implicit-entries: true # analyze implicit entries
     distinguish-string-constants: reflection # (distinguish reflection-relevant
     # string constants, i.e., class, method, and field names)
@@ -134,7 +136,9 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
     merge-string-objects: true
     merge-string-builders: true
     merge-exception-objects: true
-    handle-invokedynamic: true
+```
+    **handle-invokedynamic: true**
+```
     propagate-types: [ reference ] # ,null,int,long,...(other primitive types)
     advanced: null # specify advanced analysis:
     # zipper | zipper-e | zipper-e=PV
@@ -169,6 +173,14 @@ How to use?
 ```bash
 python Merger.py --input-dir "YOUR_INPUT_DIR"
 ```
+
+---
+
+### evaluate.py
+This script evaluates the quanlity of data and compares ML and GNN.
+- Does not use CYCLE_FEATURES as model input (to avoid label leakage)
+- Structure-based deduplication + structure-grouped LOSO cross-validation
+- Rule-based baseline + statistical baseline + heterogeneous GNN comparison
 
 ---
 
@@ -208,14 +220,6 @@ Model and args saved to a .pt file.
 4. Main (main)
 Args: epochs, batch_size, lr, hidden_dim, num_layers, threshold, seed, save path.
 Loads train/val/test dirs, prints label distributions, trains, evaluates, and saves the best model.
-
----
-
-### evaluate.py
-This script evaluates the quanlity of data and compares ML and GNN.
-- Does not use CYCLE_FEATURES as model input (to avoid label leakage)
-- Structure-based deduplication + structure-grouped LOSO cross-validation
-- Rule-based baseline + statistical baseline + heterogeneous GNN comparison
 
 ---
 
