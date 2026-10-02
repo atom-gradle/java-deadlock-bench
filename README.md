@@ -43,16 +43,36 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 Here we chose `Apache Collections`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
 ```
-[INFO] found 5 projects: ['commons-collections-master', 'disruptor-master', 'JCTools-master', 'jsoup-master', 'RxJava-4.x']
-[INFO] commons-collections-master: found 370 java files in D:\Projects\commons-collections-master\src\main\java
+(.venv) PS C:\Users\Admin\PycharmProjects\GNN-Ranker> .\MutationGenerator-dev.py --retain-all-classes
+[INFO] found 4 projects: ['commons-collections-master', 'disruptor-master', 'jsoup-master', 'mutated-1790765986899']
+[INFO] commons-collections-master: found 367 java files in D:\Projects\commons-collections-master\src\main\java
+creating harness: org.apache.commons.collections4.BagUtilsHarness
+creating harness: org.apache.commons.collections4.CollectionUtilsHarness
+creating harness: org.apache.commons.collections4.ListUtilsHarness
+creating harness: org.apache.commons.collections4.MapUtilsHarness
+creating harness: org.apache.commons.collections4.MultiSetUtilsHarness
+creating harness: org.apache.commons.collections4.QueueUtilsHarness
+creating harness: org.apache.commons.collections4.SetUtilsHarness
+creating harness: org.apache.commons.collections4.bag.SynchronizedBagHarness
+creating harness: org.apache.commons.collections4.bag.SynchronizedSortedBagHarness
+creating harness: org.apache.commons.collections4.collection.SynchronizedCollectionHarness
+creating harness: org.apache.commons.collections4.map.StaticBucketMapHarness
+creating harness: org.apache.commons.collections4.multiset.SynchronizedMultiSetHarness
+creating harness: org.apache.commons.collections4.multiset.SynchronizedSortedMultiSetHarness
+creating harness: org.apache.commons.collections4.properties.OrderedPropertiesHarness
+creating harness: org.apache.commons.collections4.queue.SynchronizedQueueHarness
 [INFO] disruptor-master: found 71 java files in D:\Projects\disruptor-master\src\main\java
-[INFO] JCTools-master: found 137 java files in D:\Projects\JCTools-master\jctools-core\src\main\java
-[INFO] jsoup-master: found 98 java files in D:\Projects\jsoup-master\src\main\java
-[INFO] RxJava-4.x: found 942 java files in D:\Projects\RxJava-4.x\src\main\java
-[INFO] report written to ./mutated-1790643322161\mutation_report.json
-[INFO] mutated 58 classes
-
-Process finished, with exit code 0.
+creating harness: com.lmax.disruptor.BlockingWaitStrategyHarness
+creating harness: com.lmax.disruptor.LiteBlockingWaitStrategyHarness
+creating harness: com.lmax.disruptor.LiteTimeoutBlockingWaitStrategyHarness
+creating harness: com.lmax.disruptor.TimeoutBlockingWaitStrategyHarness
+[INFO] jsoup-master: found 95 java files in D:\Projects\jsoup-master\src\main\java
+creating harness: org.jsoup.helper.HttpConnectionHarness
+creating harness: org.jsoup.nodes.ElementHarness
+creating harness: org.jsoup.parser.ParserHarness
+[SKIP] mutated-1790765986899: no src dir
+[INFO] report written to ./mutated-1790904542384\mutation_report.json
+[INFO] mutated 23 classes
 ```
 
 Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
@@ -123,8 +143,10 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
   id: pta
   options:
 ```
+
     **cs: ci # | k-[obj|type|call][-k'h]**
     **only-app: true # only analyze application code**
+    
 ```
     implicit-entries: true # analyze implicit entries
     distinguish-string-constants: reflection # (distinguish reflection-relevant
@@ -137,7 +159,9 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
     merge-string-builders: true
     merge-exception-objects: true
 ```
+
     **handle-invokedynamic: true**
+    
 ```
     propagate-types: [ reference ] # ,null,int,long,...(other primitive types)
     advanced: null # specify advanced analysis:
@@ -156,8 +180,8 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
     taint-interactive-mode: false # whether enable interactive mode for taint analysis
     spring: false # whether enable Spring Framework analysis (DI + WEC)
 ```
+
     **plugins: [ MyPlugin ] # | [ pluginClass, ... ]**
-    ...
 
 4. run
 ```bash
