@@ -3,7 +3,7 @@
 This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Pipeline
-MutationGenerator -> Two Parsers -> RunnerAndMerger -> dataset -> evaluation(ML/GNN) -> training & comparision
+MutationGenerator -> Two Parsers -> RunnerAndMerger -> (dataset) -> evaluation(ML/GNN) -> training & comparision
 
 ---
 
@@ -34,7 +34,8 @@ How to use?
 python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
 ```
 
-Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like 
+Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like
+
 -JavaProjects
 |-Disruptor
 |-Agrona
