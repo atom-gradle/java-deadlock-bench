@@ -167,7 +167,7 @@ java -cp "*"
 ---
 
 ### RunnerAndMerger.py
-This script merges output(.txt) from ParserA and ParserB into one single txt file while automatically correcting the index of data into sequence.
+This script automatically runs `ParserB.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence.
 
 How to use?
 ```bash
