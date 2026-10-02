@@ -25,22 +25,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * specialized for new Thread(Lambda)
  * creating Threads with Lambda Expression
- * and Non-Static lock fields
+ * static and non-static lock objects
  */
-public class ParserB implements Plugin {
+public class MyPlugin implements Plugin {
 
     private Solver solver;
 
-    // ===== 锁相关状态 =====
     private final List<LockAcquisition> lockAcquisitions = new ArrayList<>();
     private final Set<LockOrderEdge> lockOrderEdges = new HashSet<>();
     private final Set<CSObj> threadObjs = new HashSet<>();
     private final Map<CSMethod, Set<HeldLock>> entryLocks = new HashMap<>();
     private final Map<CSVar, Boolean> lockVarIsStatic = new HashMap<>();
     private final Map<Obj, JMethod> lambdaImplMethods = new HashMap<>();
-    private final Set<CSMethod> bridgedRunMethods = new LinkedHashSet<>();
 
-    /** 已处理过的 (recvObj, callSite) 对，用于 processCall 去重 */
+    // 已处理过的 (recvObj, callSite) 对，用于 processCall 去重
     private final Set<String> processedCalls = new HashSet<>();
 
     private static final List<String> LOCK_TYPES = List.of(
@@ -203,45 +201,49 @@ public class ParserB implements Plugin {
             JMethod lambdaMethod = implHandle != null
                     ? implHandle.getMethodRef().resolve() : null;
 
+            // ★ 加 null 检查
+            if (lambdaMethod == null) {
+                System.out.println("[handleInvoke]: lambda method unresolved, skip");
+                return;   // 或者 continue 到后面的逻辑
+            }
+
             System.out.println(implHandle + " " + lambdaMethod.getSignature());
 
-            if (lambdaMethod != null) {
-                // 直接让 lambdaMethod 可达
-                CSCallSite csCallSite = solver.getCSManager().getCSCallSite(context, stmt);
-                Context lambdaContext = solver.getContextSelector().selectContext(csCallSite, lambdaMethod);
-                CSMethod csLambda = solver.getCSManager().getCSMethod(lambdaContext, lambdaMethod);
-                solver.addCallEdge(new Edge<>(CallKind.VIRTUAL, csCallSite, csLambda));
+            // 直接让 lambdaMethod 可达
+            CSCallSite csCallSite = solver.getCSManager().getCSCallSite(context, stmt);
+            Context lambdaContext = solver.getContextSelector().selectContext(csCallSite, lambdaMethod);
+            CSMethod csLambda = solver.getCSManager().getCSMethod(lambdaContext, lambdaMethod);
+            solver.addCallEdge(new Edge<>(CallKind.VIRTUAL, csCallSite, csLambda));
 
-                // 给 invokedynamic 的返回值分配一个 CSObj
-                Var lhs = stmt.getLValue();
-                if (lhs != null) {
-                    CSVar csLhs = solver.getCSManager().getCSVar(context, lhs);
+            // 给 invokedynamic 的返回值分配一个 CSObj
+            Var lhs = stmt.getLValue();
+            if (lhs != null) {
+                CSVar csLhs = solver.getCSManager().getCSVar(context, lhs);
 
-                    // 1) 构造一个 mock Obj，代表这个 lambda 对象
-                    //    desc:     用于 toString / 调试
-                    //    alloc:    分配点，用 invokedynamic 语句本身
-                    //    type:     lambda 表达式的类型（Runnable）
-                    //    container: 所在方法（csMethod 的 JMethod）
-                    //    isFunctional: 是否是函数式对象
-                    Type lambdaType = stmt.getInvokeExp().getType();   // 或者 lhs.getType()
-                    Obj lambdaObj = solver.getHeapModel().getMockObj(
-                            () -> "Lambda@" + stmt.getLineNumber(),   // Descriptor
-                            stmt,                                     // alloc site
-                            lambdaType,                               // Type
-                            csMethod.getMethod(),                     // container JMethod
-                            true                                      // isFunctional
-                    );
+                // 1) 构造一个 mock Obj，代表这个 lambda 对象
+                //    desc:     用于 toString / 调试
+                //    alloc:    分配点，用 invokedynamic 语句本身
+                //    type:     lambda 表达式的类型（Runnable）
+                //    container: 所在方法（csMethod 的 JMethod）
+                //    isFunctional: 是否是函数式对象
+                Type lambdaType = stmt.getInvokeExp().getType();   // 或者 lhs.getType()
+                Obj lambdaObj = solver.getHeapModel().getMockObj(
+                        () -> "Lambda@" + stmt.getLineNumber(),   // Descriptor
+                        stmt,                                     // alloc site
+                        lambdaType,                               // Type
+                        csMethod.getMethod(),                     // container JMethod
+                        true                                      // isFunctional
+                );
 
-                    // 2) 为这个 Obj 选堆上下文，得到 CSObj
-                    CSObj csLambdaObj = solver.getCSManager().getCSObj(
-                            solver.getContextSelector().selectHeapContext(csMethod, lambdaObj),
-                            lambdaObj);
+                // 2) 为这个 Obj 选堆上下文，得到 CSObj
+                CSObj csLambdaObj = solver.getCSManager().getCSObj(
+                        solver.getContextSelector().selectHeapContext(csMethod, lambdaObj),
+                        lambdaObj);
 
-                    // 3) 把 CSObj 加到 lhs 的 points-to 集合
-                    PointsToSet csObjs = solver.makePointsToSet();
-                    csObjs.addObject(csLambdaObj);
-                    solver.addPointsTo(csLhs, csObjs);
-                }
+                // 3) 把 CSObj 加到 lhs 的 points-to 集合
+                PointsToSet csObjs = solver.makePointsToSet();
+                csObjs.addObject(csLambdaObj);
+                solver.addPointsTo(csLhs, csObjs);
             }
         }
     }
@@ -359,149 +361,6 @@ public class ParserB implements Plugin {
     }
 
     /**
-     * 第一趟：遍历 main 的 IR，找到所有 Thread.<init>(Runnable) 调用，
-     * 把 argVar 的 points-to 手动加到 threadObj.target 字段上。
-     *
-     * 注意：不使用 addPFGEdge，因为 onFinish 阶段 worklist 不会再跑，
-     * 必须直接 addPointsTo。
-     */
-    private void bridgeThreadInitPass() {
-        JField targetField = World.get().getClassHierarchy()
-                .getClass("java.lang.Thread").getDeclaredField("target");
-        if (targetField == null) {
-            System.out.println("[bridgeThreadInitPass] Thread.target not found");
-            return;
-        }
-
-        JMethod mainMethod = World.get().getMainMethod();
-        if (mainMethod == null || mainMethod.getIR() == null) return;
-
-        Context emptyCtx = solver.getContextSelector().getEmptyContext();
-        CSMethod csMain = solver.getCSManager().getCSMethod(emptyCtx, mainMethod);
-
-        int updated = 0;
-
-        for (Stmt stmt : mainMethod.getIR().getStmts()) {
-            if (!(stmt instanceof Invoke invoke)) continue;
-
-            JMethod callee = resolveInvoke(null, invoke);
-            if (!isThreadMethod(callee, "<init>")) continue;
-
-            InvokeExp invokeExp = invoke.getInvokeExp();
-            if (!(invokeExp instanceof InvokeInstanceExp instanceExp)) continue;
-
-            Var base = instanceExp.getBase();
-            if (base == null) continue;
-            CSVar csBase = solver.getCSManager().getCSVar(csMain.getContext(), base);
-            PointsToSet threadPts = solver.getPointsToSetOf(csBase);
-
-            List<Var> args = invokeExp.getArgs();
-            if (args.isEmpty()) continue;
-            CSVar argVar = solver.getCSManager().getCSVar(csMain.getContext(), args.get(0));
-            PointsToSet argPts = solver.getPointsToSetOf(argVar);
-
-            System.out.println("[bridgeThreadInitPass] invoke=" + invoke
-                    + ", threadPts=" + threadPts
-                    + ", argVar=" + argVar
-                    + ", argPts=" + argPts);
-
-            for (CSObj threadObj : threadPts) {
-                Pointer targetPtr = solver.getCSManager()
-                        .getInstanceField(threadObj, targetField);
-
-                for (CSObj o : argPts) {
-                    targetPtr.getPointsToSet().addObject(o);   // ★ 直接加
-                }
-            }
-        }
-
-        System.out.println("[bridgeThreadInitPass] updated " + updated + " target points-to");
-    }
-
-    /**
-     * 第二趟：遍历 main 的 IR，找到所有 Thread.start() 调用，
-     * 读 threadObj.target 字段的 points-to，建 start -> run 边，
-     * 并把 targetObj 传给 run() 的 this。
-     */
-    private void bridgeThreadStartPass() {
-        JField targetField = World.get().getClassHierarchy()
-                .getClass("java.lang.Thread").getDeclaredField("target");
-        if (targetField == null) {
-            System.out.println("[bridgeThreadStartPass] Thread.target not found");
-            return;
-        }
-
-        JMethod mainMethod = World.get().getMainMethod();
-        if (mainMethod == null || mainMethod.getIR() == null) return;
-
-        Context emptyCtx = solver.getContextSelector().getEmptyContext();
-        CSMethod csMain = solver.getCSManager().getCSMethod(emptyCtx, mainMethod);
-
-        int bridged = 0;
-
-        for (Stmt stmt : mainMethod.getIR().getStmts()) {
-            if (!(stmt instanceof Invoke invoke)) continue;
-
-            JMethod callee = resolveInvoke(null, invoke);
-            if (!isThreadMethod(callee, "start")) continue;
-
-            InvokeExp invokeExp = invoke.getInvokeExp();
-            if (!(invokeExp instanceof InvokeInstanceExp instanceExp)) continue;
-
-            Var base = instanceExp.getBase();
-            if (base == null) continue;
-            CSVar csBase = solver.getCSManager().getCSVar(csMain.getContext(), base);
-            PointsToSet threadPts = solver.getPointsToSetOf(csBase);
-
-            for (CSObj threadObj : threadPts) {
-                Pointer targetPtr = solver.getCSManager()
-                        .getInstanceField(threadObj, targetField);
-                PointsToSet targetPts = solver.getPointsToSetOf(targetPtr);
-
-                System.out.println("[bridgeThreadStartPass] thread=" + threadObj
-                        + ", targetPts=" + targetPts);
-
-                for (CSObj targetObj : targetPts) {
-                    Obj obj = targetObj.getObject();
-
-                    // 1) lambda 对象 → lambdaMethod
-                    JMethod targetRun = lambdaImplMethods.get(obj);
-                    // 2) 匿名类 / 静态内部类 → resolveRunByType
-                    if (targetRun == null) {
-                        targetRun = resolveRunByType(obj.getType());
-                    }
-                    if (targetRun == null) continue;
-
-                    CSCallSite csCallSite = solver.getCSManager()
-                            .getCSCallSite(csMain.getContext(), invoke);
-                    Context calleeContext = solver.getContextSelector()
-                            .selectContext(csCallSite, targetObj, targetRun);
-                    CSMethod csCallee = solver.getCSManager()
-                            .getCSMethod(calleeContext, targetRun);
-                    solver.addCallEdge(new Edge<>(CallKind.VIRTUAL, csCallSite, csCallee));
-                    bridgedRunMethods.add(csCallee);   // ★ 收集
-
-                    // ★ 把 targetObj 传给 run() 的 this
-                    /*
-                    Var mThis = targetRun.getIR().getThis();
-                    if (mThis != null) {
-                        CSVar csThis = solver.getCSManager().getCSVar(calleeContext, mThis);
-                        PointsToSet pts = solver.makePointsToSet();
-                        pts.addObject(targetObj);
-                        solver.addPointsTo(csThis, pts);   // 用 addPointsTo，虽然 onFinish 阶段不生效
-                    }*/
-
-                    bridged++;
-                    System.out.println("[bridgeThreadStartPass] bridged "
-                            + targetObj + " -> " + targetRun);
-                }
-            }
-        }
-
-        System.out.println("[bridgeThreadStartPass] total bridged = " + bridged);
-    }
-
-    /**
      * 第三趟：遍历所有可达方法，收集 ReentrantLock.lock() / unlock()。
      * 因为 onFinish 阶段 onNewCSMethod 不会再触发，
      * 新可达的 run() 里的 lock()/unlock() 需要手动收集。
@@ -562,204 +421,13 @@ public class ParserB implements Plugin {
                 + ", lockAcquisitions.size = " + lockAcquisitions.size());
     }
 */
-    private void collectLockAcquisitionsFromReachableMethods() {
-        // 从 bridgedRunMethods 出发，递归遍历所有被调用的方法
-        Deque<CSMethod> workList = new ArrayDeque<>(bridgedRunMethods);
-        Set<CSMethod> visited = new HashSet<>(bridgedRunMethods);
 
-        int added = 0;
-
-        while (!workList.isEmpty()) {
-            CSMethod csMethod = workList.poll();
-            JMethod method = csMethod.getMethod();
-            if (method.getIR() == null) continue;
-
-            System.out.println("[collectLock] scanning " + method.getSignature());
-
-            Context context = csMethod.getContext();
-            int[] nesting = {0};
-
-            for (Stmt stmt : method.getIR().getStmts()) {
-                Map<Var, Set<CSObj>> fieldPtsMap = new HashMap<>();
-                // ---- LoadField: $r1 = LOCK_A ----
-                /*
-                if (stmt instanceof LoadField loadField) {
-                    if (loadField.getFieldAccess() instanceof StaticFieldAccess) {
-                        JField field = loadField.getFieldAccess().getFieldRef().resolve();
-                        StaticField staticField = solver.getCSManager().getStaticField(field);
-                        CSVar varPtr = solver.getCSManager().getCSVar(context, loadField.getLValue());
-
-                        // ★ 直接手动传播 points-to
-                        //PointsToSet staticPts = solver.getPointsToSetOf(staticField);
-                        Set<CSObj> staticPts = new HashSet<>();
-                        solver.getPointsToSetOf(staticField).forEach(staticPts::add);
-                        fieldPtsMap.put(loadField.getLValue(), staticPts);   // ★ 存起来
-                        System.out.println("[collectLock] LoadField: " + loadField
-                                + ", staticField=" + staticField
-                                + ", staticPts=" + staticPts);
-
-                        // ★ 加在这里
-                        System.out.println("[collectLock] varPtr identity = "
-                                + System.identityHashCode(varPtr)
-                                + ", pts after add = " + solver.getPointsToSetOf(varPtr));
-
-                        lockVarIsStatic.put(varPtr, true);
-                    }
-                    continue;
-                }
-
-                 */
-                if (stmt instanceof LoadField loadField) {
-                    if (loadField.getFieldAccess() instanceof StaticFieldAccess) {
-                        JField field = loadField.getFieldAccess().getFieldRef().resolve();
-                        StaticField staticField = solver.getCSManager().getStaticField(field);
-                        Set<CSObj> staticPts = new HashSet<>();
-                        solver.getPointsToSetOf(staticField).forEach(staticPts::add);
-                        fieldPtsMap.put(loadField.getLValue(), staticPts);
-                        System.out.println("[collectLock] LoadField: " + loadField
-                                + ", staticPts=" + staticPts);
-                        lockVarIsStatic.put(solver.getCSManager().getCSVar(context, loadField.getLValue()), true);
-                    }
-                    continue;
-                }
-
-                // ---- StoreField: LOCK_A = $r1 ----
-                if (stmt instanceof StoreField storeField) {
-                    if (storeField.getFieldAccess() instanceof StaticFieldAccess) {
-                        JField field = storeField.getFieldAccess().getFieldRef().resolve();
-                        StaticField staticField = solver.getCSManager().getStaticField(field);
-                        CSVar varPtr = solver.getCSManager().getCSVar(context, storeField.getRValue());
-                        solver.addPFGEdge(varPtr, staticField, FlowKind.STATIC_STORE);
-                        System.out.println("[collectLock] StoreField: " + storeField
-                                + ", varPtr=" + varPtr + ", staticField=" + staticField);
-                    }
-                    continue;
-                }
-                // ---- Monitor ----
-                if (stmt instanceof Monitor monitor) {
-                    Var lockVar = monitor.getObjectRef();
-                    CSVar csLockVar = solver.getCSManager().getCSVar(context, lockVar);
-                    boolean isEnter = monitor.isEnter();
-
-                    boolean exists = lockAcquisitions.stream().anyMatch(la ->
-                            la.method.equals(csMethod) && la.stmt.equals(monitor));
-                    if (exists) continue;
-
-                    LockAcquisition la = new LockAcquisition(csMethod, monitor, csLockVar, isEnter);
-                    if (isEnter) {
-                        la.nestingDepth = ++nesting[0];
-                    } else {
-                        la.nestingDepth = nesting[0]--;
-                    }
-                    lockAcquisitions.add(la);
-                    added++;
-                    System.out.println("[collectLock] added (Monitor) " + la);
-                }
-                // ---- ReentrantLock.lock/unlock ----
-                else if (stmt instanceof Invoke invoke) {
-                    InvokeExp invokeExp = invoke.getInvokeExp();
-
-                    // 1) 尝试解析 callee，递归遍历
-                    JMethod callee = null;
-                    if (invokeExp instanceof InvokeInstanceExp instanceExp) {
-                        Var base = instanceExp.getBase();
-                        if (base != null) {
-                            CSVar csBase = solver.getCSManager().getCSVar(context, base);
-                            for (CSObj recvObj : solver.getPointsToSetOf(csBase)) {
-                                callee = resolveCallee(recvObj, invoke);
-                                if (callee != null) break;
-                            }
-                        }
-                    } else {
-                        callee = resolveCallee(null, invoke);
-                    }
-                    if (callee == null) {
-                        callee = invokeExp.getMethodRef().resolve();
-                    }
-
-                    // 2) 如果是 ReentrantLock.lock/unlock，收集
-                    if (callee != null) {
-                        String cls = callee.getDeclaringClass().getName();
-                        String name = callee.getName();
-                        if (LOCK_TYPES.contains(cls) && (name.equals("lock") || name.equals("unlock"))) {
-                            if (invokeExp instanceof InvokeInstanceExp instanceExp) {
-                                Var base = instanceExp.getBase();
-                                if (base != null) {
-                                    CSVar csLockVar = solver.getCSManager().getCSVar(context, base);
-                                    boolean isEnter = name.equals("lock");
-
-                                    LockAcquisition la = new LockAcquisition(csMethod, invoke, csLockVar, isEnter);
-                                    Set<CSObj> objs = fieldPtsMap.get(base);
-                                    if (objs != null) la.lockObjs.addAll(objs);
-                                    if (la.lockObjs.isEmpty()) {
-                                        solver.getPointsToSetOf(csLockVar).forEach(la.lockObjs::add);
-                                    }
-                                    if (isEnter) {
-                                        la.nestingDepth = ++nesting[0];
-                                    } else {
-                                        la.nestingDepth = nesting[0]--;
-                                    }
-                                    lockAcquisitions.add(la);
-                                    added++;
-                                    System.out.println("[collectLock] added (ReentrantLock) " + la
-                                            + ", lockObjs=" + la.lockObjs);
-                                }
-                            }
-                        }
-                        // 3) 递归：把 callee 加进 worklist
-                        //    ★ 就是这里，替换掉原来的 visited.add / workList.add
-                        if (callee.getDeclaringClass().isApplication()) {
-                            CSMethod csCallee = solver.getCSManager()
-                                    .getCSMethod(context, callee);   // 用 caller 的 context，避免 selectContext
-                            if (visited.add(csCallee)) {
-                                workList.add(csCallee);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        System.out.println("[collectLock] total added = " + added
-                + ", lockAcquisitions.size = " + lockAcquisitions.size());
-    }
     private JMethod resolveInvoke(JMethod caller, Invoke invoke) {
         // 先试 resolveCallee
         JMethod callee = resolveCallee(null, invoke);
         if (callee != null) return callee;
         // 兜底：直接用 MethodRef.resolve()
         return invoke.getInvokeExp().getMethodRef().resolve();
-    }
-
-    private void fillLockVarPointsTo() {
-        for (LockAcquisition la : lockAcquisitions) {
-            if (la.lockVar == null) continue;
-            if (!solver.getPointsToSetOf(la.lockVar).isEmpty()) continue;
-
-            // 找 la.stmt 里的 base
-            if (la.stmt instanceof Invoke invoke
-                    && invoke.getInvokeExp() instanceof InvokeInstanceExp instanceExp) {
-                Var base = instanceExp.getBase();
-                if (base == null) continue;
-
-                // 找 base 对应的 LoadField
-                JMethod method = la.method.getMethod();
-                for (Stmt s : method.getIR().getStmts()) {
-                    if (s instanceof LoadField lf
-                            && lf.getLValue() == base
-                            && lf.getFieldAccess() instanceof StaticFieldAccess) {
-                        JField field = lf.getFieldAccess().getFieldRef().resolve();
-                        StaticField staticField = solver.getCSManager().getStaticField(field);
-                        PointsToSet staticPts = solver.getPointsToSetOf(staticField);
-                        System.out.println("[fillLockVar] la=" + la
-                                + ", staticPts=" + staticPts);
-                        for (CSObj o : staticPts) {
-                            la.lockVar.getPointsToSet().addObject(o);   // ★ 直接加
-                        }
-                    }
-                }
-            }
-        }
     }
 
     // ============================================================
@@ -772,15 +440,8 @@ public class ParserB implements Plugin {
         System.out.println("[onFinish]: reachableMethods: " + solver.getCallGraph().reachableMethods().toList().size());
         System.out.println(solver.getCallGraph().reachableMethods().toList());
 
-        // ★ 分三趟桥接 Thread
-        //bridgeThreadInitPass();    // 第一趟：Thread.<init> -> target 字段
-        //bridgeThreadStartPass();   // 第二趟：Thread.start -> run
-        //collectLockAcquisitionsFromReachableMethods();  // 第三趟：收集 lock()/unlock()
-
         dumpThreadTarget();
         computeEntryLocks();
-
-        //fillLockVarPointsTo();
 
         buildLockOrderGraph();
         dumpLockOrderGraph();
@@ -797,7 +458,7 @@ public class ParserB implements Plugin {
         final boolean isEnter;
         int nestingDepth;
 
-        Set<CSObj> lockObjs = new HashSet<>();   // ★
+        Set<CSObj> lockObjs = new HashSet<>();
 
         public LockAcquisition(CSMethod method, Stmt stmt, CSVar lockVar, boolean isEnter) {
             this.method = method;
@@ -898,12 +559,10 @@ public class ParserB implements Plugin {
                     entryLocks.getOrDefault(m, new HashSet<>()));
 
             for (LockAcquisition la : events) {
-                /*
                 if (la.isEnter) {
                     Set<CSObj> toObjs = new HashSet<>(la.lockObjs);   // ★ 直接用
-                    if (toObjs.isEmpty()) {
+                    if (toObjs.isEmpty())
                         solver.getPointsToSetOf(la.lockVar).forEach(toObjs::add);   // 兜底
-                    }
                     //Set<CSObj> toObjs = new HashSet<>();
                     //la.lockVar.getPointsToSet().forEach(toObjs::add);
                     //solver.getPointsToSetOf(la.lockVar).forEach(toObjs::add);
@@ -915,7 +574,9 @@ public class ParserB implements Plugin {
 
                     System.out.println("[buildLockOrderGraph] la=" + la
                             + ", lockVar=" + la.lockVar
-                            + ", toObjs=" + toObjs);
+                            + ", lockVar identity=" + System.identityHashCode(la.lockVar)
+                            + ", toObjs=" + toObjs
+                            + ", pts=" + solver.getPointsToSetOf(la.lockVar));
                     for (HeldLock held : heldStack) {
                         for (CSObj toObj : toObjs) {
                             lockOrderEdges.add(new LockOrderEdge(
@@ -929,7 +590,7 @@ public class ParserB implements Plugin {
                     heldStack.removeIf(h -> toRemove.contains(h.obj()));
                 }
 
-                 */
+                /*
                 if (la.isEnter) {
                     Set<CSObj> toObjs = new HashSet<>(la.lockObjs);
                     if (toObjs.isEmpty()) {
@@ -951,6 +612,8 @@ public class ParserB implements Plugin {
                     }
                     heldStack.removeIf(h -> toRemove.contains(h.obj()));
                 }
+
+                 */
             }
         }
     }
@@ -1144,79 +807,193 @@ public class ParserB implements Plugin {
         return false;
     }
 
-    // ---------- 导出 ----------
-
     private void exportGraph() {
         String fileName = "graph-" + System.currentTimeMillis() + ".txt";
         try (FileWriter writer = new FileWriter(fileName)) {
+
+            // ===== 预处理：获锁点索引 =====
+            Map<String, LockAcquisition> acquisitionMap = new LinkedHashMap<>();
+            Map<String, Set<CSObj>> acqToObjs = new HashMap<>();
+            Map<CSObj, Set<String>> objToAcqs = new HashMap<>();
+            for (LockAcquisition la : lockAcquisitions) {
+                String k = acqKey(la);
+                acquisitionMap.putIfAbsent(k, la);
+                Set<CSObj> objs = acqToObjs.computeIfAbsent(k, x -> new HashSet<>());
+                la.lockVar.getPointsToSet().forEach(objs::add);
+            }
+            for (var e : acqToObjs.entrySet())
+                for (CSObj o : e.getValue())
+                    objToAcqs.computeIfAbsent(o, k -> new LinkedHashSet<>()).add(e.getKey());
+
+            // ===== 找环 =====
             List<List<LockOrderEdge>> cycles = findAllCycles();
+
             int cycleId = 0;
             for (List<LockOrderEdge> cycle : cycles) {
-                writer.write("CYCLE " + cycleId++ + "\n");
+                writer.write("CYCLE " + cycleId++ + "\n\n");
 
-                Map<String, Integer> nodeIdMap = new LinkedHashMap<>();
-                List<LockAcquisition> nodeLaList = new ArrayList<>();
-                List<CSObj> nodeObjList = new ArrayList<>();
+                // ---------- Layer 1: 锁对象节点 ----------
+                Map<String, Integer> lockNodeId = new LinkedHashMap<>();
+                List<CSObj> lockNodeObj = new ArrayList<>();
 
                 for (LockOrderEdge e : cycle) {
-                    String fromKey = nodeKey(e.fromObj);
-                    if (!nodeIdMap.containsKey(fromKey)) {
-                        nodeIdMap.put(fromKey, nodeIdMap.size());
-                        nodeLaList.add(e.fromLa);
-                        nodeObjList.add(e.fromObj);
-                    }
-                    String toKey = nodeKey(e.toObj);
-                    if (!nodeIdMap.containsKey(toKey)) {
-                        nodeIdMap.put(toKey, nodeIdMap.size());
-                        nodeLaList.add(e.toLa);
-                        nodeObjList.add(e.toObj);
+                    for (CSObj o : List.of(e.fromObj, e.toObj)) {
+                        String key = objKey(o);
+                        if (!lockNodeId.containsKey(key)) {
+                            lockNodeId.put(key, lockNodeId.size());
+                            lockNodeObj.add(o);
+                        }
                     }
                 }
 
-                for (int i = 0; i < nodeLaList.size(); i++) {
-                    LockAcquisition la = nodeLaList.get(i);
-                    CSObj obj = nodeObjList.get(i);
-                    if (la == null) {
-                        writer.write(String.format("NODE %d,%s,%s,%s,%d,%b,%b,%d,%d\n",
-                                i, "?", obj.getObject().toString(), "?", -1,
-                                isStaticLock(obj), false, 0, 1));
-                        continue;
-                    }
-                    String var = la.lockVar != null ? la.lockVar.getVar().toString() : "?";
-                    String method = la.method.getMethod().getDeclaringClass().getSimpleName()
-                            + "." + la.method.getMethod().getName();
-                    int line = la.stmt != null ? la.stmt.getLineNumber() : -1;
-                    boolean isSync = Modifier.hasSynchronized(la.method.getMethod().getModifiers());
-                    int nesting = la.nestingDepth;
-                    int ptsSize = la.lockVar != null ? solver.getPointsToSetOf(la.lockVar).size() : 1;
-                    writer.write(String.format("NODE %d,%s,%s,%s,%d,%b,%b,%d,%d\n",
-                            i, var, obj.getObject().toString(), method, line,
-                            isStaticLock(obj), isSync, nesting, ptsSize));
+                writer.write("# Layer 1: Lock Objects\n");
+                for (int i = 0; i < lockNodeObj.size(); i++) {
+                    CSObj o = lockNodeObj.get(i);
+                    writer.write(String.format(
+                            "LOCK_NODE %d,%s,%s,%b,%d\n",
+                            i, objKey(o),
+                            o.getObject().getType().toString(),
+                            isStaticLock(o),
+                            o.getObject() != null ? 1 : 0));
                 }
 
+                // ---------- Layer 1: 锁顺序边 ----------
                 for (LockOrderEdge e : cycle) {
-                    int fromId = nodeIdMap.get(nodeKey(e.fromObj));
-                    int toId = nodeIdMap.get(nodeKey(e.toObj));
-                    String fromType = e.fromObj.getObject().getType().toString();
-                    String toType = e.toObj.getObject().getType().toString();
-                    boolean sameClass = fromType.equals(toType);
-                    int callDistance = -1;
-                    if (e.fromLa != null && e.toLa != null)
-                        callDistance = computeCallDistance(e.fromLa.method, e.toLa.method);
+                    int fromId = lockNodeId.get(objKey(e.fromObj));
+                    int toId = lockNodeId.get(objKey(e.toObj));
+
+                    String fromM = e.fromLa != null
+                            ? e.fromLa.method.getMethod().getDeclaringClass().getSimpleName()
+                            + "." + e.fromLa.method.getMethod().getName() : "?";
+                    int fromL = e.fromLa != null && e.fromLa.stmt != null
+                            ? e.fromLa.stmt.getLineNumber() : -1;
+                    String toM = e.toLa != null
+                            ? e.toLa.method.getMethod().getDeclaringClass().getSimpleName()
+                            + "." + e.toLa.method.getMethod().getName() : "?";
+                    int toL = e.toLa != null && e.toLa.stmt != null
+                            ? e.toLa.stmt.getLineNumber() : -1;
+
+                    int dist = (e.fromLa != null && e.toLa != null)
+                            ? computeCallDistance(e.fromLa.method, e.toLa.method) : -1;
+
                     boolean mayAlias = false;
                     if (e.fromLa != null && e.toLa != null
                             && e.fromLa.lockVar != null && e.toLa.lockVar != null) {
-                        Set<CSObj> fromPts = new HashSet<>();
-                        solver.getPointsToSetOf(e.fromLa.lockVar).forEach(fromPts::add);
-                        for (CSObj o : solver.getPointsToSetOf(e.toLa.lockVar))
-                            if (fromPts.contains(o)) { mayAlias = true; break; }
+                        Set<CSObj> fp = new HashSet<>();
+                        e.fromLa.lockVar.getPointsToSet().forEach(fp::add);
+                        for (CSObj o : e.toLa.lockVar.getPointsToSet())
+                            if (fp.contains(o)) { mayAlias = true; break; }
                     }
                     boolean sameLockObj = e.fromObj.equals(e.toObj);
-                    writer.write(String.format("EDGE %d,%d,%b,%d,%b,%b\n",
-                            fromId, toId, sameClass, callDistance, mayAlias, sameLockObj));
+
+                    writer.write(String.format(
+                            "LOCK_EDGE %d,%d,%s,%d,%s,%d,%d,%b,%b\n",
+                            fromId, toId, fromM, fromL, toM, toL,
+                            dist, mayAlias, sameLockObj));
                 }
-                writer.write("LABEL 0\n\n");
+                writer.write("\n");
+
+                // ---------- Layer 2: 获锁点节点 ----------
+                // 环上所有边的 fromLa / toLa 涉及的获锁点
+                Map<String, Integer> acqNodeId = new LinkedHashMap<>();
+                List<LockAcquisition> acqNodeList = new ArrayList<>();
+
+                for (LockOrderEdge e : cycle) {
+                    for (LockAcquisition la : List.of(e.fromLa, e.toLa)) {
+                        if (la == null) continue;
+                        String k = acqKey(la);
+                        if (!acqNodeId.containsKey(k)) {
+                            acqNodeId.put(k, acqNodeId.size());
+                            acqNodeList.add(la);
+                        }
+                    }
+                }
+
+                writer.write("# Layer 2: Lock Acquisitions\n");
+                for (int i = 0; i < acqNodeList.size(); i++) {
+                    LockAcquisition la = acqNodeList.get(i);
+                    String method = la.method.getMethod().getDeclaringClass().getSimpleName()
+                            + "." + la.method.getMethod().getName();
+                    int line = la.stmt != null ? la.stmt.getLineNumber() : -1;
+                    String var = la.lockVar != null ? la.lockVar.getVar().toString() : "?";
+                    boolean isStatic = false;
+                    if (la.lockVar != null && !la.lockVar.getPointsToSet().isEmpty()) {
+                        CSObj anyObj = la.lockVar.getPointsToSet().iterator().next();
+                        isStatic = isStaticLock(anyObj);
+                    }
+                    boolean isSync = Modifier.hasSynchronized(la.method.getMethod().getModifiers());
+                    int nesting = la.nestingDepth;
+                    int ptsSize = la.lockVar != null ? la.lockVar.getPointsToSet().size() : 1;
+
+                    writer.write(String.format(
+                            "ACQ_NODE %d,%s,%d,%s,%b,%b,%d,%d\n",
+                            i, method, line, var,
+                            isStatic, isSync, nesting, ptsSize));
+                }
+
+                // ---------- Layer 2: 获锁点之间的调用图边 ----------
+                // 对环上每对相邻的获锁点，看它们在调用图上是否可达
+                for (int i = 0; i < acqNodeList.size(); i++) {
+                    for (int j = 0; j < acqNodeList.size(); j++) {
+                        if (i == j) continue;
+                        LockAcquisition a = acqNodeList.get(i);
+                        LockAcquisition b = acqNodeList.get(j);
+                        int d = computeCallDistance(a.method, b.method);
+                        if (d >= 0 && d <= 5) {   // 限制距离，避免边爆炸
+                            boolean sameMethod = a.method.equals(b.method);
+                            boolean nested = a.nestingDepth < b.nestingDepth;
+                            writer.write(String.format(
+                                    "CALL_EDGE %d,%d,%d,%b,%b\n",
+                                    i, j, d, sameMethod, nested));
+                        }
+                    }
+                }
+                writer.write("\n");
+
+                // ---------- 跨层边 ----------
+                writer.write("# Cross-layer edges\n");
+                for (int i = 0; i < acqNodeList.size(); i++) {
+                    LockAcquisition la = acqNodeList.get(i);
+                    for (CSObj o : la.lockVar.getPointsToSet()) {
+                        Integer lockId = lockNodeId.get(objKey(o));
+                        if (lockId != null) {
+                            writer.write(String.format("ACQ_TO_LOCK %d,%d\n", i, lockId));
+                            writer.write(String.format("LOCK_TO_ACQ %d,%d\n", lockId, i));
+                        }
+                    }
+                }
+                writer.write("\n");
+
+                // ---------- 标注 ----------
+                //writer.write("LABEL_CYCLE 1\n");   // 这个环是死锁候选
+                CycleFeatures feat = classifyCycle(cycle);
+
+                writer.write("LABEL_CYCLE " + (feat.isReal ? 1 : 0) + "\n");
+                writer.write(String.format(
+                        "CYCLE_FEATURES thread_count=%d max_thread_occurrence=%d "
+                                + "all_edges_same_thread=%b all_edges_reachable=%b "
+                                + "has_non_adjacent_edge=%b edge_count=%d\n",
+                        feat.threadCount, feat.maxThreadOccurrence,
+                        feat.allEdgesSameThread, feat.allEdgesReachable,
+                        feat.hasNonAdjacentEdge, feat.edgeCount));
+                // 环上的锁对象节点标 1
+                StringBuilder nodeLabels = new StringBuilder();
+                for (int i = 0; i < lockNodeObj.size(); i++)
+                    nodeLabels.append(i).append(",");
+                writer.write("LABEL_LOCK_NODES " + nodeLabels + "\n");
+                // 环上的锁边标 1
+                StringBuilder edgeLabels = new StringBuilder();
+                for (int i = 0; i < cycle.size(); i++)
+                    edgeLabels.append(i).append(",");
+                writer.write("LABEL_LOCK_EDGES " + edgeLabels + "\n");
+                writer.write("LABEL_ACQ_NODES ");
+                for (int i = 0; i < acqNodeList.size(); i++)
+                    writer.write(i + ",");
+                writer.write("\n");
+
+                writer.write("\n");
             }
+
             System.out.println("Graph data written to: " + fileName);
             System.out.println("Total cycles: " + cycleId);
         } catch (IOException e) {
@@ -1224,8 +1001,368 @@ public class ParserB implements Plugin {
         }
     }
 
-    private String nodeKey(CSObj obj) {
+    /** 获锁点唯一 key */
+    private String acqKey(LockAcquisition la) {
+        if (la == null) return "?";
+        String m = la.method.getMethod().toString();
+        int line = la.stmt != null ? la.stmt.getLineNumber() : -1;
+        String v = la.lockVar != null ? la.lockVar.getVar().toString() : "?";
+        return m + "@" + line + "#" + v + "#" + la.isEnter;
+    }
+
+    private String nodeKey(LockAcquisition la, CSObj obj) {
+        // 节点只按锁对象区分，不再带 method/line
         return obj.getObject().toString();
+    }
+
+    private boolean hasNonAdjacentEdge(List<LockOrderEdge> cycle) {
+        for (LockOrderEdge e : cycle) {
+            if (e.fromLa == null || e.toLa == null) continue;
+            // 如果 fromLa 和 toLa 之间，在调用链上还存在别的 LockAcquisition
+            // 说明这条边"跳过"了中间锁
+            if (hasIntermediateLock(e.fromLa, e.toLa)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasIntermediateLock(LockAcquisition from, LockAcquisition to) {
+        // 用 computeCallDistance + 遍历 from 到 to 的路径
+        // 简化版：只看 from 到 to 的调用距离是否 > 1，且中间经过的获锁点数 > 0
+        // 精确版需要 BFS 记录路径
+        List<CSMethod> path = shortestPath(from.method, to.method);
+        if (path == null || path.size() <= 2) return false;
+
+        // 路径中间的方法里，是否有 LockAcquisition
+        for (int i = 1; i < path.size() - 1; i++) {
+            CSMethod mid = path.get(i);
+            for (LockAcquisition la : lockAcquisitions) {
+                if (la.method.equals(mid)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /** BFS 找 from 到 to 的最短调用路径，返回方法序列（含两端），无路径返回 null */
+    private List<CSMethod> shortestPath(CSMethod from, CSMethod to) {
+        if (from.equals(to)) return List.of(from);
+
+        Queue<CSMethod> queue = new ArrayDeque<>();
+        Map<CSMethod, CSMethod> parent = new HashMap<>();
+        Set<CSMethod> visited = new HashSet<>();
+        queue.add(from);
+        visited.add(from);
+
+        while (!queue.isEmpty()) {
+            CSMethod cur = queue.poll();
+            for (CSCallSite cs : solver.getCallGraph().getCallSitesIn(cur)) {
+                for (CSMethod succ : solver.getCallGraph().getCalleesOf(cs)) {
+                    if (!visited.add(succ)) continue;
+                    parent.put(succ, cur);
+                    if (succ.equals(to)) {
+                        // 回溯路径
+                        LinkedList<CSMethod> path = new LinkedList<>();
+                        CSMethod p = to;
+                        while (p != null) {
+                            path.addFirst(p);
+                            p = parent.get(p);
+                        }
+                        return path;
+                    }
+                    queue.add(succ);
+                }
+            }
+        }
+        return null;
+    }
+
+    private CycleFeatures classifyCycle(List<LockOrderEdge> cycle) {
+        CycleFeatures f = new CycleFeatures();
+        f.edgeCount = cycle.size();
+
+        // 1) 收集每条边的线程归属
+        List<String> edgeThreads = new ArrayList<>();
+        boolean allSame = true;
+        boolean allReachable = true;
+
+        for (LockOrderEdge e : cycle) {
+            String fromThread = e.fromLa != null
+                    ? threadIdOf(e.fromLa.method) : "?";
+            String toThread = e.toLa != null
+                    ? threadIdOf(e.toLa.method) : "?";
+
+            // 边的两端必须同线程
+            if (!fromThread.equals(toThread)) {
+                allSame = false;
+            }
+            edgeThreads.add(fromThread);
+
+            // 边的两端在线程内必须可达
+            if (e.fromLa == null || e.toLa == null
+                    || computeCallDistance(e.fromLa.method, e.toLa.method) < 0) {
+                allReachable = false;
+            }
+        }
+
+        // 2) 统计线程出现次数
+        Map<String, Integer> threadCount = new HashMap<>();
+        for (String t : edgeThreads) {
+            threadCount.merge(t, 1, Integer::sum);
+        }
+        f.threadCount = threadCount.size();
+        f.maxThreadOccurrence = threadCount.values().stream()
+                .mapToInt(Integer::intValue).max().orElse(0);
+        f.allEdgesSameThread = allSame;
+        f.allEdgesReachable = allReachable;
+
+        // 3) 是否有"跳过中间锁"的边
+        f.hasNonAdjacentEdge = hasNonAdjacentEdge(cycle);
+
+        // 4) 最终判定
+        f.isReal = allSame                  // 每条边同线程
+                && allReachable             // 每条边线程内可达
+                && f.threadCount >= 2       // 至少两个线程
+                && f.maxThreadOccurrence <= 1; // 每个线程最多出现一次
+
+        return f;
+    }
+
+    /*
+    // 从方法沿调用图向上找最近的 run()，返回其所属类名作为线程 ID
+    private String threadIdOf(CSMethod m) {
+        // BFS 向上找 caller，直到遇到名为 run 的方法
+        Queue<CSMethod> queue = new ArrayDeque<>();
+        Set<CSMethod> visited = new HashSet<>();
+        queue.add(m);
+        visited.add(m);
+
+        while (!queue.isEmpty()) {
+            CSMethod cur = queue.poll();
+            JMethod jm = cur.getMethod();
+            if (jm.getName().equals("run") && jm.getParamCount() == 0) {
+                return jm.getDeclaringClass().getName();
+            }
+            for (CSCallSite cs : solver.getCallGraph().getCallersOf(cur)) {
+                CSMethod caller = solver.getCallGraph().getContainerOf(cs);
+                if (caller != null && visited.add(caller)) {
+                    queue.add(caller);
+                }
+            }
+        }
+        // 找不到 run()，退化为"类名.方法名前缀"
+        return m.getMethod().getDeclaringClass().getName();
+    }
+    */
+    // ============================================================
+    // 线程身份判定
+    // ============================================================
+
+    /**
+     * 返回一个 CSMethod 所属的"线程身份"。
+     * - 普通 Runnable.run 链路：向上找 run()，再找承载它的 Thread 对象
+     * - lambda 方法（lambda$xxx$N）：从 invokedynamic 溯源，找承载它的 Thread 对象
+     * - 兜底：用声明类名
+     */
+    /**
+     * 返回一个 CSMethod 所属的"线程身份"。
+     * 沿 caller 向上 BFS：
+     * - 遇到 run() → Thread.start 溯源
+     * - 遇到 lambda$xxx → invokedynamic 溯源
+     * - 都找不到 → 声明类名
+     */
+    private String threadIdOf(CSMethod m) {
+        Queue<CSMethod> queue = new ArrayDeque<>();
+        Set<CSMethod> visited = new HashSet<>();
+        queue.add(m);
+        visited.add(m);
+
+        while (!queue.isEmpty()) {
+            CSMethod cur = queue.poll();
+            JMethod jm = cur.getMethod();
+
+            // 1) run()：走 Thread.start 溯源
+            if (jm.getName().equals("run") && jm.getParamCount() == 0) {
+                String tid = findThreadInstanceId(cur);
+                if (tid != null) return tid;
+                return jm.getDeclaringClass().getName();
+            }
+
+            // 2) lambda$：走 invokedynamic 溯源
+            if (jm.getName().startsWith("lambda$")) {
+                String tid = findThreadForLambda(jm);
+                if (tid != null) return tid;
+                // 失败则继续向上找 caller
+                // 兜底：用 lambda 方法名区分
+                return jm.getName();
+            }
+
+            // 3) 继续向上
+            for (CSCallSite cs : solver.getCallGraph().getCallersOf(cur)) {
+                CSMethod caller = solver.getCallGraph().getContainerOf(cs);
+                if (caller != null && visited.add(caller)) {
+                    queue.add(caller);
+                }
+            }
+        }
+
+        return m.getMethod().getDeclaringClass().getName();
+    }
+
+    /**
+     * 普通 Runnable 链路：
+     * 从 m 沿 caller BFS 向上找名为 run() 的方法，
+     * 再从 run() 向上找 Thread.start() 的接收者对象，作为线程 ID。
+     * 找不到时退化为声明类名。
+     */
+    private String findThreadByRunChain(CSMethod m) {
+        Queue<CSMethod> queue = new ArrayDeque<>();
+        Set<CSMethod> visited = new HashSet<>();
+        queue.add(m);
+        visited.add(m);
+
+        while (!queue.isEmpty()) {
+            CSMethod cur = queue.poll();
+            JMethod jm = cur.getMethod();
+
+            if (jm.getName().equals("run") && jm.getParamCount() == 0) {
+                String tid = findThreadInstanceId(cur);
+                if (tid != null) return tid;
+                return jm.getDeclaringClass().getName();
+            }
+
+            for (CSCallSite cs : solver.getCallGraph().getCallersOf(cur)) {
+                CSMethod caller = solver.getCallGraph().getContainerOf(cs);
+                if (caller != null && visited.add(caller)) {
+                    queue.add(caller);
+                }
+            }
+        }
+        return m.getMethod().getDeclaringClass().getName();
+    }
+
+    /**
+     * 从 run() 的 CSMethod 向上找 Thread.start() 的接收者对象，返回其身份字符串。
+     * 找不到时返回 null。
+     */
+    private String findThreadInstanceId(CSMethod runMethod) {
+        Queue<CSMethod> queue = new ArrayDeque<>();
+        Set<CSMethod> visited = new HashSet<>();
+        queue.add(runMethod);
+        visited.add(runMethod);
+
+        while (!queue.isEmpty()) {
+            CSMethod cur = queue.poll();
+            JMethod jm = cur.getMethod();
+            if (jm.getIR() == null) continue;
+
+            // 看这个方法里有没有对某个 Thread 对象调用 start()
+            for (Stmt stmt : jm.getIR().getStmts()) {
+                if (!(stmt instanceof Invoke invoke)) continue;
+                InvokeExp exp = invoke.getInvokeExp();
+                if (!(exp instanceof InvokeInstanceExp inst)) continue;
+                JMethod callee = exp.getMethodRef().resolve();
+                if (callee == null) continue;
+                if (!callee.getDeclaringClass().getName().equals("java.lang.Thread")) continue;
+                if (!callee.getName().equals("start")) continue;
+
+                // 拿到接收者 thread 对象的 CSObj
+                CSVar baseVar = solver.getCSManager().getCSVar(
+                        cur.getContext(), inst.getBase());
+                for (CSObj threadObj : solver.getPointsToSetOf(baseVar)) {
+                    return threadObj.getObject().toString();
+                }
+            }
+
+            for (CSCallSite cs : solver.getCallGraph().getCallersOf(cur)) {
+                CSMethod caller = solver.getCallGraph().getContainerOf(cs);
+                if (caller != null && visited.add(caller)) {
+                    queue.add(caller);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * lambda 溯源：
+     * 遍历所有可达方法，找哪个 invokedynamic 引用了这个 lambdaMethod；
+     * 再从这个 invokedynamic 的返回值（Runnable 对象）出发，
+     * 找它被传给哪个 Thread.<init>，返回那个 Thread 对象的身份。
+     */
+    private String findThreadForLambda(JMethod lambdaMethod) {
+        for (CSMethod csMethod : solver.getCallGraph().reachableMethods().toList()) {
+            JMethod m = csMethod.getMethod();
+            if (m.getIR() == null) continue;
+
+            for (Stmt stmt : m.getIR().getStmts()) {
+                if (!(stmt instanceof Invoke invoke)) continue;
+                if (!(invoke.getInvokeExp() instanceof InvokeDynamic dyn)) continue;
+
+                // 找 bootstrap args 里的 MethodHandle
+                MethodHandle mh = null;
+                for (Literal arg : dyn.getBootstrapArgs()) {
+                    if (arg instanceof MethodHandle h) mh = h;
+                }
+                if (mh == null) continue;
+
+                JMethod impl = mh.getMethodRef().resolve();
+                if (impl == null || !impl.equals(lambdaMethod)) continue;
+
+                // 找到了：这个 invokedynamic 的返回值被谁用？
+                Var lhs = invoke.getLValue();
+                if (lhs == null) continue;
+
+                // 看 lhs 流向哪个 Thread
+                String tid = findThreadForRunnableVar(csMethod, lhs);
+                if (tid != null) return tid;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 在 method 的 IR 里找：runnableVar 被传给哪个 Thread.<init>(Runnable)，
+     * 返回那个 Thread 对象的身份。
+     */
+    private String findThreadForRunnableVar(CSMethod method, Var runnableVar) {
+        JMethod jm = method.getMethod();
+        if (jm.getIR() == null) return null;
+
+        for (Stmt stmt : jm.getIR().getStmts()) {
+            if (!(stmt instanceof Invoke invoke)) continue;
+            if (!(invoke.getInvokeExp() instanceof InvokeInstanceExp inst)) continue;
+
+            JMethod callee = invoke.getInvokeExp().getMethodRef().resolve();
+            if (callee == null) continue;
+            if (!callee.getDeclaringClass().getName().equals("java.lang.Thread")) continue;
+            if (!callee.getName().equals("<init>")) continue;
+
+            // Thread.<init>(Runnable)，runnable 是第 0 个参数
+            List<Var> args = invoke.getInvokeExp().getArgs();
+            if (args.isEmpty()) continue;
+            if (!args.get(0).equals(runnableVar)) continue;
+
+            // 找到了：thread 对象是 invoke 的 base
+            CSVar baseVar = solver.getCSManager().getCSVar(
+                    method.getContext(), inst.getBase());
+            for (CSObj threadObj : solver.getPointsToSetOf(baseVar)) {
+                return threadObj.getObject().toString();
+            }
+        }
+        return null;
+    }
+
+    static class CycleFeatures {
+        boolean isReal;              // 最终 0/1
+        int threadCount;             // 环涉及几个线程
+        int maxThreadOccurrence;     // 一个线程在环里最多出现几次
+        boolean allEdgesSameThread;  // 是否所有边同线程
+        boolean allEdgesReachable;   // 是否所有边在线程内可达
+        boolean hasNonAdjacentEdge;  // 是否有"跳过中间锁"的边
+        int edgeCount;               // 边数
     }
 
     private List<List<LockOrderEdge>> findAllCycles() {
