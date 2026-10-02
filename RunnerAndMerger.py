@@ -1,4 +1,4 @@
-import os,re,subprocess,sys
+import os,re,subprocess,sys,time
 from pathlib import Path
 
 def find_harness_files(root_dir):
@@ -21,7 +21,7 @@ def get_class_full_name(class_file_path, root_dir):
     rel_path = os.path.relpath(class_file_path, root_dir)
 
     # 去掉.class后缀
-    class_name = rel_path[:-6]  # 去掉 '.class'
+    class_name = rel_path[:-6]
 
     # 将路径分隔符替换为点号，得到完整的类名
     full_class_name = class_name.replace(os.sep, '.')
@@ -79,9 +79,7 @@ def run_java_command(class_full_name, working_dir):
         print(f"✗ 执行异常: {class_full_name}")
         print(f"异常信息: {str(e)}")
 
-def run_all_java():
-
-    target_dir = "."
+def run_all_java(target_dir = "."):
 
     # 转换为绝对路径
     target_dir = os.path.abspath(target_dir)
@@ -190,11 +188,6 @@ def merge_generated_graphs(search_dir=".", output="merged-real-.txt"):
     merge_txt(graph_files, output)
     print(f"\n✓ 合并完成，输出文件: {output}")
 
-
-# ============================================================
-# 主流程：先跑 Java，再合并 graph-*.txt
-# ============================================================
-
 def main():
     target_dir = "."
 
@@ -202,7 +195,9 @@ def main():
     run_all_java(target_dir)
 
     # 2. 再把生成的 graph-*.txt 合并
-    merge_generated_graphs(search_dir=target_dir, output="merged-real-.txt")
+    timestamp = str(round(1000 * time.time()))
+    output_dir = "graph-real-" + timestamp + ".txt"
+    merge_generated_graphs(search_dir=target_dir, output=output_dir)
 
 
 if __name__ == "__main__":
