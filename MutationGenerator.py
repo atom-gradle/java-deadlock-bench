@@ -2,99 +2,77 @@
 """
 Perform lock-related mutations on plain Java projects to generate
 reproducible samples.
-
-Supported:
-- Find classes containing lock fields / synchronized blocks
-- Replace the lock variable inside synchronized(...)
-- Reassign non-final lock fields
-- Insert Thread.sleep inside synchronized blocks
-- Add new synchronized blocks (only for Object-type lock fields)
-- Generate a linear mock call chain (realistic long-distance calls)
-- Insert the chain head into an original method body
-- Generate a harness for each class
-
-Supported constructs:
-- new Thread(...) / Runnable anonymous class / Lambda
-- Object / custom lock object / ReentrantLock
-
-Not supported:
-- wait / notify
-- Other JUC utilities (ReadWriteLock, StampedLock, Semaphore, etc.)
 """
 
-import os,re,json,random,shutil,time, argparse
+import os, re, json, random, shutil, time, argparse
 
-WORKING_DIR = r"D:\Projects2"
+WORKING_DIR = r"D:\Projects"
 
-# mutated/project_name/package_name/...
-formatted_time = time.strftime("%m%d-%H%M%S", time.localtime(time.time())) + f"{int((time.time() % 1) * 1000):03d}"
 OUTPUT_DIR = "./mutated-" + str(round(1000 * time.time()))
-
-# OUTPUT_DIR/mutation_report.json
 REPORT_PATH = os.path.join(OUTPUT_DIR, "mutation_report.json")
 
-# 是否保留原项目中的所有类（True 时不跳过不含锁的类，便于直接编译整个项目）
 RETAIN_ALL_CLASSES = False
 
 SEED = 42
 
-# mutation possibility
 P_REPLACE_LOCK = 0.5
 P_REASSIGN_LOCK = 0.3
 P_INSERT_SLEEP = 0.4
 P_ADD_SYNC_BLOCK = 0.3
 P_ADD_MOCK_METHOD = 1.0
+P_ADD_CROSS_LOCK = 1.0
 
-# Thread.sleep(milliseconds)
+P_FAKE_CROSS_LOCK = 0.5
+
+SKIP_REPLACE_LOCK_IF_CROSS = True
+
 SLEEP_MIN = 100
 SLEEP_MAX = 500
 
-# 每个类最多插入 sleep 次数
+CROSS_LOCK_SLEEP_MIN = 50
+CROSS_LOCK_SLEEP_MAX = 200
+
 MAX_SLEEP_PER_CLASS = 3
 
-# mock 链最大长度
-MOCK_MAX_DEPTH = 5
+NEST_DEPTH_MEAN = 2.0
+NEST_DEPTH_STD = 1.5
+NEST_DEPTH_MIN = 1
+NEST_DEPTH_MAX = 10
 
-# 识别锁字段的类型
-LOCK_TYPES = {
-    "ReentrantLock",
+CALL_DIST_MEAN = 2.5
+CALL_DIST_STD = 1.5
+CALL_DIST_MIN = 1
+CALL_DIST_MAX = 10
+
+MAX_HARNESS_EXTRA_METHODS = 3
+
+CROSS_LOCK_MODE_WEIGHTS = {
+    "AB_BA": 0.3,
+    "ABC_CYCLE": 0.4,
+    "NESTED_CROSS": 0.3,
 }
 
-# 锁字段名字关键词
+LOCK_TYPES = {"ReentrantLock"}
 LOCK_NAME_HINTS = ["lock", "mutex", "monitor", "semaphore", "guard"]
 
-# synchronized blocks regex
-RE_SYNC_BLOCK = re.compile(
-    r'synchronized\s*\(\s*([^)]+?)\s*\)\s*\{',
-    re.MULTILINE
-)
+NON_MONITOR_LOCK_TYPES = {
+    "ReentrantLock", "ReentrantReadWriteLock", "StampedLock",
+    "Semaphore", "CountDownLatch", "CyclicBarrier",
+}
 
-# 锁字段声明正则
+RE_SYNC_BLOCK = re.compile(r'synchronized\s*\(\s*([^)]+?)\s*\)\s*\{', re.MULTILINE)
 RE_LOCK_FIELD = re.compile(
     r'(?:private|protected|public)?\s*'
     r'(?:static\s+)?(?:final\s+)?'
     r'(\w+)\s+(\w+)\s*=\s*new\s+\1\s*\([^)]*\)\s*;',
     re.MULTILINE
 )
-
-# class regex
 RE_CLASS = re.compile(
     r'(?:^|\n)\s*(?:public\s+|protected\s+|private\s+)?'
     r'(?:abstract\s+|final\s+)?class\s+(\w+)',
     re.MULTILINE
 )
-
-RE_CLASS_ALL = re.compile(
-    r'(?:^|\n)\s*(?:public\s+|protected\s+|private\s+)?'
-    r'(?:abstract\s+|final\s+|sealed\s+|non-sealed\s+|static\s+)?'
-    r'(?:class|interface|record|enum)\s+(\w+)',
-    re.MULTILINE
-)
-
-# package regex
 RE_PACKAGE = re.compile(r'^\s*package\s+([\w\.]+)\s*;', re.MULTILINE)
-
-# public methods
 RE_PUBLIC_METHOD = re.compile(
     r'(?:^|\n)[ \t]*public[ \t]+'
     r'(?:static[ \t]+)?(?:final[ \t]+)?(?:synchronized[ \t]+)?'
@@ -104,6 +82,26 @@ RE_PUBLIC_METHOD = re.compile(
     r'(?:throws[ \t]+[^\n{};]+)?[ \t\n]*\{',
     re.MULTILINE
 )
+
+
+# ============================================================
+# 分布采样
+# ============================================================
+
+def sample_normal_int(mean, std, lo, hi):
+    v = int(round(random.gauss(mean, std)))
+    return max(lo, min(hi, v))
+
+
+def sample_nest_depth():
+    return sample_normal_int(NEST_DEPTH_MEAN, NEST_DEPTH_STD,
+                             NEST_DEPTH_MIN, NEST_DEPTH_MAX)
+
+
+def sample_call_distance():
+    return sample_normal_int(CALL_DIST_MEAN, CALL_DIST_STD,
+                             CALL_DIST_MIN, CALL_DIST_MAX)
+
 
 # ============================================================
 # IO tools
@@ -117,8 +115,12 @@ def read_file(path):
 
 
 def write_file(path, content):
+    if content is None:
+        return
     path = os.path.normpath(path)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    d = os.path.dirname(path)
+    if d:
+        os.makedirs(d, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
@@ -131,36 +133,84 @@ def find_java_files(src_root):
 
 
 def resolve_source_root(project_dir):
-    candidate1 = os.path.join(project_dir, "src", "main", "java")
-    if os.path.isdir(candidate1):
-        return candidate1
-    candidate2 = os.path.join(project_dir, "src")
-    if os.path.isdir(candidate2):
-        return candidate2
-    candidate3 = os.path.join(project_dir, "agrona", "src", "main", "java")
-    if os.path.isdir(candidate3):
-        return candidate3
-    candidate4 = os.path.join(project_dir, "jctools-core", "src", "main", "java")
-    if os.path.isdir(candidate4):
-        return candidate4
+    for c in (
+        os.path.join(project_dir, "src", "main", "java"),
+        os.path.join(project_dir, "src"),
+        os.path.join(project_dir, "agrona", "src", "main", "java"),
+        os.path.join(project_dir, "jctools-core", "src", "main", "java"),
+    ):
+        if os.path.isdir(c):
+            return c
     return None
 
 
 # ============================================================
-# 注释剥离
+# 注释剥离 / 括号扫描
 # ============================================================
 
 def strip_comments(content):
-    content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
-    content = re.sub(r'//(?!/)[^\n]*', '', content)
-    return content
+    """
+    剥离注释，但跳过字符串和字符字面量，避免把 "http://..." 里的 // 当注释。
+    """
+    result = []
+    i = 0
+    n = len(content)
+    while i < n:
+        c = content[i]
+        # 行注释
+        if c == '/' and i + 1 < n and content[i+1] == '/':
+            j = content.find('\n', i)
+            if j == -1:
+                break
+            i = j
+            continue
+        # 块注释
+        if c == '/' and i + 1 < n and content[i+1] == '*':
+            j = content.find('*/', i + 2)
+            if j == -1:
+                break
+            i = j + 2
+            continue
+        # 字符串
+        if c == '"':
+            result.append(c)
+            i += 1
+            while i < n:
+                result.append(content[i])
+                if content[i] == '\\':
+                    i += 1
+                    if i < n:
+                        result.append(content[i])
+                    i += 1
+                    continue
+                if content[i] == '"':
+                    i += 1
+                    break
+                i += 1
+            continue
+        # 字符
+        if c == '\'':
+            result.append(c)
+            i += 1
+            while i < n:
+                result.append(content[i])
+                if content[i] == '\\':
+                    i += 1
+                    if i < n:
+                        result.append(content[i])
+                    i += 1
+                    continue
+                if content[i] == '\'':
+                    i += 1
+                    break
+                i += 1
+            continue
+        result.append(c)
+        i += 1
+    return ''.join(result)
 
 
 def _scan_balanced_braces(text, start):
-    """
-    从 text[start] 开始（start 指向 { 之后的位置），扫描到匹配的 } 之后。
-    跳过字符串字面量 "..." 和字符字面量 '...'，避免括号计数被字面量里的 {} 干扰。
-    """
     n = len(text)
     depth = 1
     i = start
@@ -194,44 +244,57 @@ def _scan_balanced_braces(text, start):
 
 
 def remove_nested_classes(body):
-    """去掉嵌套类声明和匿名内部类，保留其他代码。"""
+    """只删匿名内部类，保留命名内部类。"""
     result = []
     i = 0
     n = len(body)
     while i < n:
-        m_class = re.search(r'\b(?:class|interface|enum)\s+\w+', body[i:])
-        m_anon = re.search(r'\bnew\s+\w+(?:<[^>]*>)?\s*\([^)]*\)\s*\{', body[i:])
-
-        candidates = []
-        if m_class:
-            candidates.append((m_class.start(), 'class', m_class))
-        if m_anon:
-            candidates.append((m_anon.start(), 'anon', m_anon))
-
-        if not candidates:
+        m_anon = re.search(
+            r'\bnew\s+[\w\.]+(?:<[^>{}]*>)?\s*\([^)]*\)\s*\{',
+            body[i:]
+        )
+        if not m_anon:
             result.append(body[i:])
             break
 
-        candidates.sort(key=lambda x: x[0])
-        pos, kind, m = candidates[0]
-
-        result.append(body[i:i + pos])
-
-        if kind == 'class':
-            j = i + m.end()
-            while j < n and body[j] != '{':
-                j += 1
-            if j >= n:
-                break
-            j += 1
-            j = _scan_balanced_braces(body, j)
-            i = j
-        else:
-            j = i + m.end()
-            j = _scan_balanced_braces(body, j)
-            i = j
+        result.append(body[i:i + m_anon.start()])
+        j = i + m_anon.end()
+        j = _scan_balanced_braces(body, j)
+        i = j
 
     return ''.join(result)
+
+
+# ============================================================
+# 字段区域抽取
+# ============================================================
+
+def _field_region(content, class_name):
+    """
+    抽取类体的字段区域：从类体开始到第一个方法/构造器声明之前。
+    """
+    clean = strip_comments(content)
+    class_pattern = re.compile(
+        r'\bclass\s+' + re.escape(class_name) + r'\b[^{]*\{',
+        re.MULTILINE
+    )
+    m = class_pattern.search(clean)
+    if not m:
+        return ""
+
+    start = m.end()
+    end = _scan_balanced_braces(clean, start)
+    body = clean[start:end - 1]
+
+    method_decl = re.search(
+        r'\n[ \t]*(?:(?:public|protected|private|static|final|synchronized|abstract|native|default)\s+)*'
+        r'(?:[\w<>\[\],\s\?\.]+?\s+)?'
+        r'[\w]+\s*\([^)]*\)\s*(?:throws\s+[^\n{};]+)?\s*\{',
+        body
+    )
+    if method_decl:
+        return body[:method_decl.start()]
+    return body
 
 
 # ============================================================
@@ -242,16 +305,37 @@ def parse_package(content):
     m = RE_PACKAGE.search(content)
     return m.group(1) if m else None
 
+
 def parse_class_name(content):
     clean = strip_comments(content)
     m = RE_CLASS.search(clean)
     return m.group(1) if m else None
 
+
 def need_to_parse(content):
     clean = strip_comments(content)
     return RE_CLASS.search(clean) is not None
 
+
+def _infer_field_type(content, name, class_name):
+    region = _field_region(content, class_name)
+    if not region:
+        return "Object"
+    pat = re.compile(
+        r'(?:^|\n)[ \t]*'
+        r'(?:(?:private|protected|public|final|static|volatile|transient)\s+)*'
+        r'([\w\.]+)(?:\s*<[^;{}]*>)?(?:\s*\[\])?\s+'
+        + re.escape(name) + r'\s*[;=]',
+        re.MULTILINE
+    )
+    m = pat.search(region)
+    if m:
+        return m.group(1)
+    return "Object"
+
+
 def parse_lock_fields(content):
+    class_name = parse_class_name(content) or ""
     fields = []
     seen = set()
 
@@ -271,6 +355,7 @@ def parse_lock_fields(content):
             "name": name,
             "is_static": "static" in decl,
             "is_final": "final" in decl,
+            "inferred": False,
         })
         seen.add(name)
 
@@ -281,8 +366,9 @@ def parse_lock_fields(content):
         if expr.isupper():
             continue
         if re.fullmatch(r"[A-Za-z_]\w*", expr) and expr not in seen:
+            inferred_type = _infer_field_type(content, expr, class_name)
             fields.append({
-                "type": "Object",
+                "type": inferred_type,
                 "name": expr,
                 "is_static": False,
                 "is_final": True,
@@ -291,23 +377,6 @@ def parse_lock_fields(content):
             seen.add(expr)
 
     return fields
-
-
-def parse_class_modifiers(content, class_name):
-    clean = strip_comments(content)
-    pattern = re.compile(
-        r'(?:^|\n)\s*((?:(?:public|protected|private|abstract|final|static)\s+)*)'
-        r'class\s+' + re.escape(class_name) + r'\b',
-        re.MULTILINE
-    )
-    m = pattern.search(clean)
-    if not m:
-        return []
-    return m.group(1).split()
-
-
-def is_public_class(content, class_name):
-    return 'public' in parse_class_modifiers(content, class_name)
 
 
 def _get_class_body(content, class_name):
@@ -324,29 +393,34 @@ def _get_class_body(content, class_name):
     return clean[start:end - 1]
 
 
-def get_first_constructor_args(content, class_name):
+def _ctor_region(content, class_name):
     class_body = _get_class_body(content, class_name)
     if class_body is None:
+        return ""
+    body = remove_nested_classes(class_body)
+    return body
+
+
+def get_first_constructor_args(content, class_name):
+    body = _ctor_region(content, class_name)
+    if not body:
         return None
-    class_body_no_nested = remove_nested_classes(class_body)
     pattern = re.compile(
-        r'(?:^|\n)[ \t]*(?:public|protected)?[ \t]*'
+        r'(?:^|\n)[ \t]*(?:public|protected|private)?[ \t]*'
         + re.escape(class_name) + r'[ \t]*\(([^)]*)\)[ \t]*'
         r'(?:throws[ \t]+[^\n{};]+)?\{',
         re.MULTILINE
     )
-    m = pattern.search(class_body_no_nested)
+    m = pattern.search(body)
     if not m:
         return None
     return m.group(1).strip()
 
 
 def has_no_arg_constructor(content, class_name):
-    class_body = _get_class_body(content, class_name)
-    if class_body is None:
+    body = _ctor_region(content, class_name)
+    if not body:
         return False
-
-    class_body_no_nested = remove_nested_classes(class_body)
 
     any_ctor_pattern = re.compile(
         r'(?:^|\n)[ \t]*(?:public|protected|private)?[ \t]*'
@@ -354,9 +428,7 @@ def has_no_arg_constructor(content, class_name):
         r'(?:throws[ \t]+[^\n{};]+)?\{',
         re.MULTILINE
     )
-    any_ctors = list(any_ctor_pattern.finditer(class_body_no_nested))
-
-    if not any_ctors:
+    if not list(any_ctor_pattern.finditer(body)):
         return True
 
     public_ctor_pattern = re.compile(
@@ -364,11 +436,25 @@ def has_no_arg_constructor(content, class_name):
         r'(?:throws[ \t]+[^\n{};]+)?\{',
         re.MULTILINE
     )
-    for c in public_ctor_pattern.finditer(class_body_no_nested):
-        params = c.group(1).strip()
-        if not params:
+    for c in public_ctor_pattern.finditer(body):
+        if not c.group(1).strip():
             return True
 
+    return False
+
+
+def has_private_ctor(content, class_name):
+    body = _ctor_region(content, class_name)
+    if not body:
+        return False
+    pat = re.compile(
+        r'(?:^|\n)[ \t]*private[ \t]+' + re.escape(class_name) + r'[ \t]*\(([^)]*)\)[ \t]*'
+        r'(?:throws[ \t]+[^\n{};]+)?\{',
+        re.MULTILINE
+    )
+    for c in pat.finditer(body):
+        if not c.group(1).strip():
+            return True
     return False
 
 
@@ -380,32 +466,70 @@ def has_lock(content):
     return False
 
 
+def _brace_depth_at(text, pos):
+    depth = 0
+    i = 0
+    in_string = False
+    in_char = False
+    while i < pos:
+        c = text[i]
+        if in_string:
+            if c == '\\':
+                i += 2
+                continue
+            if c == '"':
+                in_string = False
+        elif in_char:
+            if c == '\\':
+                i += 2
+                continue
+            if c == '\'':
+                in_char = False
+        else:
+            if c == '"':
+                in_string = True
+            elif c == '\'':
+                in_char = True
+            elif c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+        i += 1
+    return depth
+
+
 def parse_public_methods(content, class_name):
     class_body = _get_class_body(content, class_name)
     if class_body is None:
         return []
 
-    class_body_no_nested = remove_nested_classes(class_body)
+    class_body_no_anon = remove_nested_classes(class_body)
 
     methods = []
-    for mm in RE_PUBLIC_METHOD.finditer(class_body_no_nested):
+    seen_sig = set()
+    for mm in RE_PUBLIC_METHOD.finditer(class_body_no_anon):
+        depth = _brace_depth_at(class_body_no_anon, mm.start())
+        if depth != 0:
+            continue
+
         ret_type = mm.group(1).strip()
         name = mm.group(2)
         params = mm.group(3).strip()
         if name == class_name:
             continue
-        matched_text = class_body_no_nested[mm.start():mm.end()]
-        is_static = "static" in matched_text
-        is_sync = "synchronized" in matched_text
+        sig = (name, params)
+        if sig in seen_sig:
+            continue
+        seen_sig.add(sig)
+        matched_text = class_body_no_anon[mm.start():mm.end()]
         methods.append({
             "return_type": ret_type,
             "name": name,
             "params": params,
-            "is_static": is_static,
-            "is_synchronized": is_sync,
+            "is_static": "static" in matched_text,
+            "is_synchronized": "synchronized" in matched_text,
         })
     return methods
-
 
 def simple_args_for(params):
     if not params.strip():
@@ -415,18 +539,16 @@ def simple_args_for(params):
         p = p.strip()
         if not p:
             continue
-        # 去掉 final
         p = re.sub(r"\bfinal\b", "", p).strip()
-        # 提取参数类型名（泛型前的原始类型）
-        # 形如 "Collection<C> collection" -> "Collection"
-        # 形如 "Enumeration<? extends C> enumeration" -> "Enumeration"
-        # 形如 "C... elements" -> "C"
+        m_var = re.match(r'([\w\.]+)\s*\.\.\.', p)
+        if m_var:
+            args.append(f"({m_var.group(1)}[]) null")
+            continue
         m = re.match(r'([\w\.]+)', p)
         if not m:
             args.append("null")
             continue
         typ = m.group(1)
-        # 基本类型和 String 用具体值
         if typ in ("int", "Integer"):
             args.append("0")
         elif typ in ("long", "Long"):
@@ -439,16 +561,13 @@ def simple_args_for(params):
             args.append("0.0f")
         elif typ in ("String", "CharSequence"):
             args.append('""')
-        elif typ.endswith("...") or p.endswith("..."):
-            base = typ[:-3] if typ.endswith("...") else typ
-            args.append(f"null")
         else:
-            # 其他引用类型，用 (Type) null
-            args.append(f"null")
+            args.append(f"({typ}) null")
     return args
 
+
 # ============================================================
-# 变异操作
+# 基础变异
 # ============================================================
 
 def mutate_replace_lock(content, lock_fields):
@@ -456,20 +575,24 @@ def mutate_replace_lock(content, lock_fields):
         return content, []
     records = []
     names = [f["name"] for f in lock_fields]
+    replaced_positions = set()
 
     def repl(m):
         old = m.group(1).strip()
         if not re.fullmatch(r"[A-Za-z_]\w*", old):
             return m.group(0)
+        key = m.start()
+        if key in replaced_positions:
+            return m.group(0)
         candidates = [n for n in names if n != old]
         if not candidates:
             return m.group(0)
         new = random.choice(candidates)
+        replaced_positions.add(key)
         records.append({"op": "replace_lock", "old": old, "new": new})
         return f"synchronized ({new}) {{"
 
-    new_content = RE_SYNC_BLOCK.sub(repl, content)
-    return new_content, records
+    return RE_SYNC_BLOCK.sub(repl, content), records
 
 
 def mutate_reassign_lock(content, lock_fields, class_name):
@@ -511,8 +634,7 @@ def mutate_insert_sleep(content):
                 + f"\n{indent}    try {{ Thread.sleep({sleep_ms}); }} "
                   f"catch (InterruptedException e) {{ }}")
 
-    new_content = RE_SYNC_BLOCK.sub(repl, content)
-    return new_content, records
+    return RE_SYNC_BLOCK.sub(repl, content), records
 
 
 def mutate_add_sync_block(content, lock_fields):
@@ -539,8 +661,200 @@ def mutate_add_sync_block(content, lock_fields):
     }]
 
 
+# ============================================================
+# 交叉加锁变异
+# ============================================================
+
+def _collect_usable_locks(lock_fields):
+    seen = set()
+    out = []
+    for f in lock_fields:
+        if f.get("is_static", False):
+            continue
+        if f.get("type") in NON_MONITOR_LOCK_TYPES:
+            continue
+        n = f["name"]
+        if n in seen:
+            continue
+        seen.add(n)
+        out.append({
+            "name": n,
+            "inferred": f.get("inferred", False),
+            "type": f.get("type", "Object"),
+        })
+    return out
+
+
+def _field_exists(content, name, class_name):
+    region = _field_region(content, class_name)
+    if not region:
+        return False
+    pat = re.compile(
+        r'(?:^|\n)[ \t]*'
+        r'(?:(?:private|protected|public|final|static|volatile|transient)\s+)*'
+        r'(?:[\w\.]+)(?:\s*<[^;{}]*>)?(?:\s*\[\])?\s+'
+        + re.escape(name) + r'\s*[;=]',
+        re.MULTILINE
+    )
+    return pat.search(region) is not None
+
+
+def _ensure_locks(content, usable, k, class_name):
+    locks = [f["name"] for f in usable[:k]]
+    extra = []
+
+    for f in usable[:k]:
+        if f.get("inferred") and not _field_exists(content, f["name"], class_name):
+            if f["name"] not in extra:
+                extra.append(f["name"])
+
+    while len(locks) < k:
+        nm = f"__crossLock_{random.randint(1000, 9999)}"
+        if nm in locks or nm in extra:
+            continue
+        locks.append(nm)
+        extra.append(nm)
+
+    if extra:
+        decl = "".join(
+            f"\n    private final Object {n} = new Object();\n" for n in extra
+        )
+        return locks, decl
+    return locks, None
+
+
+def _fake_guard_code():
+    return """
+    private static boolean __crossLockGuard() {
+        return Thread.currentThread().getName().startsWith("__never_");
+    }
+"""
+
+
+def _gen_cross_method(method_name, lock_seq, sleep_ms, fake):
+    outer = lock_seq[:-1] if fake and len(lock_seq) >= 2 else lock_seq
+    inner = lock_seq[-1] if fake and len(lock_seq) >= 2 else None
+
+    body_lines = []
+    for i, lk in enumerate(outer):
+        body_lines.append(f"        synchronized ({lk}) {{")
+        if i == 0 and sleep_ms is not None:
+            body_lines.append(
+                f"            try {{ Thread.sleep({sleep_ms}); }} "
+                f"catch (InterruptedException e) {{ }}"
+            )
+    if inner is not None:
+        body_lines.append("            if (__crossLockGuard()) {")
+        body_lines.append(f"                synchronized ({inner}) {{ }}")
+        body_lines.append("            }")
+    for _ in outer:
+        body_lines.append("        }")
+
+    body = "\n".join(body_lines)
+    return f"""
+    public void {method_name}() {{
+{body}
+    }}
+"""
+
+
+def _weighted_choice(weights):
+    items = list(weights.items())
+    total = sum(w for _, w in items)
+    r = random.random() * total
+    acc = 0.0
+    for k, w in items:
+        acc += w
+        if r <= acc:
+            return k
+    return items[-1][0]
+
+
+def mutate_add_cross_lock(content, lock_fields, class_name):
+    if random.random() >= P_ADD_CROSS_LOCK:
+        return content, [], None
+
+    usable = _collect_usable_locks(lock_fields)
+    fake = random.random() < P_FAKE_CROSS_LOCK
+
+    if len(usable) >= 3:
+        mode = _weighted_choice(CROSS_LOCK_MODE_WEIGHTS)
+    else:
+        mode = "AB_BA"
+
+    depth = max(2, sample_nest_depth())
+
+    if mode == "AB_BA":
+        locks, decl = _ensure_locks(content, usable, max(2, depth), class_name)
+    elif mode == "ABC_CYCLE":
+        locks, decl = _ensure_locks(content, usable, max(3, depth), class_name)
+    elif mode == "NESTED_CROSS":
+        locks, decl = _ensure_locks(content, usable, max(3, depth), class_name)
+    else:
+        return content, [], None
+
+    methods = []
+    method_codes = []
+    s1 = random.randint(CROSS_LOCK_SLEEP_MIN, CROSS_LOCK_SLEEP_MAX)
+
+    if mode == "AB_BA":
+        a, b = locks[0], locks[1]
+        m1 = f"crossLock_1_{random.randint(0, 9999)}"
+        m2 = f"crossLock_2_{random.randint(0, 9999)}"
+        method_codes.append(_gen_cross_method(m1, [a, b], s1, fake))
+        method_codes.append(_gen_cross_method(m2, [b, a], None, fake))
+        methods = [m1, m2]
+
+    elif mode == "ABC_CYCLE":
+        a, b, c = locks[0], locks[1], locks[2]
+        m1 = f"crossLock_1_{random.randint(0, 9999)}"
+        m2 = f"crossLock_2_{random.randint(0, 9999)}"
+        m3 = f"crossLock_3_{random.randint(0, 9999)}"
+        method_codes.append(_gen_cross_method(m1, [a, b], s1, fake))
+        method_codes.append(_gen_cross_method(m2, [b, c], None, fake))
+        method_codes.append(_gen_cross_method(m3, [c, a], None, fake))
+        methods = [m1, m2, m3]
+
+    elif mode == "NESTED_CROSS":
+        seq_fwd = locks[:depth]
+        seq_bwd = list(reversed(seq_fwd))
+        m1 = f"crossLock_1_{random.randint(0, 9999)}"
+        m2 = f"crossLock_2_{random.randint(0, 9999)}"
+        method_codes.append(_gen_cross_method(m1, seq_fwd, s1, fake))
+        method_codes.append(_gen_cross_method(m2, seq_bwd, None, fake))
+        methods = [m1, m2]
+
+    idx = content.rfind("}")
+    if idx == -1:
+        return content, [], None
+
+    guard_code = _fake_guard_code() if fake else ""
+    prefix = (decl if decl else "") + guard_code
+    new_content = content[:idx] + prefix + "".join(method_codes) + content[idx:]
+
+    info = {
+        "mode": mode,
+        "locks": locks,
+        "methods": methods,
+        "fake": fake,
+        "nest_depth": depth,
+    }
+    rec = {
+        "op": "add_cross_lock",
+        "mode": mode,
+        "locks": locks,
+        "methods": methods,
+        "fake": fake,
+        "nest_depth": depth,
+    }
+    return new_content, [rec], info
+
+
+# ============================================================
+# mock 链
+# ============================================================
+
 def _insert_call_into_method(content, method, call_line):
-    """在方法体开头插入一行调用。"""
     method_name = method["name"]
     pattern = re.compile(
         r'([ \t]*(?:public|protected|private)?[ \t]*(?:static[ \t]+)?'
@@ -557,23 +871,14 @@ def _insert_call_into_method(content, method, call_line):
     indent_match = re.match(r'[ \t]*', content[line_start:m.start()])
     indent = indent_match.group(0) if indent_match else ""
     inner_indent = indent + "    "
-    insertion = f"\n{inner_indent}{call_line}"
-    return content[:insert_pos] + insertion + content[insert_pos:]
-
+    indented = "\n".join(
+        (inner_indent + ln) if ln.strip() else ln
+        for ln in call_line.split("\n")
+    )
+    return content[:insert_pos] + f"\n{indented}" + content[insert_pos:]
 
 def _build_mock_chain(methods, depth_limit, sync_block_name=None,
                       exclude_method=None):
-    """
-    生成一条线性 mock 链：
-        mockMethod_0 → mockMethod_1 → ... → mockMethod_N → 原始方法
-
-    每个方法只被一个方法调用，不扇入，不循环。
-    返回 (chain_list, head_name, tail_target)。
-    chain_list 里每个元素是 {"name": ..., "code": ...}。
-    """
-    # 选链尾调用的原始方法：优先非静态实例方法，排除插入点
-
-    # print(f"[DEBUG] _build_mock_chain depth_limit={depth_limit}")
     candidates = [m for m in methods
                   if m["is_synchronized"]
                   and not m.get("is_static")
@@ -591,16 +896,13 @@ def _build_mock_chain(methods, depth_limit, sync_block_name=None,
     if tail_target:
         args = ", ".join(simple_args_for(tail_target["params"]))
         tail_call = f"{tail_target['name']}({args});"
-    # print(f"[DEBUG] _build_mock_chain: depth_limit={depth_limit}, range={list(range(depth_limit - 1, -1, -1))}")
-    # 从尾到头生成
+
     chain = []
     next_call = tail_call
     mid_depth = depth_limit // 2
     for depth in range(depth_limit - 1, -1, -1):
         method_name = f"mockMethod_{depth}_{random.randint(0, 9999)}"
-        sync_line = ""
-        if sync_block_name and depth == mid_depth:
-            sync_line = f"{sync_block_name}();"
+        sync_line = f"{sync_block_name}();" if (sync_block_name and depth == mid_depth) else ""
         method_code = f"""
     public void {method_name}() throws Exception {{
         {next_call}
@@ -611,26 +913,19 @@ def _build_mock_chain(methods, depth_limit, sync_block_name=None,
         next_call = f"{method_name}();"
 
     chain.reverse()
-    head_name = chain[0]["name"]
-    return chain, head_name, tail_target
+    return chain, chain[0]["name"], tail_target
 
 
 def mutate_add_mock_chain(content, methods, insert_into_method=None,
                           sync_block_name=None):
-    """
-    在 content 里新增一条线性 mock 链。
-    如果 insert_into_method 非 None，把链头的调用插入到该方法体开头。
-    """
+    depth_limit = sample_call_distance()
     chain, head_name, tail_target = _build_mock_chain(
-        methods, MOCK_MAX_DEPTH,
+        methods, depth_limit,
         sync_block_name=sync_block_name,
         exclude_method=insert_into_method,
     )
-
-    # print(f"[DEBUG] mutate_add_mock_chain: chain_len={len(chain)}, head={head_name}, tail={tail_target}")
     if not chain:
         return content, []
-
     idx = content.rfind("}")
     if idx == -1:
         return content, []
@@ -638,11 +933,18 @@ def mutate_add_mock_chain(content, methods, insert_into_method=None,
     new_content = content[:idx] + chain_code + content[idx:]
 
     if insert_into_method is not None:
+        call_line = (
+            f"try {{\n"
+            f"    {head_name}();\n"
+            f"}} catch (Exception e) {{\n"
+            f"    throw new RuntimeException(e);\n"
+            f"}}"
+        )
         new_content = _insert_call_into_method(
-            new_content, insert_into_method, f"{head_name}();"
+            new_content, insert_into_method, call_line
         )
 
-    records = [{
+    return new_content, [{
         "op": "add_mock_chain",
         "head": head_name,
         "length": len(chain),
@@ -651,17 +953,29 @@ def mutate_add_mock_chain(content, methods, insert_into_method=None,
         "chain": [c["name"] for c in chain],
     }]
 
-    # print(f"[DEBUG] mutate_add_mock_chain: new_content contains {chain_code.count('mockMethod')} mockMethod")
 
-    return new_content, records
-
+# ============================================================
+# 组合变异
+# ============================================================
 
 def mutate_class(content, class_name, lock_fields, methods):
     records = []
     new_content = content
     sync_block_name = None
 
-    if random.random() < P_REPLACE_LOCK:
+    new_content, cross_recs, cross_info = mutate_add_cross_lock(
+        new_content, lock_fields, class_name
+    )
+    records.extend(cross_recs)
+    cross_hit = bool(cross_info)
+
+    do_replace = random.random() < P_REPLACE_LOCK
+    if cross_hit and SKIP_REPLACE_LOCK_IF_CROSS:
+        do_replace = False
+        records.append({"op": "skip_replace_lock",
+                        "reason": "cross_lock_hit"})
+
+    if do_replace:
         new_content, r = mutate_replace_lock(new_content, lock_fields)
         records.extend(r)
 
@@ -680,7 +994,6 @@ def mutate_class(content, class_name, lock_fields, methods):
             sync_block_name = r[0].get("name")
 
     if random.random() < P_ADD_MOCK_METHOD:
-        # 选插入点：优先有锁的实例方法
         insert_target = None
         candidates = [m for m in methods if m["is_synchronized"] and not m.get("is_static")]
         if not candidates:
@@ -694,14 +1007,28 @@ def mutate_class(content, class_name, lock_fields, methods):
         )
         records.extend(r)
 
-    return new_content, records
+    return new_content, records, cross_info
 
 
 # ============================================================
 # Harness 生成
 # ============================================================
 
-def gen_harness(pkg, class_name, methods, project_out_dir, ctor_args=None, use_null_instance=None):
+def _emit_call(lines, class_name, m, indent="        "):
+    args = ", ".join(simple_args_for(m["params"]))
+    if m.get("is_static"):
+        call_expr = f"{class_name}.{m['name']}({args})"
+    else:
+        call_expr = f"instance.{m['name']}({args})"
+    if m["return_type"] == "void":
+        lines.append(f"{indent}try {{ {call_expr}; }} catch (Throwable t) {{ }}")
+    else:
+        lines.append(f"{indent}try {{ Object _r = {call_expr}; }} catch (Throwable t) {{ }}")
+
+
+def gen_harness(pkg, class_name, methods, project_out_dir,
+                ctor_args=None, use_null_instance=None,
+                cross_lock_info=None, need_reflection=False):
     harness_pkg = pkg or ""
     harness_class = class_name + "Harness"
     path = os.path.normpath(os.path.join(
@@ -714,11 +1041,21 @@ def gen_harness(pkg, class_name, methods, project_out_dir, ctor_args=None, use_n
     if harness_pkg:
         lines.append(f"package {harness_pkg};")
         lines.append("")
+    if need_reflection:
+        lines.append("import java.lang.reflect.Constructor;")
+        lines.append("")
 
     lines.append(f"public class {harness_class} {{")
     lines.append("    public static void main(String[] args) throws Exception {")
 
-    if use_null_instance:
+    if need_reflection:
+        lines.append(
+            f"        Constructor<{class_name}> __ctor = "
+            f"{class_name}.class.getDeclaredConstructor();"
+        )
+        lines.append("        __ctor.setAccessible(true);")
+        lines.append(f"        {class_name} instance = __ctor.newInstance();")
+    elif use_null_instance:
         lines.append(f"        {class_name} instance = null;")
     elif ctor_args is None:
         lines.append(f"        {class_name} instance = new {class_name}();")
@@ -729,54 +1066,49 @@ def gen_harness(pkg, class_name, methods, project_out_dir, ctor_args=None, use_n
     mock_methods = [m for m in methods if m["name"].startswith("mockMethod_")]
     mock_methods.sort(key=lambda m: m["name"])
     other_methods = [m for m in methods if not m["name"].startswith("mockMethod_")]
-    ordered = mock_methods + other_methods
 
-    for m in ordered:
-        args = ", ".join(simple_args_for(m["params"]))
-        if m.get("is_static"):
-            call_expr = f"{class_name}.{m['name']}({args})"
-        else:
-            call_expr = f"instance.{m['name']}({args})"
+    cross_methods = []
+    cross_method_names = set()
+    if cross_lock_info:
+        cross_method_names = set(cross_lock_info.get("methods", []))
+        for nm in cross_lock_info.get("methods", []):
+            for m in other_methods:
+                if m["name"] == nm:
+                    cross_methods.append(m)
+                    break
 
+    # ------------------------------------------------------------
+    # 关键修改：抽样方法排除 crossLock
+    # crossLock 只在多线程段调用，避免污染线程归属
+    # ------------------------------------------------------------
+    sampleable = [m for m in other_methods if m["name"] not in cross_method_names]
+    sampled_others = []
+    if sampleable:
+        k = min(MAX_HARNESS_EXTRA_METHODS, len(sampleable))
+        sampled_others = random.sample(sampleable, k)
+
+    # 顺序调用段：只有抽样方法（不含 crossLock）
+    seq = sampled_others
+    for m in seq:
         lines.append(f"        // call {m['name']}")
-        if m["return_type"] == "void":
-            lines.append(
-                f"        try {{ {call_expr}; }} catch (Throwable t) {{ }}"
-            )
-        else:
-            lines.append(
-                f"        try {{ Object _r = {call_expr}; }} catch (Throwable t) {{ }}"
-            )
+        _emit_call(lines, class_name, m)
         lines.append("")
 
-    # 多线程模拟：随机 1-4 个线程，每个线程随机选一个方法
-    # 优先包含 mock 链头，其次随机选原始方法
-    callable_methods = list(ordered)  # 所有可调用方法
-    # 去掉返回类型为构造器或不可调用的
-    callable_methods = [m for m in callable_methods if m["name"] != class_name]
+    # 多线程段：每个 crossLock 单独占一个线程
+    threads = []
+    threads.extend(cross_methods)
+    if mock_methods:
+        threads.append(mock_methods[0])
 
-    # 随机 1-4 个线程
-    num_threads = random.randint(2, 4)
-    if callable_methods:
-        threads = []
-        # 优先保证链头被调用一次
-        head_method = None
-        if mock_methods:
-            head_method = mock_methods[0]
-            threads.append(head_method)
+    remaining = [m for m in (mock_methods + sampled_others) if m not in threads]
+    while len(threads) < 4 and remaining:
+        chosen = random.choice(remaining)
+        threads.append(chosen)
+        remaining.remove(chosen)
+    while len(threads) < 2 and (mock_methods + sampled_others):
+        threads.append(random.choice(mock_methods + sampled_others))
 
-        # 从剩余方法里随机选
-        remaining = [m for m in callable_methods if m is not head_method]
-        while len(threads) < num_threads and remaining:
-            chosen = random.choice(remaining)
-            threads.append(chosen)
-            remaining.remove(chosen)
-
-        # 如果线程数还不够（方法太少），重复选
-        while len(threads) < num_threads and callable_methods:
-            threads.append(random.choice(callable_methods))
-
-        # 生成线程代码
+    if threads:
         thread_vars = []
         for i, m in enumerate(threads):
             var = f"t{i+1}"
@@ -788,26 +1120,35 @@ def gen_harness(pkg, class_name, methods, project_out_dir, ctor_args=None, use_n
                 call_expr = f"instance.{m['name']}({args})"
             lines.append(f"        Thread {var} = new Thread(() -> {{")
             lines.append(
-                f"            try {{ {call_expr}; }} "
-                f"catch (Throwable t) {{ }}"
+                f"            try {{ {call_expr}; }} catch (Throwable t) {{ }}"
             )
             lines.append("        });")
 
-        # start + join
         for var in thread_vars:
             lines.append(f"        {var}.start();")
         for var in thread_vars:
-            lines.append(f"        {var}.join();")
+            lines.append(f"        {var}.join(5000);")
 
-    lines.append("    }")  # 闭合 main
-    lines.append("}")  # 闭合 class
+    lines.append("    }")
+    lines.append("}")
     content = "\n".join(lines)
     write_file(path, content)
     return path
 
 # ============================================================
-# process one single project
+# 项目处理
 # ============================================================
+
+def _decide_instance(content, class_name):
+    if has_no_arg_constructor(content, class_name):
+        return None, False, False
+    if has_private_ctor(content, class_name):
+        return None, False, True
+    ctor_args = get_first_constructor_args(content, class_name)
+    if ctor_args is None:
+        return None, True, False
+    return ctor_args, False, False
+
 
 def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
     src_root = resolve_source_root(project_dir)
@@ -816,7 +1157,6 @@ def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
         return
 
     project_out_dir = os.path.join(OUTPUT_DIR, project_name)
-
     java_files = list(find_java_files(src_root))
     print(f"[INFO] {project_name}: found {len(java_files)} java files in {src_root}")
 
@@ -825,10 +1165,10 @@ def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
         if content is None:
             continue
 
-        if os.path.basename(jf) == "package-info.java":
+        if not need_to_parse(content):
             rel = os.path.relpath(jf, src_root)
             out_path = os.path.normpath(os.path.join(project_out_dir, rel))
-            write_file(out_path, content)  # 写原始内容
+            write_file(out_path, content)
             continue
 
         if not has_lock(content):
@@ -852,7 +1192,7 @@ def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
             "methods": [m["name"] for m in methods],
         })
 
-        new_content, mutations = mutate_class(
+        new_content, mutations, cross_info = mutate_class(
             content, class_name, lock_fields, methods
         )
 
@@ -868,22 +1208,17 @@ def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
         })
 
         new_methods = parse_public_methods(new_content, class_name)
+        if not new_methods:
+            continue
 
-        if has_no_arg_constructor(content, class_name):
-            ctor_args = None
-            use_null_instance = False
-        else:
-            ctor_args = get_first_constructor_args(content, class_name)
-            if ctor_args is None:
-                ctor_args = None
-                use_null_instance = True
-            else:
-                use_null_instance = False
+        ctor_args, use_null_instance, need_refl = _decide_instance(content, class_name)
 
         harness_path = gen_harness(
             pkg, class_name, new_methods, project_out_dir,
             ctor_args=ctor_args,
             use_null_instance=use_null_instance,
+            cross_lock_info=cross_info,
+            need_reflection=need_refl,
         )
 
         report["harnesses"].append({
@@ -892,6 +1227,7 @@ def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
             "harness": harness_path,
         })
 
+
 def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report):
     src_root = resolve_source_root(project_dir)
     if src_root is None:
@@ -899,7 +1235,6 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
         return
 
     project_out_dir = os.path.join(OUTPUT_DIR, project_name)
-
     java_files = list(find_java_files(src_root))
     print(f"[INFO] {project_name}: found {len(java_files)} java files in {src_root}")
 
@@ -915,12 +1250,11 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
             continue
 
         lock_present = has_lock(content)
-
         class_name = parse_class_name(content)
 
         pkg = parse_package(content)
         lock_fields = parse_lock_fields(content)
-        methods = parse_public_methods(content, class_name)
+        methods = parse_public_methods(content, class_name) if class_name else []
 
         if lock_present:
             report["classes"].append({
@@ -932,8 +1266,9 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
                 "methods": [m["name"] for m in methods],
             })
 
-        if lock_present:
-            new_content, mutations = mutate_class(
+        cross_info = None
+        if lock_present and class_name:
+            new_content, mutations, cross_info = mutate_class(
                 content, class_name, lock_fields, methods
             )
         else:
@@ -944,9 +1279,7 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
         out_path = os.path.normpath(os.path.join(project_out_dir, rel))
         write_file(out_path, new_content)
 
-        # creating harness
-        if lock_present:
-            print(f"creating harness: f{pkg}.f{class_name}Harness")
+        if lock_present and class_name:
             report["mutations"].append({
                 "project": project_name,
                 "file": jf,
@@ -955,22 +1288,18 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
             })
 
             new_methods = parse_public_methods(new_content, class_name)
+            if not new_methods:
+                continue
 
-            if has_no_arg_constructor(content, class_name):
-                ctor_args = None
-                use_null_instance = False
-            else:
-                ctor_args = get_first_constructor_args(content, class_name)
-                if ctor_args is None:
-                    ctor_args = None
-                    use_null_instance = True
-                else:
-                    use_null_instance = False
+            print(f"creating harness: {pkg}.{class_name}Harness")
+            ctor_args, use_null_instance, need_refl = _decide_instance(content, class_name)
 
             harness_path = gen_harness(
                 pkg, class_name, new_methods, project_out_dir,
                 ctor_args=ctor_args,
                 use_null_instance=use_null_instance,
+                cross_lock_info=cross_info,
+                need_reflection=need_refl,
             )
 
             report["harnesses"].append({
@@ -979,11 +1308,12 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
                 "harness": harness_path,
             })
 
+
 # ============================================================
 # 主流程
 # ============================================================
 
-def process_all_projects(working_dir, OUTPUT_DIR, retain_all = False):
+def process_all_projects(working_dir, OUTPUT_DIR, retain_all=False):
     report = {
         "working_dir": working_dir,
         "classes": [],
@@ -1011,10 +1341,7 @@ def process_all_projects(working_dir, OUTPUT_DIR, retain_all = False):
             else:
                 process_one_project(pdir, pname, OUTPUT_DIR, report)
         except Exception as e:
-            report["errors"].append({
-                "project": pname,
-                "error": str(e),
-            })
+            report["errors"].append({"project": pname, "error": str(e)})
             print(f"[ERROR] {pname}: {e}")
 
     write_file(REPORT_PATH, json.dumps(report, indent=2, ensure_ascii=False))
@@ -1022,40 +1349,19 @@ def process_all_projects(working_dir, OUTPUT_DIR, retain_all = False):
     print(f"[INFO] mutated {len(report['mutations'])} classes")
     return report
 
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--working-dir",
-        dest="working_dir",
-        default=WORKING_DIR,
-        help=r"Root directory containing Java projects (e.g. D:\Projects)",
-    )
-    parser.add_argument(
-        "--output-dir",
-        dest="output_dir",
-        default=None,
-        help="Output directory for mutated projects (default: auto-generated)",
-    )
-    parser.add_argument(
-        "--seed",
-        dest="seed",
-        type=int,
-        default=SEED,
-        help="Random seed",
-    )
-    parser.add_argument(
-        "--retain-all-classes",
-        dest="retain_all_classes",
-        action="store_true",
-        default=None,
-        help="Retain all classes from the original project (not only those "
-             "containing locks), so the project can still be compiled.",
-    )
+    parser.add_argument("--working-dir", dest="working_dir",
+                        default=WORKING_DIR)
+    parser.add_argument("--output-dir", dest="output_dir", default=None)
+    parser.add_argument("--seed", dest="seed", type=int, default=SEED)
+    parser.add_argument("--retain-all-classes", dest="retain_all_classes",
+                        action="store_true", default=None)
     args = parser.parse_args()
 
     random.seed(args.seed)
 
-    # 用运行时参数覆盖全局常量
     global RETAIN_ALL_CLASSES, OUTPUT_DIR, REPORT_PATH
     if args.retain_all_classes:
         RETAIN_ALL_CLASSES = True
@@ -1065,12 +1371,12 @@ def main():
         REPORT_PATH = os.path.join(OUTPUT_DIR, "mutation_report.json")
 
     output_dir = args.output_dir if args.output_dir else OUTPUT_DIR
-
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
     process_all_projects(args.working_dir, output_dir, RETAIN_ALL_CLASSES)
+
 
 if __name__ == "__main__":
     main()
