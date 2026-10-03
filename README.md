@@ -41,7 +41,7 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 |-Agrona
 |-RxJava
 
-Here we chose `Apache Commons Collections`, `Apache Commons IO`, `Apache Commons Lang`, `Guava`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
+Here we chose `Apache Commons Collections`, `Apache Commons IO`, `Apache Commons Lang`, `Guava 32.1.2`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
 
 ```
