@@ -41,11 +41,12 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 |-Agrona
 |-RxJava
 
-Here we chose `Apache Collections`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
+Here we chose `Apache Commons Collections`, `Apache Commons IO`, `Apache Commons Lang`, `Guava`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
+
 ```
-(.venv) PS C:\Users\Admin\PycharmProjects\GNN-Ranker> .\MutationGenerator-dev.py --retain-all-classes
-[INFO] found 4 projects: ['commons-collections-master', 'disruptor-master', 'jsoup-master', 'mutated-1790765986899']
+C:\Users\Admin\PycharmProjects\GNN-Ranker\.venv\Scripts\python.exe C:\Users\Admin\PycharmProjects\GNN-Ranker\MutationGenerator-dev.py 
+[INFO] found 6 projects: ['commons-collections-master', 'commons-io-master', 'commons-lang-master', 'disruptor-master', 'guava-master', 'jsoup-master']
 [INFO] commons-collections-master: found 367 java files in D:\Projects\commons-collections-master\src\main\java
 creating harness: org.apache.commons.collections4.BagUtilsHarness
 creating harness: org.apache.commons.collections4.CollectionUtilsHarness
@@ -57,23 +58,65 @@ creating harness: org.apache.commons.collections4.SetUtilsHarness
 creating harness: org.apache.commons.collections4.bag.SynchronizedBagHarness
 creating harness: org.apache.commons.collections4.bag.SynchronizedSortedBagHarness
 creating harness: org.apache.commons.collections4.collection.SynchronizedCollectionHarness
+creating harness: org.apache.commons.collections4.map.ConcurrentReferenceHashMapHarness
 creating harness: org.apache.commons.collections4.map.StaticBucketMapHarness
 creating harness: org.apache.commons.collections4.multiset.SynchronizedMultiSetHarness
 creating harness: org.apache.commons.collections4.multiset.SynchronizedSortedMultiSetHarness
 creating harness: org.apache.commons.collections4.properties.OrderedPropertiesHarness
 creating harness: org.apache.commons.collections4.queue.SynchronizedQueueHarness
+[INFO] commons-io-master: found 277 java files in D:\Projects\commons-io-master\src\main\java
+creating harness: org.apache.commons.io.FileCleanerHarness
+creating harness: org.apache.commons.io.FileCleaningTrackerHarness
+creating harness: org.apache.commons.io.channels.ByteArraySeekableByteChannelHarness
+creating harness: org.apache.commons.io.input.NullInputStreamHarness
+creating harness: org.apache.commons.io.input.ProxyInputStreamHarness
+creating harness: org.apache.commons.io.input.ProxyReaderHarness
+creating harness: org.apache.commons.io.input.ReadAheadInputStreamHarness
+creating harness: org.apache.commons.io.monitor.FileAlterationObserverHarness
+creating harness: org.apache.commons.io.output.ByteArrayOutputStreamHarness
+creating harness: org.apache.commons.io.output.LockableFileWriterHarness
+[INFO] commons-lang-master: found 264 java files in D:\Projects\commons-lang-master\src\main\java
+creating harness: org.apache.commons.lang3.CharSetHarness
+creating harness: org.apache.commons.lang3.concurrent.LazyInitializerHarness
+creating harness: org.apache.commons.lang3.concurrent.MultiBackgroundInitializerHarness
+creating harness: org.apache.commons.lang3.concurrent.locks.LockingVisitorsHarness
+creating harness: org.apache.commons.lang3.time.FastDateParserHarness
 [INFO] disruptor-master: found 71 java files in D:\Projects\disruptor-master\src\main\java
 creating harness: com.lmax.disruptor.BlockingWaitStrategyHarness
 creating harness: com.lmax.disruptor.LiteBlockingWaitStrategyHarness
 creating harness: com.lmax.disruptor.LiteTimeoutBlockingWaitStrategyHarness
 creating harness: com.lmax.disruptor.TimeoutBlockingWaitStrategyHarness
+[INFO] guava-master: found 611 java files in D:\Projects\guava-master\guava\src
+creating harness: com.google.common.base.EnumsHarness
+creating harness: com.google.common.base.SuppliersHarness
+creating harness: com.google.common.cache.LocalCacheHarness
+creating harness: com.google.common.collect.MapsHarness
+creating harness: com.google.common.collect.MultimapsHarness
+creating harness: com.google.common.collect.QueuesHarness
+creating harness: com.google.common.collect.SetsHarness
+creating harness: com.google.common.collect.SynchronizedHarness
+creating harness: com.google.common.collect.TablesHarness
+creating harness: com.google.common.eventbus.SubscriberHarness
+creating harness: com.google.common.util.concurrent.AbstractScheduledServiceHarness
+creating harness: com.google.common.util.concurrent.AbstractServiceHarness
+creating harness: com.google.common.util.concurrent.ClosingFutureHarness
+creating harness: com.google.common.util.concurrent.CycleDetectingLockFactoryHarness
+creating harness: com.google.common.util.concurrent.DirectExecutorServiceHarness
+creating harness: com.google.common.util.concurrent.ExecutionListHarness
+creating harness: com.google.common.util.concurrent.InterruptibleTaskHarness
+creating harness: com.google.common.util.concurrent.LazyLoggerHarness
+creating harness: com.google.common.util.concurrent.ListenerCallQueueHarness
+creating harness: com.google.common.util.concurrent.MonitorHarness
+creating harness: com.google.common.util.concurrent.RateLimiterHarness
+creating harness: com.google.common.util.concurrent.SequentialExecutorHarness
+creating harness: com.google.common.util.concurrent.ServiceManagerHarness
+creating harness: com.google.common.util.concurrent.StripedHarness
 [INFO] jsoup-master: found 95 java files in D:\Projects\jsoup-master\src\main\java
 creating harness: org.jsoup.helper.HttpConnectionHarness
 creating harness: org.jsoup.nodes.ElementHarness
 creating harness: org.jsoup.parser.ParserHarness
-[SKIP] mutated-1790765986899: no src dir
-[INFO] report written to ./mutated-1790904542384\mutation_report.json
-[INFO] mutated 23 classes
+[INFO] report written to ./mutated-1790993066738\mutation_report.json
+[INFO] mutated 63 classes
 ```
 
 Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
@@ -140,49 +183,16 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
 3. extract tai-e-analyses.yml from tai-e-0.5.4.jar and modify tai-e-analyses.yml to enable features for our analysis
 ```
 - description: whole-program pointer analysis
-  analysisClass: pascal.taie.analysis.pta.PointerAnalysis
-  id: pta
-  options:
 ```
 
     **cs: ci # | k-[obj|type|call][-k'h]**
     **only-app: true # only analyze application code**
-    
-```
-    implicit-entries: true # analyze implicit entries
-    distinguish-string-constants: reflection # (distinguish reflection-relevant
-    # string constants, i.e., class, method, and field names)
-    # | null (do not distinguish any string constants)
-    # | app (distinguish string constants in application code)
-    # | all (distinguish all string constants)
-    # | <predicate-class-name>
-    merge-string-objects: true
-    merge-string-builders: true
-    merge-exception-objects: true
-```
+
 
     **handle-invokedynamic: true**
     
-```
-    propagate-types: [ reference ] # ,null,int,long,...(other primitive types)
-    advanced: null # specify advanced analysis:
-    # zipper | zipper-e | zipper-e=PV
-    # scaler | scaler=TST
-    # mahjong | collection
-    dump: false # whether dump points-to results (with contexts)
-    dump-ci: false # whether dump points-to results (without contexts)
-    dump-yaml: false # whether dump points-to results in yaml format
-    expected-file: null # path of expected file for comparing results
-    reflection-inference: string-constant # | solar | null
-    reflection-log: null # path to reflection log, required when reflection option is log
-    taint-config: null # path (of dir/file) to config file of taint analysis,
-    taint-config-providers: [ ] # class names of taint config provider classes
-    # when this path/provider is given, taint analysis will be enabled
-    taint-interactive-mode: false # whether enable interactive mode for taint analysis
-    spring: false # whether enable Spring Framework analysis (DI + WEC)
-```
-
     **plugins: [ MyPlugin ] # | [ pluginClass, ... ]**
+```
 
 4. run
 ```bash
