@@ -1,0 +1,3388 @@
+CYCLE 0
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[16@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 1
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[16@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[4@L210] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[7@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,3,false,false
+LOCK_EDGE 1,2,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,3,false,false
+LOCK_EDGE 2,0,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 2
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[16@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[4@L210] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,3,false,false
+LOCK_EDGE 1,0,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 3
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[16@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[7@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[4@L210] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,1,false,false
+LOCK_EDGE 1,2,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,2,false,false
+LOCK_EDGE 2,0,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 4
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[16@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[7@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,1,false,false
+LOCK_EDGE 1,0,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring2_8880_8951_m0,148,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 5
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[10@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[1@L26] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[13@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,3,false,false
+LOCK_EDGE 1,2,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,3,false,false
+LOCK_EDGE 2,0,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 6
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[10@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[13@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,1,false,false
+LOCK_EDGE 1,0,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,%v4,false,false,1,1
+ACQ_NODE 3,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 7
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[10@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[13@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[1@L26] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,1,false,false
+LOCK_EDGE 1,2,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,BlockingWaitStrategy.crossLock_g0_ring0_2740,108,1,false,false
+LOCK_EDGE 2,0,BlockingWaitStrategy.signalAllWhenBlocking,79,BlockingWaitStrategy.signalAllWhenBlocking,81,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.crossLock_g0_ring0_2740,108,%v4,false,false,1,1
+ACQ_NODE 3,BlockingWaitStrategy.signalAllWhenBlocking,79,%v12,false,false,1,1
+ACQ_NODE 4,BlockingWaitStrategy.signalAllWhenBlocking,81,%v15,false,false,2,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 3,4,0,true,true
+CALL_EDGE 4,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 8
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[13@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[1@L26] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,BlockingWaitStrategy.crossLock_g0_ring0_2740,108,1,false,false
+LOCK_EDGE 1,0,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g0_ring2_9263,122,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.crossLock_g0_ring0_2740,108,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,%v4,false,false,1,1
+ACQ_NODE 3,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 9
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[13@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g2_ring2_9632,184,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 10
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[10@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g0_ring1_1354,115,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 11
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[10@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[1@L26] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,3,false,false
+LOCK_EDGE 1,0,BlockingWaitStrategy.signalAllWhenBlocking,79,BlockingWaitStrategy.signalAllWhenBlocking,81,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g2_ring1_3438,177,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.__ring_crossLock_g2_ring0_3882_4605_m0,165,%v4,false,false,1,1
+ACQ_NODE 2,BlockingWaitStrategy.signalAllWhenBlocking,79,%v12,false,false,1,1
+ACQ_NODE 3,BlockingWaitStrategy.signalAllWhenBlocking,81,%v15,false,false,2,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 12
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[7@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 13
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[4@L210] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[7@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,3,false,false
+LOCK_EDGE 1,0,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,%v4,false,false,1,1
+ACQ_NODE 1,BlockingWaitStrategy.crossLock_g1_ring0_8898,129,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 14
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[4@L210] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.__ring_crossLock_g1_ring1_6010_4877_m0,136,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 15
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.BlockingWaitStrategy: void <init>()>[1@L26] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,BlockingWaitStrategy.mockMethod_2_4090,204,BlockingWaitStrategy.mockMethod_2_4090,204,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,BlockingWaitStrategy.mockMethod_2_4090,204,%v3,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 16
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,2,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,2,false,false
+LOCK_EDGE 2,3,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,2,false,false
+LOCK_EDGE 3,0,LiteBlockingWaitStrategy.mockMethod_0_7291,197,LiteBlockingWaitStrategy.waitFor,47,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.mockMethod_0_7291,197,%v3,false,false,1,1
+ACQ_NODE 6,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 2,4,1,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 4,2,2,false,false
+CALL_EDGE 4,3,1,false,false
+CALL_EDGE 5,6,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 17
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 4,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,1,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,1,false,false
+LOCK_EDGE 2,3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,2,false,false
+LOCK_EDGE 3,4,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,2,false,false
+LOCK_EDGE 4,0,LiteBlockingWaitStrategy.mockMethod_0_7291,197,LiteBlockingWaitStrategy.waitFor,47,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 6,LiteBlockingWaitStrategy.mockMethod_0_7291,197,%v3,false,false,1,1
+ACQ_NODE 7,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 3,5,1,false,false
+CALL_EDGE 4,3,1,false,false
+CALL_EDGE 4,5,2,false,false
+CALL_EDGE 5,3,2,false,false
+CALL_EDGE 5,4,1,false,false
+CALL_EDGE 6,7,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,4
+LOCK_TO_ACQ 4,5
+ACQ_TO_LOCK 6,4
+LOCK_TO_ACQ 4,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=7 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=5
+LABEL_LOCK_NODES 0,1,2,3,4,
+LABEL_LOCK_EDGES 0,1,2,3,4,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 18
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,2,false,false
+LOCK_EDGE 1,0,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 19
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,2,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,2,false,false
+LOCK_EDGE 2,0,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 20
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,2,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,1,false,false
+LOCK_EDGE 2,3,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,1,false,false
+LOCK_EDGE 3,0,LiteBlockingWaitStrategy.waitFor,37,LiteBlockingWaitStrategy.waitFor,47,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.waitFor,37,%v22,false,false,2,1
+ACQ_NODE 6,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 2,4,2,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,2,false,false
+CALL_EDGE 5,6,0,true,true
+CALL_EDGE 6,5,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 21
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,2,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,2,false,false
+LOCK_EDGE 2,0,LiteBlockingWaitStrategy.waitFor,37,LiteBlockingWaitStrategy.waitFor,47,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.waitFor,37,%v22,false,false,2,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 4,5,0,true,true
+CALL_EDGE 5,4,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 22
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 4,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,1,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,1,false,false
+LOCK_EDGE 2,3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,1,false,false
+LOCK_EDGE 3,4,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,1,false,false
+LOCK_EDGE 4,0,LiteBlockingWaitStrategy.waitFor,37,LiteBlockingWaitStrategy.waitFor,47,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 6,LiteBlockingWaitStrategy.waitFor,37,%v22,false,false,2,1
+ACQ_NODE 7,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 3,5,2,false,false
+CALL_EDGE 4,3,2,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,3,1,false,false
+CALL_EDGE 5,4,2,false,false
+CALL_EDGE 6,7,0,true,true
+CALL_EDGE 7,6,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,4
+LOCK_TO_ACQ 4,5
+ACQ_TO_LOCK 6,4
+LOCK_TO_ACQ 4,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=7 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=5
+LABEL_LOCK_NODES 0,1,2,3,4,
+LABEL_LOCK_EDGES 0,1,2,3,4,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 23
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,1,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,1,false,false
+LOCK_EDGE 2,3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,2,false,false
+LOCK_EDGE 3,0,LiteBlockingWaitStrategy.waitFor,37,LiteBlockingWaitStrategy.waitFor,47,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.waitFor,37,%v22,false,false,2,1
+ACQ_NODE 6,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 4,3,1,false,false
+CALL_EDGE 5,6,0,true,true
+CALL_EDGE 6,5,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 24
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteBlockingWaitStrategy.crossLock_g0_ring1_7511,137,LiteBlockingWaitStrategy.crossLock_g0_ring1_7511,137,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g0_ring1_7511,137,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 25
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,1,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,1,false,false
+LOCK_EDGE 2,0,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 26
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[14@L205] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,1,false,false
+LOCK_EDGE 1,0,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g2_ring1_2161,177,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 27
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,2,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,1,false,false
+LOCK_EDGE 2,0,LiteBlockingWaitStrategy.mockMethod_0_7291,197,LiteBlockingWaitStrategy.waitFor,47,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.mockMethod_0_7291,197,%v3,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,5,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 28
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,1,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,1,false,false
+LOCK_EDGE 2,3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,1,false,false
+LOCK_EDGE 3,0,LiteBlockingWaitStrategy.mockMethod_0_7291,197,LiteBlockingWaitStrategy.waitFor,47,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 3,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 4,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+ACQ_NODE 5,LiteBlockingWaitStrategy.mockMethod_0_7291,197,%v3,false,false,1,1
+ACQ_NODE 6,LiteBlockingWaitStrategy.waitFor,47,%v32,false,false,5,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,3,2,false,false
+CALL_EDGE 5,6,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 29
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,1,false,false
+LOCK_EDGE 1,0,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g2_ring2_4945,184,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g2_ring0_3314,170,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 30
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[2@L28] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteBlockingWaitStrategy.__ring_crossLock_g0_ring0_1526_7039_m0,125,LiteBlockingWaitStrategy.__ring_crossLock_g0_ring0_1526_7039_m0,125,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g0_ring0_1526_7039_m0,125,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 31
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 32
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,2,false,false
+LOCK_EDGE 1,0,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 33
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,1,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,1,false,false
+LOCK_EDGE 2,0,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 34
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,3,false,false
+LOCK_EDGE 1,0,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 35
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[17@L206] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,2,false,false
+LOCK_EDGE 1,2,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,3,false,false
+LOCK_EDGE 2,0,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring0_5533,144,%v4,false,false,1,1
+ACQ_NODE 2,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 36
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,1,false,false
+LOCK_EDGE 1,0,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+ACQ_NODE 1,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 37
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[8@L203] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.crossLock_g1_ring2_9468,163,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 38
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteBlockingWaitStrategy: void <init>()>[11@L204] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteBlockingWaitStrategy.__ring_crossLock_g1_ring1_8967_1631_m0,151,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 39
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,1,false,false
+LOCK_EDGE 2,3,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,0,false,false
+LOCK_EDGE 3,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,%v13,false,false,2,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,%v20,false,false,4,1
+ACQ_NODE 6,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,6,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,6,3,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,5,0,true,true
+CALL_EDGE 5,4,0,true,false
+CALL_EDGE 6,0,3,false,false
+CALL_EDGE 6,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 40
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,0,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,1,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,%v13,false,false,2,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,%v20,false,false,4,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,3,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 41
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,4,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,%v19,false,false,3,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+CALL_EDGE 0,1,4,false,true
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 42
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,1,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,4,3,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,4,1,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,0,1,false,false
+CALL_EDGE 4,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 43
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,1,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,1,false,false
+LOCK_EDGE 2,3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,1,false,false
+LOCK_EDGE 3,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,5,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 1,5,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,5,1,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,3,2,false,false
+CALL_EDGE 5,0,1,false,false
+CALL_EDGE 5,1,2,false,false
+CALL_EDGE 5,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 44
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,0,false,false
+LOCK_EDGE 2,3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,1,false,false
+LOCK_EDGE 3,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,%v13,false,false,2,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,%v20,false,false,4,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 6,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,6,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,6,2,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,4,3,false,false
+CALL_EDGE 6,0,2,false,false
+CALL_EDGE 6,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 45
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,4,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,%v5,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,%v19,false,false,3,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,4,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,4,2,false,false
+CALL_EDGE 2,3,4,false,true
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,0,2,false,false
+CALL_EDGE 4,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 46
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,2,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 47
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,1,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,1,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 4,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 48
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,1,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,2,false,false
+LOCK_EDGE 2,3,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,4,false,false
+LOCK_EDGE 3,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,%v5,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,%v19,false,false,3,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+ACQ_NODE 6,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 3,4,4,false,true
+CALL_EDGE 4,3,2,false,false
+CALL_EDGE 5,6,2,false,false
+CALL_EDGE 6,5,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 49
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring0_2181,122,%v5,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 50
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,4,false,false
+LOCK_EDGE 2,3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,3,false,false
+LOCK_EDGE 3,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,%v5,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,%v19,false,false,3,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 6,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,4,false,true
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 4,6,2,false,false
+CALL_EDGE 5,4,1,false,false
+CALL_EDGE 5,6,3,false,false
+CALL_EDGE 6,4,2,false,false
+CALL_EDGE 6,5,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 51
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,3,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 52
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,3,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 53
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,4,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,3,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,93,%v19,false,false,3,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,true
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 2,4,1,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 4,2,3,false,false
+CALL_EDGE 4,3,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 54
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[2@L14] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,3,false,false
+LOCK_EDGE 2,3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,2,false,false
+LOCK_EDGE 3,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring0_4668,166,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,3,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,1,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,0,1,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 55
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[17@L226] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 56
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[17@L226] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[20@L227] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,1,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,1,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 57
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[17@L226] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[20@L227] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,1,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 58
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[17@L226] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,2,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 59
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[17@L226] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[20@L227] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,2,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring1_2017,152,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 60
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,LiteTimeoutBlockingWaitStrategy.mockMethod_4_9623,217,3,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.mockMethod_1_4295,200,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.mockMethod_4_9623,217,%v3,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 61
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,2,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,0,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,%v13,false,false,2,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,%v20,false,false,4,1
+ACQ_NODE 4,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 5,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,4,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 62
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,0,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,88,%v13,false,false,2,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.signalAllWhenBlocking,95,%v20,false,false,4,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 63
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,2,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring2_1120,138,%v5,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g0_ring1_2340,130,%v5,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+ACQ_NODE 3,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 64
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[14@L225] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,1,false,false
+LOCK_EDGE 1,2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,2,false,false
+LOCK_EDGE 2,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+ACQ_NODE 2,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring1_439,173,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 65
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[20@L227] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,1,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring0_2293,145,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 66
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[20@L227] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g1_ring2_9659,159,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 67
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 68
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[11@L224] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,1,false,false
+LOCK_EDGE 1,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring2_4942,180,%v4,false,false,1,1
+ACQ_NODE 1,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 69
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[8@L223] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LiteTimeoutBlockingWaitStrategy.crossLock_g2_ring3_3366,187,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 70
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 71
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,5,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,3,false,false
+LOCK_EDGE 2,3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,2,false,false
+LOCK_EDGE 3,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,5,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,0,2,false,false
+CALL_EDGE 3,1,1,false,false
+CALL_EDGE 3,2,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 72
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,5,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,5,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 73
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,4,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 74
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,2,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,1,false,false
+LOCK_EDGE 2,3,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,5,false,false
+LOCK_EDGE 3,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,%v7,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,%v12,false,false,1,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 5,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,4,5,false,false
+CALL_EDGE 0,5,4,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,4,3,false,false
+CALL_EDGE 1,5,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,0,1,false,false
+CALL_EDGE 4,1,3,false,false
+CALL_EDGE 4,5,5,false,false
+CALL_EDGE 5,0,2,false,false
+CALL_EDGE 5,1,4,false,false
+CALL_EDGE 5,4,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 75
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,2,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,2,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 76
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,4,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,4,false,false
+LOCK_EDGE 2,3,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,1,false,false
+LOCK_EDGE 3,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,%v7,false,false,1,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,%v12,false,false,1,1
+ACQ_NODE 5,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,5,5,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 1,5,1,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,5,3,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,3,2,false,false
+CALL_EDGE 5,0,1,false,false
+CALL_EDGE 5,1,5,false,false
+CALL_EDGE 5,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 77
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,1,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,5,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,%v7,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,%v12,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 2,4,3,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,4,4,false,false
+CALL_EDGE 4,2,3,false,false
+CALL_EDGE 4,3,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 78
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,2,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 79
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,5,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,5,false,false
+LOCK_EDGE 2,3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,4,false,false
+LOCK_EDGE 3,0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,%v8,false,false,2,1
+ACQ_NODE 5,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,%v15,false,false,2,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 80
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,4,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,4,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,%v8,false,false,2,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,%v15,false,false,2,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,3,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 81
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,4,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,1,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 82
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,2,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,2,false,false
+LOCK_EDGE 2,3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,1,false,false
+LOCK_EDGE 3,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,5,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,0,1,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 83
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,2,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,1,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 84
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,4,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,1,false,false
+LOCK_EDGE 2,3,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,3,false,false
+LOCK_EDGE 3,0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,%v8,false,false,2,1
+ACQ_NODE 5,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,%v15,false,false,2,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 0,3,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 1,3,4,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,5,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,2,false,false
+CALL_EDGE 3,2,3,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 85
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[16@L215] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,1,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring3_9237_6033_m0,145,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 86
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[4@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[7@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g1_ring1_5038,164,TimeoutBlockingWaitStrategy.crossLock_g1_ring0_6164,157,1,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.crossLock_g1_ring0_6164,157,TimeoutBlockingWaitStrategy.crossLock_g1_ring1_5038,164,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g1_ring1_5038,164,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g1_ring0_6164,157,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 87
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[4@L211] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,TimeoutBlockingWaitStrategy.crossLock_g1_ring1_5038,164,TimeoutBlockingWaitStrategy.crossLock_g1_ring1_5038,164,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g1_ring1_5038,164,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 88
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,5,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 89
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,5,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,3,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,%v8,false,false,2,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,%v15,false,false,2,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,3,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 90
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 91
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,2,false,false
+LOCK_EDGE 1,2,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,1,false,false
+LOCK_EDGE 2,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,%v7,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,%v12,false,false,1,1
+ACQ_NODE 4,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,4,5,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,4,3,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,0,1,false,false
+CALL_EDGE 4,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 92
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[10@L213] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,2,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g0_ring1_3287,126,%v4,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,%v8,false,false,2,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,91,%v15,false,false,2,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 93
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,1,false,false
+LOCK_EDGE 1,0,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,%v7,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,%v12,false,false,1,1
+ACQ_NODE 2,TimeoutBlockingWaitStrategy.crossLock_g0_ring0_6044,119,%v4,false,false,1,1
+ACQ_NODE 3,TimeoutBlockingWaitStrategy.__ring_crossLock_g0_ring2_4777_4016_m0,133,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 94
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[13@L214] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.mockMethod_1_7417,202,%v7,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.mockMethod_1_7417,203,%v8,false,false,2,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 95
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[7@L212] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,TimeoutBlockingWaitStrategy.crossLock_g1_ring0_6164,157,TimeoutBlockingWaitStrategy.crossLock_g1_ring0_6164,157,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.crossLock_g1_ring0_6164,157,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 96
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<com.lmax.disruptor.TimeoutBlockingWaitStrategy: void <init>(long,java.util.concurrent.TimeUnit)>[1@L17] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,96,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,89,%v12,false,false,1,1
+ACQ_NODE 1,TimeoutBlockingWaitStrategy.signalAllWhenBlocking,96,%v21,false,false,4,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,

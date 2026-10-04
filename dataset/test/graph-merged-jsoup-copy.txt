@@ -1,0 +1,3786 @@
+CYCLE 0
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[16@L1576] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,HttpConnection.crossLock_g2_ring0_9441,1532,4,false,false
+LOCK_EDGE 1,0,HttpConnection.crossLock_g2_ring0_9441,1532,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g2_ring0_9441,1532,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 1
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[16@L1576] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[19@L1577] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,HttpConnection.crossLock_g2_ring0_9441,1532,4,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g2_ring0_9441,1532,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,5,false,false
+LOCK_EDGE 2,0,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g2_ring0_9441,1532,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 2
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[16@L1576] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[19@L1577] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,3,false,false
+LOCK_EDGE 1,0,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 3
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[16@L1576] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[19@L1577] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,3,false,false
+LOCK_EDGE 1,2,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,HttpConnection.crossLock_g2_ring0_9441,1532,1,false,false
+LOCK_EDGE 2,0,HttpConnection.crossLock_g2_ring0_9441,1532,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g2_ring0_9441,1532,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 4
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[16@L1576] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring1_6251_9868_m0,1539,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 5
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.crossLock_g2_ring0_9441,1532,HttpConnection.crossLock_g2_ring0_9441,1532,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g2_ring0_9441,1532,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 6
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[19@L1577] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,HttpConnection.crossLock_g2_ring0_9441,1532,1,false,false
+LOCK_EDGE 1,0,HttpConnection.crossLock_g2_ring0_9441,1532,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g2_ring0_9441,1532,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 7
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,3,false,false
+LOCK_EDGE 1,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring0_4945,1480,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 8
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,3,false,false
+LOCK_EDGE 1,2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring1_107,1487,4,false,false
+LOCK_EDGE 2,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring0_4945,1480,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 9
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring0_4945,1480,1,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,3,false,false
+LOCK_EDGE 2,3,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring1_107,1487,4,false,false
+LOCK_EDGE 3,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring3_3635,1511,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 3,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,2,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,5,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 10
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring0_4945,1480,1,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,3,false,false
+LOCK_EDGE 2,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring3_3635,1511,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 11
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring1_107,1487,2,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring0_4945,1480,5,false,false
+LOCK_EDGE 2,3,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,3,false,false
+LOCK_EDGE 3,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring3_3635,1511,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 3,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 1,3,2,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,2,false,false
+CALL_EDGE 3,1,4,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 12
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,4,false,false
+LOCK_EDGE 1,2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring0_4945,1480,3,false,false
+LOCK_EDGE 2,0,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring3_3635,1511,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 13
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,4,false,false
+LOCK_EDGE 1,2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring1_107,1487,4,false,false
+LOCK_EDGE 2,3,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring0_4945,1480,5,false,false
+LOCK_EDGE 3,0,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring3_3635,1511,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 3,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,0,5,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 14
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring0_4945,1480,1,false,false
+LOCK_EDGE 1,0,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring3_3635,1511,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 15
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring1_107,1487,2,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring0_4945,1480,5,false,false
+LOCK_EDGE 2,0,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring3_3635,1511,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 16
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring1_107,1487,2,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,2,false,false
+LOCK_EDGE 2,3,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring0_4945,1480,3,false,false
+LOCK_EDGE 3,0,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring3_3635,1511,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 3,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 1,3,5,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,5,false,false
+CALL_EDGE 3,1,1,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 17
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[13@L1575] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g1_ring1_9346,1525,HttpConnection.crossLock_g1_ring0_1505,1518,1,false,false
+LOCK_EDGE 1,0,HttpConnection.crossLock_g1_ring0_1505,1518,HttpConnection.crossLock_g1_ring1_9346,1525,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g1_ring1_9346,1525,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g1_ring0_1505,1518,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 18
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring1_107,1487,1,false,false
+LOCK_EDGE 1,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring0_4945,1480,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 19
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring1_107,1487,1,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,2,false,false
+LOCK_EDGE 2,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring0_4945,1480,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 20
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring0_4945,1480,1,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring1_107,1487,1,false,false
+LOCK_EDGE 2,3,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,2,false,false
+LOCK_EDGE 3,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring3_3635,1511,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 3,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,5,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,0,2,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 21
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,4,false,false
+LOCK_EDGE 1,2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring0_4945,1480,3,false,false
+LOCK_EDGE 2,3,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring1_107,1487,1,false,false
+LOCK_EDGE 3,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring3_3635,1511,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 3,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,4,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,2,false,false
+CALL_EDGE 3,2,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 22
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[1@L1571] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring0_4945,1480,1,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring0_4945,1480,HttpConnection.crossLock_g0_ring1_107,1487,1,false,false
+LOCK_EDGE 2,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring3_3635,1511,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring0_4945,1480,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 23
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[13@L1575] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.crossLock_g1_ring1_9346,1525,HttpConnection.crossLock_g1_ring1_9346,1525,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g1_ring1_9346,1525,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 24
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring3_3635,1511,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 25
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,4,false,false
+LOCK_EDGE 1,2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring1_107,1487,4,false,false
+LOCK_EDGE 2,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring3_3635,1511,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 26
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,4,false,false
+LOCK_EDGE 1,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring3_3635,1511,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 27
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring1_107,1487,2,false,false
+LOCK_EDGE 1,2,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,2,false,false
+LOCK_EDGE 2,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring3_3635,1511,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 2,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 28
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[10@L1574] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring3_3635,1511,HttpConnection.crossLock_g0_ring1_107,1487,2,false,false
+LOCK_EDGE 1,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring3_3635,1511,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring3_3635,1511,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 29
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[19@L1577] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g2_ring2_1285_7115_m1,1551,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 30
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.crossLock_g0_ring1_107,1487,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 31
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[4@L1572] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpConnection.crossLock_g0_ring1_107,1487,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,2,false,false
+LOCK_EDGE 1,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.crossLock_g0_ring1_107,1487,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.crossLock_g0_ring1_107,1487,%v4,false,false,1,1
+ACQ_NODE 1,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 32
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.helper.HttpConnection: void <init>()>[7@L1573] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpConnection.__ring_crossLock_g0_ring2_4920_8376_m0,1499,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 33
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,259,Element.id,263,0,false,false
+LOCK_EDGE 1,2,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring3_9163,2274,1,false,false
+LOCK_EDGE 2,0,Element.mockMethod_1_9551,2339,Element.id,259,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,259,%v10,false,false,1,1
+ACQ_NODE 1,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 2,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 4,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,3,false,false
+CALL_EDGE 4,0,1,false,false
+CALL_EDGE 4,1,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 34
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,259,Element.id,263,0,false,false
+LOCK_EDGE 1,2,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring1_2209,2258,3,false,false
+LOCK_EDGE 2,3,Element.id,261,Element.id,265,0,false,false
+LOCK_EDGE 3,0,Element.mockMethod_1_9551,2339,Element.id,259,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,259,%v10,false,false,1,1
+ACQ_NODE 1,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 2,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 4,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 5,Element.id,265,%v19,false,false,4,1
+ACQ_NODE 6,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 0,4,0,true,true
+CALL_EDGE 0,5,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 1,4,0,true,false
+CALL_EDGE 1,5,0,true,true
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 4,0,0,true,false
+CALL_EDGE 4,1,0,true,true
+CALL_EDGE 4,5,0,true,true
+CALL_EDGE 5,0,0,true,false
+CALL_EDGE 5,1,0,true,false
+CALL_EDGE 5,4,0,true,false
+CALL_EDGE 6,0,1,false,false
+CALL_EDGE 6,1,1,false,true
+CALL_EDGE 6,4,1,false,false
+CALL_EDGE 6,5,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=6 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 35
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring1_2209,2258,1,false,false
+LOCK_EDGE 1,2,Element.id,261,Element.id,265,0,false,false
+LOCK_EDGE 2,0,Element.mockMethod_1_9551,2339,Element.id,259,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 2,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 3,Element.id,265,%v19,false,false,4,1
+ACQ_NODE 4,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 5,Element.id,259,%v10,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 2,5,0,true,false
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 3,5,0,true,false
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,1,false,true
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,2,0,true,true
+CALL_EDGE 5,3,0,true,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 36
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring1_2209,2258,1,false,false
+LOCK_EDGE 1,2,Element.crossLock_g1_ring1_5254,2288,Element.crossLock_g1_ring2_5644,2295,1,false,false
+LOCK_EDGE 2,3,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring3_9163,2274,1,false,false
+LOCK_EDGE 3,0,Element.mockMethod_1_9551,2339,Element.id,259,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 2,Element.crossLock_g1_ring1_5254,2288,%v4,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 4,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 5,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 6,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 7,Element.id,259,%v10,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,4,2,false,false
+CALL_EDGE 0,5,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,4,1,false,false
+CALL_EDGE 1,5,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 4,0,2,false,false
+CALL_EDGE 4,1,3,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,0,1,false,false
+CALL_EDGE 5,1,2,false,false
+CALL_EDGE 5,4,3,false,false
+CALL_EDGE 6,7,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=7 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 37
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring3_9163,2274,3,false,false
+LOCK_EDGE 1,0,Element.mockMethod_1_9551,2339,Element.id,259,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,259,%v10,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 38
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Element.mockMethod_1_9551,2338,Element.mockMethod_1_9551,2339,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.mockMethod_1_9551,2338,%v7,false,false,1,1
+ACQ_NODE 1,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 39
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring1_2209,2258,1,false,false
+LOCK_EDGE 1,2,Element.id,261,Element.id,265,0,false,false
+LOCK_EDGE 2,3,Element.mockMethod_1_9551,2339,Element.id,263,1,false,false
+LOCK_EDGE 3,0,Element.crossLock_g1_ring2_5644,2295,Element.crossLock_g1_ring0_3120,2281,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 2,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 3,Element.id,265,%v19,false,false,4,1
+ACQ_NODE 4,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 5,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 6,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 7,Element.crossLock_g1_ring0_3120,2281,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 2,5,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 3,5,0,true,false
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,1,false,true
+CALL_EDGE 4,5,1,false,true
+CALL_EDGE 5,2,0,true,false
+CALL_EDGE 5,3,0,true,true
+CALL_EDGE 6,7,1,false,false
+CALL_EDGE 7,6,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 40
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring3_9163,2274,3,false,false
+LOCK_EDGE 1,2,Element.mockMethod_1_9551,2339,Element.id,263,1,false,false
+LOCK_EDGE 2,0,Element.crossLock_g1_ring2_5644,2295,Element.crossLock_g1_ring0_3120,2281,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 4,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 5,Element.crossLock_g1_ring0_3120,2281,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 41
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring3_9163,2274,1,false,false
+LOCK_EDGE 1,0,Element.mockMethod_1_9551,2339,Element.id,263,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,263,%v16,false,false,3,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 42
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,261,Element.id,265,0,false,false
+LOCK_EDGE 1,2,Element.mockMethod_1_9551,2339,Element.id,263,1,false,false
+LOCK_EDGE 2,0,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring1_2209,2258,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 1,Element.id,265,%v19,false,false,4,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 4,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 5,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 0,3,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 1,3,0,true,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,1,false,true
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 3,0,0,true,false
+CALL_EDGE 3,1,0,true,true
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,4,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 43
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring3_9163,2274,3,false,false
+LOCK_EDGE 1,2,Element.mockMethod_1_9551,2339,Element.id,263,1,false,false
+LOCK_EDGE 2,3,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring1_2209,2258,3,false,false
+LOCK_EDGE 3,0,Element.crossLock_g0_ring1_2209,2258,Element.crossLock_g0_ring0_2136,2250,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 4,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 5,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,4,2,false,false
+CALL_EDGE 0,5,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,4,3,false,false
+CALL_EDGE 1,5,2,false,false
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 4,0,2,false,false
+CALL_EDGE 4,1,1,false,false
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,0,3,false,false
+CALL_EDGE 5,1,2,false,false
+CALL_EDGE 5,4,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 44
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,261,Element.id,265,0,false,false
+LOCK_EDGE 1,0,Element.mockMethod_1_9551,2339,Element.id,261,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 1,Element.id,265,%v19,false,false,4,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=4 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 45
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,259,Element.id,263,0,false,false
+LOCK_EDGE 1,2,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring3_9163,2274,1,false,false
+LOCK_EDGE 2,3,Element.mockMethod_1_9551,2339,Element.id,261,1,false,false
+LOCK_EDGE 3,0,Element.crossLock_g0_ring1_2209,2258,Element.crossLock_g0_ring0_2136,2250,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,259,%v10,false,false,1,1
+ACQ_NODE 1,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 2,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 4,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 5,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 6,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 7,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 0,5,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 1,5,0,true,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 2,6,3,false,false
+CALL_EDGE 2,7,2,false,false
+CALL_EDGE 3,2,3,false,false
+CALL_EDGE 3,6,2,false,false
+CALL_EDGE 3,7,1,false,false
+CALL_EDGE 4,0,1,false,false
+CALL_EDGE 4,1,1,false,true
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,0,0,true,false
+CALL_EDGE 5,1,0,true,true
+CALL_EDGE 6,2,1,false,false
+CALL_EDGE 6,3,2,false,false
+CALL_EDGE 6,7,3,false,false
+CALL_EDGE 7,2,2,false,false
+CALL_EDGE 7,3,3,false,false
+CALL_EDGE 7,6,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 46
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring3_9163,2274,3,false,false
+LOCK_EDGE 1,2,Element.mockMethod_1_9551,2339,Element.id,261,1,false,false
+LOCK_EDGE 2,0,Element.crossLock_g0_ring1_2209,2258,Element.crossLock_g0_ring0_2136,2250,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 4,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,4,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,4,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 4,0,3,false,false
+CALL_EDGE 4,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 47
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring3_9163,2274,3,false,false
+LOCK_EDGE 1,2,Element.mockMethod_1_9551,2339,Element.id,261,1,false,false
+LOCK_EDGE 2,3,Element.crossLock_g1_ring1_5254,2288,Element.crossLock_g1_ring2_5644,2295,1,false,false
+LOCK_EDGE 3,0,Element.crossLock_g1_ring2_5644,2295,Element.crossLock_g1_ring0_3120,2281,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 2,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 3,Element.id,261,%v13,false,false,2,1
+ACQ_NODE 4,Element.crossLock_g1_ring1_5254,2288,%v4,false,false,1,1
+ACQ_NODE 5,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 6,Element.crossLock_g1_ring0_3120,2281,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 4,6,2,false,false
+CALL_EDGE 5,4,2,false,false
+CALL_EDGE 5,6,1,false,false
+CALL_EDGE 6,4,1,false,false
+CALL_EDGE 6,5,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 48
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[8@L2349] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g1_ring1_5254,2288,Element.crossLock_g1_ring2_5644,2295,1,false,false
+LOCK_EDGE 1,2,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring3_9163,2274,1,false,false
+LOCK_EDGE 2,0,Element.mockMethod_1_9551,2339,Element.id,261,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g1_ring1_5254,2288,%v4,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 2,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g0_ring3_9163,2274,%v5,false,false,1,1
+ACQ_NODE 4,Element.mockMethod_1_9551,2339,%v8,false,false,2,1
+ACQ_NODE 5,Element.id,261,%v13,false,false,2,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,3,false,false
+CALL_EDGE 4,5,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 49
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_EDGE 0,0,Element.crossLock_g1_ring0_3120,2281,Element.crossLock_g1_ring0_3120,2281,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g1_ring0_3120,2281,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 50
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,259,Element.id,263,0,false,false
+LOCK_EDGE 1,0,Element.crossLock_g1_ring2_5644,2295,Element.crossLock_g1_ring0_3120,2281,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,259,%v10,false,false,1,1
+ACQ_NODE 1,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 2,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g1_ring0_3120,2281,%v4,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 51
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.id,259,Element.id,263,0,false,false
+LOCK_EDGE 1,2,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring1_2209,2258,3,false,false
+LOCK_EDGE 2,0,Element.crossLock_g0_ring1_2209,2258,Element.crossLock_g0_ring0_2136,2250,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.id,259,%v10,false,false,1,1
+ACQ_NODE 1,Element.id,263,%v16,false,false,3,1
+ACQ_NODE 2,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 4,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 2,4,2,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,4,3,false,false
+CALL_EDGE 4,2,2,false,false
+CALL_EDGE 4,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 52
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring1_2209,2258,1,false,false
+LOCK_EDGE 1,0,Element.crossLock_g0_ring1_2209,2258,Element.crossLock_g0_ring0_2136,2250,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 53
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <clinit>()>[3@L52] new org.jsoup.nodes.Element$NodeList},org.jsoup.nodes.Element$NodeList,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g0_ring0_2136,2250,Element.crossLock_g0_ring1_2209,2258,1,false,false
+LOCK_EDGE 1,2,Element.crossLock_g1_ring1_5254,2288,Element.crossLock_g1_ring2_5644,2295,1,false,false
+LOCK_EDGE 2,0,Element.crossLock_g1_ring2_5644,2295,Element.crossLock_g1_ring0_3120,2281,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring0_2136,2250,%v5,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+ACQ_NODE 2,Element.crossLock_g1_ring1_5254,2288,%v4,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 4,Element.crossLock_g1_ring0_3120,2281,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 2,4,2,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 54
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Element.crossLock_g1_ring1_5254,2288,Element.crossLock_g1_ring2_5644,2295,1,false,false
+LOCK_EDGE 1,0,Element.crossLock_g0_ring2_7879,2266,Element.crossLock_g0_ring1_2209,2258,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g1_ring1_5254,2288,%v4,false,false,1,1
+ACQ_NODE 1,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+ACQ_NODE 2,Element.crossLock_g0_ring2_7879,2266,%v5,false,false,1,1
+ACQ_NODE 3,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 55
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[2@L2347] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Element.crossLock_g0_ring1_2209,2258,Element.crossLock_g0_ring1_2209,2258,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g0_ring1_2209,2258,%v5,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 56
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.nodes.Element: void <init>(org.jsoup.parser.Tag,java.lang.String,org.jsoup.nodes.Attributes)>[5@L2348] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Element.crossLock_g1_ring2_5644,2295,Element.crossLock_g1_ring2_5644,2295,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Element.crossLock_g1_ring2_5644,2295,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 57
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 58
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,3,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring3_2248,518,1,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring0_2485,492,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 59
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring1_5599,499,1,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring1_5599,499,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,2,false,false
+LOCK_EDGE 2,3,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring3_2248,518,1,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring0_2485,492,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,0,1,false,false
+CALL_EDGE 3,1,2,false,false
+CALL_EDGE 3,2,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 60
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring1_5599,499,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,2,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring3_2248,518,1,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring1_5599,499,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 61
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,3,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring3_2248,518,1,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring1_5599,499,2,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring0_2485,492,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,2,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 62
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring3_2248,518,1,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g1_ring3_2248,518,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 63
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring1_5599,499,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,2,false,false
+LOCK_EDGE 1,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring1_5599,499,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 64
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,3,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring1_5599,499,3,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring0_2485,492,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 65
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring3_2248,518,4,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring3_2248,518,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,4,false,false
+LOCK_EDGE 2,3,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring1_5599,499,3,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring0_2485,492,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 1,3,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 66
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,3,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring1_5599,499,3,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring3_2248,518,3,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring0_2485,492,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,1,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,1,false,false
+CALL_EDGE 3,1,4,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 67
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring3_2248,518,3,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring3_2248,518,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,4,false,false
+LOCK_EDGE 2,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring1_5599,499,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 68
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,3,false,false
+LOCK_EDGE 1,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring0_2485,492,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 69
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring3_2248,518,4,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring1_5599,499,2,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g1_ring1_5599,499,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,2,false,false
+LOCK_EDGE 3,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring0_2485,492,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 3,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,3,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 1,3,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,0,2,false,false
+CALL_EDGE 3,1,1,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 70
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring3_2248,518,4,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring3_2248,518,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,4,false,false
+LOCK_EDGE 2,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring0_2485,492,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 71
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring1_5599,499,1,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring1_5599,499,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,2,false,false
+LOCK_EDGE 2,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring0_2485,492,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 72
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[21@L584] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring1_5599,499,1,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring3_2248,518,3,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g1_ring3_2248,518,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,4,false,false
+LOCK_EDGE 3,0,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,Parser.crossLock_g1_ring0_2485,492,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 3,Parser.__ring_crossLock_g1_ring2_6436_3938_m0,506,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,3,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,2,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,0,2,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 73
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring1_2262,542,5,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring0_9186,454,5,false,false
+LOCK_EDGE 2,3,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,Parser.crossLock_g2_ring2_5062,549,2,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 4,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 5,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,4,4,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,5,1,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 4,0,4,false,false
+CALL_EDGE 4,1,1,false,false
+CALL_EDGE 4,5,2,false,false
+CALL_EDGE 5,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 74
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring1_2262,542,5,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring0_9186,454,5,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g0_ring0_9186,454,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 4,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 2,4,4,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,4,5,false,false
+CALL_EDGE 4,2,2,false,false
+CALL_EDGE 4,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 75
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring1_2262,542,5,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring2_651,468,1,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring2_651,468,%v4,false,false,1,1
+ACQ_NODE 4,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,4,1,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,5,false,false
+CALL_EDGE 4,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 76
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring1_2262,542,5,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring2_651,468,1,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,6,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g0_ring0_9186,454,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring2_651,468,%v4,false,false,1,1
+ACQ_NODE 4,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 5,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 6,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 7,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,5,4,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,4,1,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 2,6,5,false,false
+CALL_EDGE 2,7,4,false,false
+CALL_EDGE 3,2,5,false,false
+CALL_EDGE 3,6,4,false,false
+CALL_EDGE 3,7,3,false,false
+CALL_EDGE 4,0,2,false,false
+CALL_EDGE 5,0,4,false,false
+CALL_EDGE 5,1,1,false,false
+CALL_EDGE 5,4,2,false,false
+CALL_EDGE 6,2,1,false,false
+CALL_EDGE 6,3,2,false,false
+CALL_EDGE 6,7,5,false,false
+CALL_EDGE 7,2,2,false,false
+CALL_EDGE 7,3,3,false,false
+CALL_EDGE 7,6,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=8 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 77
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring1_2262,542,5,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g2_ring1_2262,542,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 78
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring2_5062,549,6,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 79
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring2_5062,549,6,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g2_ring2_5062,549,Parser.crossLock_g2_ring1_2262,542,7,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring0_9186,454,5,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g0_ring0_9186,454,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 4,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 5,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 3,4,5,false,false
+CALL_EDGE 3,5,4,false,false
+CALL_EDGE 4,3,1,false,false
+CALL_EDGE 4,5,5,false,false
+CALL_EDGE 5,3,2,false,false
+CALL_EDGE 5,4,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 80
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring2_5062,549,6,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g2_ring2_5062,549,Parser.crossLock_g2_ring1_2262,542,7,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g2_ring1_2262,542,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 81
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring2_5062,549,6,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,6,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g0_ring0_9186,454,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 4,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 3,4,5,false,false
+CALL_EDGE 4,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 82
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,Parser.crossLock_g2_ring2_5062,549,6,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,6,false,false
+LOCK_EDGE 2,3,Parser.mockMethod_0_3026,573,Parser.parseInput,79,1,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g2_ring1_2262,542,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 3,Parser.mockMethod_0_3026,573,%v3,false,false,1,1
+ACQ_NODE 4,Parser.parseInput,79,%v9,false,false,2,1
+ACQ_NODE 5,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,5,5,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,5,1,false,false
+CALL_EDGE 3,4,1,false,true
+CALL_EDGE 5,0,3,false,false
+CALL_EDGE 5,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 83
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,Parser.crossLock_g0_ring0_9186,454,1,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,Parser.crossLock_g2_ring2_5062,549,2,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 4,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 2,4,4,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 4,2,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 84
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,Parser.crossLock_g0_ring0_9186,454,1,false,false
+LOCK_EDGE 1,2,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,Parser.crossLock_g2_ring2_5062,549,2,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g2_ring2_5062,549,Parser.crossLock_g2_ring1_2262,542,7,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g2_ring1_2262,542,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 2,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 4,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 5,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 2,4,1,false,false
+CALL_EDGE 2,5,4,false,false
+CALL_EDGE 3,5,2,false,false
+CALL_EDGE 4,3,1,false,false
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,2,4,false,false
+CALL_EDGE 5,4,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 85
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,Parser.crossLock_g0_ring0_9186,454,1,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g0_ring0_9186,454,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 86
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,Parser.crossLock_g0_ring0_9186,454,1,false,false
+LOCK_EDGE 1,2,Parser.mockMethod_0_3026,573,Parser.parseInput,79,1,false,false
+LOCK_EDGE 2,3,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring2_651,468,1,false,false
+LOCK_EDGE 3,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 2,Parser.mockMethod_0_3026,573,%v3,false,false,1,1
+ACQ_NODE 3,Parser.parseInput,79,%v9,false,false,2,1
+ACQ_NODE 4,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 5,Parser.crossLock_g0_ring2_651,468,%v4,false,false,1,1
+ACQ_NODE 6,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 7,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,4,2,false,false
+CALL_EDGE 0,5,3,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,4,1,false,false
+CALL_EDGE 1,5,2,false,false
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 4,0,4,false,false
+CALL_EDGE 4,1,5,false,false
+CALL_EDGE 4,5,1,false,false
+CALL_EDGE 5,0,3,false,false
+CALL_EDGE 5,1,4,false,false
+CALL_EDGE 5,4,5,false,false
+CALL_EDGE 6,7,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=7 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 87
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,Parser.crossLock_g0_ring0_9186,454,1,false,false
+LOCK_EDGE 1,2,Parser.mockMethod_0_3026,573,Parser.parseInput,79,1,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g2_ring1_2262,542,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+ACQ_NODE 2,Parser.mockMethod_0_3026,573,%v3,false,false,1,1
+ACQ_NODE 3,Parser.parseInput,79,%v9,false,false,2,1
+ACQ_NODE 4,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 5,Parser.__ring_crossLock_g2_ring3_8582_9254_m0,561,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,4,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 88
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[12@L581] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g0_ring3_4053_8027_m1,475,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 89
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring1_352,461,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 90
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,Parser.crossLock_g2_ring2_5062,549,2,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g2_ring2_5062,549,Parser.crossLock_g2_ring1_2262,542,7,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring0_9186,454,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 4,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 3,4,5,false,false
+CALL_EDGE 4,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 91
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.mockMethod_0_3026,573,Parser.parseInput,79,1,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring0_9186,454,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.mockMethod_0_3026,573,%v3,false,false,1,1
+ACQ_NODE 1,Parser.parseInput,79,%v9,false,false,2,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring0_9186,454,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,true
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 92
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g2_ring2_5062,549,Parser.crossLock_g2_ring1_2262,542,7,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring2_651,468,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring1_2262,542,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring2_651,468,%v4,false,false,1,1
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 93
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[9@L580] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.mockMethod_0_3026,573,Parser.parseInput,79,1,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g0_ring1_352,461,Parser.crossLock_g0_ring2_651,468,1,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,6,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.mockMethod_0_3026,573,%v3,false,false,1,1
+ACQ_NODE 1,Parser.parseInput,79,%v9,false,false,2,1
+ACQ_NODE 2,Parser.crossLock_g0_ring1_352,461,%v4,false,false,1,1
+ACQ_NODE 3,Parser.crossLock_g0_ring2_651,468,%v4,false,false,1,1
+ACQ_NODE 4,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+ACQ_NODE 5,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,true
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,5,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 94
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring3_2248,518,4,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring1_5599,499,2,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring0_2485,492,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 95
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring1_5599,499,1,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring0_2485,492,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 96
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring1_5599,499,1,false,false
+LOCK_EDGE 1,2,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring3_2248,518,3,false,false
+LOCK_EDGE 2,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring0_2485,492,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 2,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 97
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring3_2248,518,3,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring1_5599,499,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 98
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[18@L583] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.crossLock_g1_ring1_5599,499,Parser.crossLock_g1_ring1_5599,499,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring1_5599,499,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 99
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,Parser.crossLock_g2_ring2_5062,549,2,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g2_ring2_5062,549,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,6,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.__ring_crossLock_g2_ring0_3314_4970_m1,525,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g2_ring2_5062,549,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 100
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[3@L33] new java.util.concurrent.locks.ReentrantLock},java.util.concurrent.locks.ReentrantLock,false,1
+LOCK_EDGE 0,0,Parser.mockMethod_0_3026,573,Parser.parseInput,78,1,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.mockMethod_0_3026,573,%v3,false,false,1,1
+ACQ_NODE 1,Parser.parseInput,78,%v8,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 101
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring0_2485,492,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 102
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[15@L582] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,Parser.crossLock_g1_ring0_2485,492,Parser.crossLock_g1_ring3_2248,518,4,false,false
+LOCK_EDGE 1,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring0_2485,492,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring0_2485,492,%v4,false,false,1,1
+ACQ_NODE 1,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 103
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[24@L585] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.crossLock_g1_ring3_2248,518,Parser.crossLock_g1_ring3_2248,518,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g1_ring3_2248,518,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 104
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.jsoup.parser.Parser: void <init>(org.jsoup.parser.TreeBuilder)>[6@L579] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,Parser.crossLock_g0_ring2_651,468,Parser.crossLock_g0_ring2_651,468,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,Parser.crossLock_g0_ring2_651,468,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
