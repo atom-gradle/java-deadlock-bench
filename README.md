@@ -138,12 +138,12 @@ Supported Java features:
 ### How to use?
 1. compile
 ```bash
-javac -cp "*" ParserB.java
+javac -cp "*" Parser.java
 ```
 
 2. update(override) classes in [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/)
 ```bash
-jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisition.class ParserB$LockOrderEdge.class
+jar uf tai-e-0.5.4.jar Parser.class Parser$HeldLock.class Parser$LockAcquisition.class Parser$LockOrderEdge.class
 ```
 
 3. extract tai-e-analyses.yml from tai-e-0.5.4.jar and modify tai-e-analyses.yml to enable features for our analysis
@@ -161,9 +161,7 @@ jar uf tai-e-0.5.4.jar ParserB.class ParserB$HeldLock.class ParserB$LockAcquisit
 ```
 
 4. run
-```bash
-java -cp "*" 
-```
+See **Pipeliner.py**
 
 ---
 
