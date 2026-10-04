@@ -129,41 +129,7 @@ python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classe
 
 ---
 
-### ParserA.java
-Specialized for the following Java features:
-- new Thread(...) / Runnable anonymous class
-- synchronized blocks and methods
-- Object / custom lock object(static field) / ReentrantLock
-
-### How to use?
-
-1. Cloning https://github.com/pascal-lab/Tai-e-assignments to local and unzip
-```bash
-git clone https://github.com/pascal-lab/Tai-e-assignments.git
-unzip Tai-e-assignments-main.zip
-```
-
-2. Replace Tai-e-assignments-main\A6\tai-e\src\main\java\pascal\taie\analysis\pta\cs\Solver.java with this file
-```bash
-cp ParserA.java /Tai-e-assignments-main/A6/tai-e/src/main/java/pascal/taie/analysis/pta/cs/
-```
-
-3. Delete original file and Rename this file to "Solver.java"
-```bash
-rm -rf Solver.java
-rename ParserA.java Solver.java
-```
-
-4. run
-```bash
-java -cp "build\classes\java\main;lib\tai-e-assignment.jar;..\..\lib\dependencies.jar" pascal.taie.Assignment -cp src/test/resources/pta/cspta -m DeadlockSample
-```
-
-Note: `DeadlockSample` is a class file or harness you want to analyze (must contains **main()** entry method)
-
----
-
-### ParserB.java
+### Parser.java
 Supported Java features:
 - new Thread(Lambda Expression)
 - synchronized blocks and methods
