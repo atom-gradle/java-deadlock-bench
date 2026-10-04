@@ -45,8 +45,7 @@ Here we chose `Apache Commons Collections`, `Apache Commons IO`, `Apache Commons
 The program's output goes like this.
 
 ```
-C:\Users\Admin\PycharmProjects\GNN-Ranker\.venv\Scripts\python.exe C:\Users\Admin\PycharmProjects\GNN-Ranker\MutationGenerator-dev.py 
-[INFO] found 6 projects: ['commons-collections-master', 'commons-io-master', 'commons-lang-master', 'disruptor-master', 'guava-master', 'jsoup-master']
+[INFO] found 5 projects: ['commons-collections-master', 'commons-io-master', 'disruptor-master', 'guava-master', 'jsoup-master']
 [INFO] commons-collections-master: found 367 java files in D:\Projects\commons-collections-master\src\main\java
 creating harness: org.apache.commons.collections4.BagUtilsHarness
 creating harness: org.apache.commons.collections4.CollectionUtilsHarness
@@ -75,12 +74,6 @@ creating harness: org.apache.commons.io.input.ReadAheadInputStreamHarness
 creating harness: org.apache.commons.io.monitor.FileAlterationObserverHarness
 creating harness: org.apache.commons.io.output.ByteArrayOutputStreamHarness
 creating harness: org.apache.commons.io.output.LockableFileWriterHarness
-[INFO] commons-lang-master: found 264 java files in D:\Projects\commons-lang-master\src\main\java
-creating harness: org.apache.commons.lang3.CharSetHarness
-creating harness: org.apache.commons.lang3.concurrent.LazyInitializerHarness
-creating harness: org.apache.commons.lang3.concurrent.MultiBackgroundInitializerHarness
-creating harness: org.apache.commons.lang3.concurrent.locks.LockingVisitorsHarness
-creating harness: org.apache.commons.lang3.time.FastDateParserHarness
 [INFO] disruptor-master: found 71 java files in D:\Projects\disruptor-master\src\main\java
 creating harness: com.lmax.disruptor.BlockingWaitStrategyHarness
 creating harness: com.lmax.disruptor.LiteBlockingWaitStrategyHarness
@@ -116,7 +109,7 @@ creating harness: org.jsoup.helper.HttpConnectionHarness
 creating harness: org.jsoup.nodes.ElementHarness
 creating harness: org.jsoup.parser.ParserHarness
 [INFO] report written to ./mutated-1790993066738\mutation_report.json
-[INFO] mutated 63 classes
+[INFO] mutated 58 classes
 ```
 
 Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
