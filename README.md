@@ -3,30 +3,12 @@
 This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Pipeline
-MutationGenerator -> Java Parser -> Pipneliner -> (dataset) -> evaluation(baseling/ML/GNN)
+MutationGenerator -> Java Parser -> Pipneliner -> (dataset) -> Evaluation(Baseling/ML/GNN)
 
 ---
 
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate reproducible samples.
-
-Functions:
-- Find classes containing lock fields / synchronized blocks
-- Replace the lock variable inside synchronized(...)
-- Reassign non-final lock fields
-- Insert Thread.sleep inside synchronized blocks
-- Add new synchronized blocks (only for Object-type lock fields)
-- Generate same-class mock methods (nestable, throws Exception)
-- Generate a harness for each class (top-level class, static methods
-  invoked via the class name)
-
-Supported Java features:
-- new Thread(...) / Runnable anonymous class / Lambda
-- Object / custom lock object / ReentrantLock
-
-Not supported:
-- wait / notify
-- Other JUC utilities (ReadWriteLock, StampedLock, Semaphore, etc)
 
 How to use?
 
@@ -123,10 +105,7 @@ python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classe
 ---
 
 ### Parser.java
-Supported Java features:
-- new Thread(Lambda Expression)
-- synchronized blocks and methods
-- Object / custom lock object(instance field)
+
 
 ### How to use?
 1. compile
