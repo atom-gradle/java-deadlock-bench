@@ -105,7 +105,7 @@ python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classe
 ---
 
 ### Parser.java
-
+Using Static Analysis to analyze Java programs and export CYCLEs.
 
 ### How to use?
 1. compile
@@ -119,8 +119,10 @@ jar uf tai-e-0.5.4.jar Parser.class Parser$HeldLock.class Parser$LockAcquisition
 ```
 
 3. extract tai-e-analyses.yml from tai-e-0.5.4.jar and modify tai-e-analyses.yml to enable features for our analysis
+```sh
+jar xf tai-e-0.5.4.jar tai-e-analyses.yml
 ```
-- description: whole-program pointer analysis
+
 ```
 
     **cs: ci # | k-[obj|type|call][-k'h]**
