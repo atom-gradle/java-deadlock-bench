@@ -13,8 +13,8 @@ Unified evaluation protocol:
   - Support ablation (removing cross-layer edges / `lock_edge` / `call_edge`)
 
 How to use?
-  python evaluate_all.py --data_dir train --label_mode binary_strong
-  python evaluate_all.py --data_dir train --label_mode three_way --do_grid --do_ablation
+  python evaluate.py --label_mode binary_strong
+  python evaluate.py --label_mode three_way --do_grid --do_ablation
 """
 
 import argparse,glob,hashlib,json,os,re,warnings,joblib
@@ -393,13 +393,13 @@ def make_folds(df, n_splits=5):
 # 6. random forest
 def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None):
     """
-    在给定的 fold 划分上评估 RF。返回 (mean_metrics, oof_prob, oof_pred, model)
+    Evaluate RF on the given fold split. Return `(mean_metrics, oof_prob, oof_pred, model)`
     """
     X = df[feat_cols].fillna(0).values.astype(np.float32)
     y = df["y"].values.astype(int)
     is_binary = df["y"].nunique() == 2
 
-    # ---- 可选：GridSearch 找最佳超参 ----
+    # ---- Use GridSearch to find the best hyperparameters. ----
     best_params = None
     if do_grid:
         print(f"\n  [GridSearch] ...")
@@ -506,7 +506,7 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
     data = HeteroData()
     n_lock = len(c["lock_nodes"]); n_acq = len(c["acq_nodes"])
 
-    # --- lock 节点特征 ---
+    # lock node features
     if n_lock > 0:
         lf = [[float(n["is_static"]), float(n["obj_nonnull"]),
                1.0 if "LockBox" in n["obj_key"] else 0.0,
@@ -516,7 +516,7 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
     else:
         data["lock"].x = torch.zeros((0, LOCK_FEAT_DIM), dtype=torch.float)
 
-    # --- acq 节点特征 ---
+    # acq node features
     if n_acq > 0:
         af = [[float(a["line"] if a["line"] >= 0 else 0),
                float(a["is_static"]), float(a["is_sync"]),
@@ -526,7 +526,7 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
     else:
         data["acq"].x = torch.zeros((0, ACQ_FEAT_DIM), dtype=torch.float)
 
-    # --- lock_edge（带 edge_attr：dist / may_alias / same_lock_obj） ---
+    # lock_edge（带 edge_attr：dist / may_alias / same_lock_obj） ---
     if c["lock_edges"] and not drop_lock_edge:
         le = torch.tensor([[e["from"] for e in c["lock_edges"]],
                            [e["to"] for e in c["lock_edges"]]], dtype=torch.long)
@@ -556,7 +556,7 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
     data["acq", "call_edge", "acq"].edge_index = ce
     data["acq", "call_edge", "acq"].edge_attr = ce_attr
 
-    # --- 跨层边（无 edge_attr，用零维占位） ---
+    # Cross-layer edges (no {edge_attr}, use a zero-dimensional placeholder)
     if drop_cross:
         atl, lta = [], []
     else:
@@ -659,7 +659,7 @@ class HeteroGNN(torch.nn.Module):
         }
         device = x_dict["lock"].device if x_dict["lock"].size(0) > 0 else x_dict["acq"].device
 
-        # GINEConv 要求 edge_attr 与 edge_index 维度一致
+        # GINEConv requires {edge_attr} to have the same dimension as {edge_index}
         edge_attr_dict = {
             ("lock", "lock_edge", "lock"):  self._make_edge_attr("lock", data, device),
             ("acq", "call_edge", "acq"):    self._make_edge_attr("call", data, device),
@@ -693,7 +693,7 @@ def train_one_fold_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=64,
 
     labels_tr = np.array([d.y.item() for d in train_ds])
     cnt = Counter(labels_tr)
-    # sqrt 温和加权（避免过激）
+    # sqrt gentle weighting (to avoid being too aggressive)
     w = torch.tensor([1.0 / np.sqrt(max(cnt.get(i, 1), 1)) for i in range(num_classes)],
                      dtype=torch.float, device=device)
     w = w / w.sum() * num_classes
@@ -720,7 +720,7 @@ def train_one_fold_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=64,
             n_seen += batch.y.size(0)
         epoch_loss /= max(n_seen, 1)
 
-        # 用训练 loss 选 best epoch（不碰 test）
+        # Use training loss to select the best epoch (without touching test)
         if epoch_loss < best_loss - 1e-5:
             best_loss = epoch_loss
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
@@ -781,7 +781,7 @@ def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=64,
         te_ds = [data_list[i] for i in te]
         y_te = np.array([d.y.item() for d in te_ds])
         if len(np.unique(y_te)) < 2 and num_classes == 2:
-            print(f"  fold {k}: 测试集只有一类，跳过")
+            print(f"  fold {k}: The test set has only one class, skipping")
             continue
 
         _, prob, _ = train_one_fold_gnn(
@@ -789,7 +789,7 @@ def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=64,
             epochs=epochs, hidden=hidden, num_layers=num_layers,
             dropout=dropout, lr=lr)
         if prob is None:
-            print(f"  fold {k}: 训练失败")
+            print(f"  fold {k}: train failed")
             continue
         oof_prob[te] = prob
         pred = prob.argmax(axis=1)
@@ -837,7 +837,7 @@ def main():
     ap.add_argument("--out_dir", default="./output")
     ap.add_argument("--label_mode", default="binary_strong",
                     choices=["binary_strong", "binary_loose", "three_way"],
-                    help="标签模式：strong=只在 L2 上训练；loose=L2+L1 都算正；three_way=L0/L1/L2")
+                    help="Label modes: strong = train only on L2; loose = both L2+L1 count as positive; three_way = L0/L1/L2.")
     ap.add_argument("--n_splits", type=int, default=5)
     ap.add_argument("--gnn_epochs", type=int, default=100)
     ap.add_argument("--gnn_hidden", type=int, default=64)
@@ -852,8 +852,7 @@ def main():
 
     os.makedirs(args.out_dir, exist_ok=True)
 
-    print("=" * 70)
-    print("evaluate_all.py — Unified comparison of rule-based / random forest / heterogeneous GNN.")
+    print("Unified comparison of rule-based / random forest / heterogeneous GNN")
     print(f"  data_dir   = {args.data_dir}")
     print(f"  test_dir   = {args.test_dir}")
     print(f"  out_dir    = {args.out_dir}")
@@ -861,48 +860,48 @@ def main():
     print(f"  n_splits   = {args.n_splits}")
     print(f"  gnn        = hidden={args.gnn_hidden}, layers={args.gnn_layers}, "
           f"lr={args.gnn_lr}, dropout={args.gnn_dropout}, epochs={args.gnn_epochs}")
-    print("=" * 70)
+    print("\n\n\n")
 
     # 1) Load train + test (merged, no split)
     cycles_train = load_all(args.data_dir)
     cycles_test  = load_all(args.test_dir)
     cycles = cycles_train + cycles_test
     if not cycles:
-        print("[ERROR] 无数据")
+        print("[ERROR] no data found")
         return
 
     df = build_feature_table(cycles)
     df = apply_label_mode(df, args.label_mode)
-    print(f"\n[data] 总样本={len(df)}  唯一结构={df['struct_hash'].nunique()}")
-    print(f"[data] y 分布 = {df['y'].value_counts().to_dict()}")
+    print(f"\n[data] Total samples = {len(df)}  Unique structure={df['struct_hash'].nunique()}")
+    print(f"[data] y Distribution = {df['y'].value_counts().to_dict()}")
 
     quality_report(df, args.out_dir)
 
     # 2) Unified fold split (shared by the three models)
     folds = make_folds(df, n_splits=args.n_splits)
-    print(f"\n[fold] GroupKFold n_splits={len(folds)}  (train+test 合并后按 struct_hash 分组)")
+    print(f"\n[fold] GroupKFold n_splits={len(folds)}  (After merging train+test, group by `struct_hash`)")
 
     # 3) rule baseline
-    print("\n" + "=" * 70)
-    print("① 规则 baseline")
-    print("=" * 70)
+    print("\n\n\n")
+    print("1. Rule Baseline")
+    print()
     rule_res = rule_baseline(df)
 
     # 4) random forest
-    print("\n" + "=" * 70)
-    print("② Random Forest")
-    print("=" * 70)
+    print("\n\n\n")
+    print("2. Random Forest")
+    print()
     rf_res = None
     if args.do_rf:
         rf_res, rf_oof_prob, rf_oof_pred = eval_rf_on_folds(
             df, GRAPH_FEATS, folds, tag="rf",
             do_grid=args.do_grid, out_dir=args.out_dir)
-        print(f"\n  [RF GroupCV 平均] {rf_res}")
+        print(f"\n  [RF GroupCV average] {rf_res}")
 
     # 5) Heterogeneous GNN
-    print("\n" + "=" * 70)
-    print("③ Heterogeneous GNN")
-    print("=" * 70)
+    print("\n\n\n")
+    print("3. Heterogeneous GNN")
+    print()
     gnn_res = None
     if args.do_gnn:
         num_classes = 2 if args.label_mode.startswith("binary") else 3
@@ -912,14 +911,14 @@ def main():
             num_layers=args.gnn_layers, dropout=args.gnn_dropout,
             lr=args.gnn_lr, tag="gnn_full")
         if gnn_res:
-            print(f"\n  [GNN GroupCV 平均] {gnn_res}")
+            print(f"\n  [GNN GroupCV average] {gnn_res}")
 
     # 6) Ablation study
     ablation_res = {}
     if args.do_ablation:
-        print("\n" + "=" * 70)
-        print("④ Ablation study (GNN)")
-        print("=" * 70)
+        print("\n\n\n")
+        print("4. Ablation study (GNN)")
+        print()
         num_classes = 2 if args.label_mode.startswith("binary") else 3
         for name, kwargs in [
             ("full",         {}),
@@ -937,9 +936,8 @@ def main():
             print(f"  [{name:15s}] {res}")
 
     # 7) Summary
-    print("\n" + "=" * 70)
-    print("最终对比 (GroupKFold by struct_hash)")
-    print("=" * 70)
+    print("\n\n\n")
+    print("Final comparison (GroupKFold by struct_hash)")
     is_binary = args.label_mode.startswith("binary")
 
     rows = []
@@ -973,10 +971,11 @@ def main():
         "hetero_gnn": gnn_res,
         "ablation": ablation_res,
     }
-    with open(os.path.join(args.out_dir, "summary.json"), "w") as f:
-        json.dump(summary, f, indent=2, default=str)
-    print(f"\n[save] {args.out_dir}/summary.json")
 
+    file_name = f"summary-{args.label_mode}.json"
+    with open(os.path.join(args.out_dir, file_name), "w") as f:
+        json.dump(summary, f, indent=2, default=str)
+    print(f"\n[save] {args.out_dir}/{file_name}")
 
 if __name__ == "__main__":
     main()
