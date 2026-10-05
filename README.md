@@ -25,7 +25,7 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 |-Jsoup
 ```
 
-Here we chose `Apache Commons Collections`, `Apache Commons IO`, `Apache Commons Lang`, `Guava 32.1.2`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
+Here we chose `Apache Commons Collections 4.6.0`, `Apache Commons IO 2.22.0`, `Guava 32.1.2`, `Disruptor 4.0.0`, and `Jsoup 1.23.2` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
 
 ```
@@ -92,7 +92,7 @@ creating harness: com.google.common.util.concurrent.StripedHarness
 creating harness: org.jsoup.helper.HttpConnectionHarness
 creating harness: org.jsoup.nodes.ElementHarness
 creating harness: org.jsoup.parser.ParserHarness
-[INFO] report written to ./mutated-1790993066738\mutation_report.json
+[INFO] report written to ./mutated-1791003708068\mutation_report.json
 [INFO] mutated 58 classes
 ```
 
