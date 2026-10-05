@@ -10,7 +10,7 @@ MutationGenerator -> Java Parser -> Pipneliner -> (dataset) -> Evaluation & Comp
 ### MutationGenerator.py
 Perform lock-related mutations on plain Java projects to generate reproducible samples.
 
-How to use?
+**How to use?**
 
 ```bash
 python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
@@ -109,7 +109,7 @@ python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classe
 ### Parser.java
 Using Static Analysis to analyze Java programs and export CYCLEs.
 
-### How to use?
+**How to use?**
 1. compile
 ```bash
 javac -cp "*" Parser.java
@@ -150,7 +150,7 @@ See **Pipeliner.py**
 ### Pipeliner.py
 This script automatically runs `ParserB.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence.
 
-How to use?
+**How to use?**
 ```bash
 python Merger.py --input-dir "YOUR_INPUT_DIR"
 ```
@@ -170,7 +170,7 @@ Unified evaluation protocol:
   - Support binary classification (`label==2` vs `label==0`) and three-class classification (2 / 1 / 0)
   - Support ablation (removing cross-layer edges / `lock_edge` / `call_edge`)
 
-### How to use?
+**How to use?**
 ```bash
 python evaluate.py --label_mode three_way
 python evaluate.py --label_mode binary_strong
