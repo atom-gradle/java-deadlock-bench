@@ -125,18 +125,24 @@ jar uf tai-e-0.5.4.jar Parser.class Parser$HeldLock.class Parser$LockAcquisition
 jar xf tai-e-0.5.4.jar tai-e-analyses.yml
 ```
 
+modify the following attributes:
+
+```
+    **cs: ci # | k-[obj|type|call][-k'h]**
+    **only-app: false # only analyze application code**
+    **handle-invokedynamic: false**
+    **plugins: # | [ pluginClass, ... ]**
 ```
 
-    **cs: ci # | k-[obj|type|call][-k'h]**
+```
+    **cs: 1-call # | k-[obj|type|call][-k'h]**
     **only-app: true # only analyze application code**
-
-
     **handle-invokedynamic: true**
-    
     **plugins: [ MyPlugin ] # | [ pluginClass, ... ]**
 ```
 
 4. run
+
 See **Pipeliner.py**
 
 ---
