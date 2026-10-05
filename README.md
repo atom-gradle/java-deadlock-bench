@@ -126,24 +126,27 @@ jar xf tai-e-0.5.4.jar tai-e-analyses.yml
 ```
 
 modify the following attributes:
+from
 
 ```
-    **cs: ci # | k-[obj|type|call][-k'h]**
-    **only-app: false # only analyze application code**
-    **handle-invokedynamic: false**
-    **plugins: # | [ pluginClass, ... ]**
+cs: ci # | k-[obj|type|call][-k'h]
+only-app: false # only analyze application code
+handle-invokedynamic: false
+plugins: # | [ pluginClass, ... ]
 ```
 
+to
+
 ```
-    **cs: 1-call # | k-[obj|type|call][-k'h]**
-    **only-app: true # only analyze application code**
-    **handle-invokedynamic: true**
-    **plugins: [ MyPlugin ] # | [ pluginClass, ... ]**
+cs: 1-call # | k-[obj|type|call][-k'h]
+only-app: true # only analyze application code
+handle-invokedynamic: true**
+plugins: [ MyPlugin ] # | [ pluginClass, ... ]
 ```
 
 4. run
 
-See **Pipeliner.py**
+- See **Pipeliner.py**
 
 ---
 
@@ -152,7 +155,7 @@ This script automatically runs `ParserB.java` and then merges output(.txt) into 
 
 **How to use?**
 ```bash
-python Merger.py --input-dir "YOUR_INPUT_DIR"
+python Pipeliner.py --input-dir "YOUR_INPUT_DIR"
 ```
 
 ---
