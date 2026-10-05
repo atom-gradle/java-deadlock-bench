@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Perform lock-related mutations on plain Java projects to generate
-reproducible samples.
+Perform lock-related mutations on plain Java projects
+to generate reproducible samples.
 """
 
 import os, re, json, random, shutil, time, argparse
@@ -15,9 +15,7 @@ REPORT_PATH = os.path.join(OUTPUT_DIR, "mutation_report.json")
 RETAIN_ALL_CLASSES = False
 SEED = 42
 
-# ============================================================
 # Probability
-# ============================================================
 P_REPLACE_LOCK = 0.5
 P_REASSIGN_LOCK = 0.3
 P_INSERT_SLEEP = 0.4
@@ -38,9 +36,7 @@ P_FAKE_CROSS_LOCK = 0.15
 
 SKIP_REPLACE_LOCK_IF_CROSS = True
 
-# ============================================================
-# 数值
-# ============================================================
+# Values
 SLEEP_MIN = 100
 SLEEP_MAX = 500
 CROSS_LOCK_SLEEP_MIN = 100
@@ -115,10 +111,7 @@ RE_TRY_FINALLY_LOCK = re.compile(
     re.MULTILINE
 )
 
-
-# ============================================================
-# 采样
-# ============================================================
+# sample
 def sample_normal_int(mean, std, lo, hi):
     v = int(round(random.gauss(mean, std)))
     return max(lo, min(hi, v))
@@ -137,10 +130,7 @@ def sample_call_distance():
 def sample_ring_chain_dist():
     return random.randint(RING_CHAIN_DIST_MIN, RING_CHAIN_DIST_MAX)
 
-
-# ============================================================
 # IO
-# ============================================================
 def read_file(path):
     try:
         with open(path, "r", encoding="utf-8", errors="ignore") as f:
@@ -180,10 +170,7 @@ def resolve_source_root(project_dir):
             return c
     return None
 
-
-# ============================================================
-# 注释剥离 / 括号扫描
-# ============================================================
+# Comment stripping / parenthesis scanning
 def strip_comments(content):
     result = []
     i = 0
@@ -290,10 +277,7 @@ def remove_nested_classes(body):
         i = j
     return ''.join(result)
 
-
-# ============================================================
-# 字段区域
-# ============================================================
+# field region
 def _field_region(content, class_name):
     clean = strip_comments(content)
     class_pattern = re.compile(
@@ -316,10 +300,7 @@ def _field_region(content, class_name):
         return body[:method_decl.start()]
     return body
 
-
-# ============================================================
 # parsers
-# ============================================================
 def parse_package(content):
     m = RE_PACKAGE.search(content)
     return m.group(1) if m else None
@@ -619,11 +600,6 @@ def simple_args_for(params):
             args.append(f"({typ}) null")
     return args
 
-
-# ============================================================
-# 方法体定位
-# ============================================================
-
 def _locate_method_body(content, method_name):
     pat = re.compile(
         r'([ \t]*(?:public|protected|private)?[ \t]*(?:static[ \t]+)?'
@@ -657,11 +633,7 @@ def _method_body_has_lock(content, method_name):
         return True
     return False
 
-
-# ============================================================
-# 锁字段声明工具
-# ============================================================
-
+# Lock field declaration tool
 def _collect_usable_locks(lock_fields):
     seen = set()
     out = []
@@ -699,10 +671,10 @@ def _field_exists(content, name, class_name):
 
 def _class_end_pos(content, class_name):
     """
-    返回**原始 content** 中类体最后 '}' 的位置。
-    关键：使用 strip_comments 后找到 '}' 的位置，然后在原始 content 上
-    找到对应的字符——为了对齐，使用"从末尾倒数"的策略：
-    找最后一个 `\n}` 出现在文件里的位置（且该 `}` 是类的闭合括号）。
+    Return the position of the last '}' of the class body in the original content.
+    Key: use `strip_comments` to find the position of '}', then locate the corresponding character in the original content.
+    For alignment, use the "count backward from the end" strategy:
+    find the position where the last `\n}` appears in the file (and that `}` is the class's closing brace).
     """
     clean = strip_comments(content)
     class_pattern = re.compile(
@@ -712,21 +684,20 @@ def _class_end_pos(content, class_name):
     m = class_pattern.search(clean)
     if not m:
         return None
-    # 在 clean 上找类的结束 '}'
+    # Find the class's closing '}' in the clean (comment-stripped) content
     start = m.end()
     end_in_clean = _scan_balanced_braces(clean, start) - 1
-    # 因为 strip_comments 会删掉注释字符，end_in_clean 的位置不能直接用到原 content 上
-    # 简单策略：在原始 content 中查找类体最后的 '}'——最后一个非空行以 '}' 结尾
-    # 更精确：从 end_in_clean 对应的内容附近（±2000 字符）在原始 content 里找相同的 '}' 位置
-    # 保守做法：直接从 content 尾部向前找最后一个单独的 '}'
+    # Because strip_comments removes comment characters, the position of end_in_clean cannot be directly applied to the original content.
+    # Simple strategy: find the final '}' of the class body in the original content—the last non-empty line ends with '}'.
+    # More precise: search the original content near the content corresponding to end_in_clean (±2000 characters) for the same '}' position.
+    # Conservative approach: search backward from the end of the content for the last standalone '}'.
     idx = content.rfind('}')
     while idx >= 0:
-        # 检查前面是不是空白+换行（即一个独立的 '}'）
+        # Check whether it is preceded by whitespace + newline (i.e., a standalone '}')
         j = idx - 1
         while j >= 0 and content[j] in ' \t\r\n':
             j -= 1
-        # 找当前 '}' 是否在类体内（用括号计数快速验证）
-        return idx  # 直接返回最后一个 '}'，它是类的结束
+        return idx  # Directly return the last '}', which is the end of the class.
     return None
 
 
@@ -774,24 +745,16 @@ def _ensure_class_has_a_lock(content, class_name):
 
 
 def _insert_decls_at_class_end(content, decl, class_name):
-    """
-    把 decl 插入到类体末尾（紧挨最后的 '}' 之前）。
-    关键修复：在 '}' 前面**强制换行**，避免跟注释串（如 `// moved into url as get params`）。
-    """
     if not decl:
         return content
     pos = _class_end_pos(content, class_name)
     if pos is None:
         return content
-    # 前面留 2 个换行，避免跟已有注释串
+    # Leave 2 newlines in front to avoid merging with existing comments.
     decl_padded = "\n\n" + decl.strip("\n") + "\n"
     return content[:pos] + decl_padded + content[pos:]
 
-
-# ============================================================
-# 基础变异
-# ============================================================
-
+# Basic mutation
 def mutate_replace_lock(content, lock_fields):
     if not lock_fields:
         return content, []
@@ -882,11 +845,7 @@ def mutate_add_sync_block(content, lock_fields):
         "name": method_name,
     }]
 
-
-# ============================================================
-# 需求 1：方法体嵌套
-# ============================================================
-
+# Method body nesting
 def mutate_wrap_method_with_sync(content, class_name, method, lock_name,
                                  sleep_ms=None, use_new_lock=True):
     loc = _locate_method_body(content, method["name"])
@@ -1002,7 +961,7 @@ def mutate_nest_inside_sync_block(content, class_name, base_lock_name, sleep_ms=
 def mutate_add_deep_nesting(content, class_name, lock_fields, methods,
                             depth=None):
     """
-    返回 (new_content, records, decl, host_method_name)
+    return (new_content, records, decl, host_method_name)
     """
     if not methods:
         return content, [], "", None
@@ -1138,11 +1097,7 @@ def mutate_insert_call_chain(content, method, methods, target_method,
         "target": target_method["name"] if target_method else None,
     }]
 
-
-# ============================================================
-# 交叉加锁变异
-# ============================================================
-
+# Cross-lock mutation
 def _fake_guard_code():
     return """
     private static boolean __crossLockGuard() {
@@ -1274,7 +1229,7 @@ def _gen_ring_methods(group_id, ring_index, my_lock, next_ring_entry,
 def mutate_add_cross_lock(content, lock_fields, class_name,
                           lock_unlock_methods=None):
     """
-    返回 (new_content, records, info, extra_decl)
+    return (new_content, records, info, extra_decl)
     """
     if random.random() >= P_ADD_CROSS_LOCK:
         return content, [], None, ""
@@ -1406,23 +1361,18 @@ def mutate_add_cross_lock(content, lock_fields, class_name,
     }
     return content, all_recs, info, merged_decl
 
-
-# ============================================================
-# mock 链（v11 修复版）
-# ============================================================
-
+# mock chain
 def _build_mock_chain(content, class_name, methods, depth_limit,
                       lock_name=None, sync_block_name=None,
                       exclude_method=None,
                       must_call_method=None,
                       mutated_methods=None):
     """
-    v11 逻辑：
-    - must_call_method 优先
-    - 否则从 mutated_methods（被变异加了 synchronized 的方法名集合）中选一个
-    - 否则选原始源码里有 synchronized 块的方法
-    - 否则选 is_synchronized 方法
-    - 都没有：链尾不调源码方法
+    - `must_call_method` takes priority.
+    - Otherwise, pick one from `mutated_methods` (the set of method names that the mutator added `synchronized` to).
+    - Otherwise, pick a method that has a `synchronized` block in the original source code.
+    - Otherwise, pick an `is_synchronized` method.
+    - If none of these exist: the tail of the chain does not call any source method.
     """
     mutated_methods = mutated_methods or set()
     tail_target = None
@@ -1434,7 +1384,7 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
                 tail_target = m
                 break
 
-    # 2. 从 mutated_methods 里选
+    # 2. choose from mutated_methods
     if tail_target is None and mutated_methods:
         candidates = [m for m in methods
                       if m["name"] in mutated_methods
@@ -1445,7 +1395,7 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
         if candidates:
             tail_target = random.choice(candidates)
 
-    # 3. 原始源码就有 synchronized 块
+    # 3. The original source code already has a `synchronized` block
     if tail_target is None:
         locked = [m for m in methods
                   if m["name"] not in ALWAYS_EXCLUDE_METHODS
@@ -1459,7 +1409,7 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
         if locked:
             tail_target = random.choice(locked)
 
-    # 4. is_synchronized 方法
+    # 4. is_synchronized method
     if tail_target is None:
         locked = [m for m in methods
                   if m["name"] not in ALWAYS_EXCLUDE_METHODS
@@ -1472,7 +1422,7 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
         if locked:
             tail_target = random.choice(locked)
 
-    # 构造 tail_call
+    # construct tail_call
     tail_call = ""
     if tail_target is not None:
         args = ", ".join(simple_args_for(tail_target["params"]))
@@ -1571,17 +1521,13 @@ def mutate_add_mock_chain(content, class_name, methods,
         "chain": [c["name"] for c in chain],
     }]
 
-
-# ============================================================
-# 组合变异
-# ============================================================
-
+# Combination mutation
 def mutate_class(content, class_name, lock_fields, methods):
     records = []
     new_content = content
     sync_block_name = None
     pending_decls = []
-    # 记录被变异器加了 synchronized 的方法名
+    # Record the names of methods that the mutator added `synchronized` to
     mutated_methods_with_lock = set()
 
     new_content, existing_lock = _ensure_class_has_a_lock(new_content, class_name)
@@ -1591,7 +1537,7 @@ def mutate_class(content, class_name, lock_fields, methods):
 
     lock_unlock_methods = parse_lock_unlock_methods(new_content, class_name)
 
-    # 1a. 给含锁方法套一层 synchronized
+    # 1.1 Wrap methods that contain locks with an extra layer of `synchronized`.
     if lock_unlock_methods and lock_fields and random.random() < P_WRAP_METHOD_WITH_SYNC:
         k = min(MAX_WRAP_METHODS_PER_CLASS, len(lock_unlock_methods))
         for m in random.sample(lock_unlock_methods, k):
@@ -1607,7 +1553,7 @@ def mutate_class(content, class_name, lock_fields, methods):
             if r:
                 mutated_methods_with_lock.add(m["name"])
 
-    # 1b. 在已有 synchronized 块内部再嵌套一层
+    # 1.2 Nest another layer inside an existing `synchronized` block
     if lock_fields and random.random() < P_NEST_SYNC_BLOCK:
         base = random.choice(lock_fields)["name"]
         new_content, r, extra_decls = mutate_nest_inside_sync_block(
@@ -1617,7 +1563,7 @@ def mutate_class(content, class_name, lock_fields, methods):
         records.extend(r)
         pending_decls.extend(extra_decls)
 
-    # 1c. 方法内 2/3/4 层嵌套
+    # 1.3 2/3/4 levels of nesting inside the method.
     deep_nested_hosts = []
     for _ in range(MAX_DEEP_NESTING_PER_CLASS):
         if random.random() >= P_ADD_DEEP_NESTING:
@@ -1634,7 +1580,7 @@ def mutate_class(content, class_name, lock_fields, methods):
                 mutated_methods_with_lock.add(host_name)
             lock_fields = parse_lock_fields(new_content)
 
-    # 2. 给真实含锁方法插入调用距离链
+    # 2. Insert a call-distance chain for methods that genuinely contain locks
     if lock_unlock_methods and random.random() < P_INSERT_CALL_CHAIN:
         k = min(MAX_CALL_CHAIN_PER_CLASS, len(lock_unlock_methods))
         for m in random.sample(lock_unlock_methods, k):
@@ -1644,7 +1590,7 @@ def mutate_class(content, class_name, lock_fields, methods):
             )
             records.extend(r)
 
-    # 3. 交叉锁环
+    # 3. cross lock cycle
     new_content, cross_recs, cross_info, cross_decl = mutate_add_cross_lock(
         new_content, lock_fields, class_name,
         lock_unlock_methods=lock_unlock_methods,
@@ -1655,7 +1601,7 @@ def mutate_class(content, class_name, lock_fields, methods):
     if cross_decl:
         pending_decls.append(cross_decl)
 
-    # 4. 基础变异
+    # 4. standard mutation
     do_replace = random.random() < P_REPLACE_LOCK
     if cross_hit and SKIP_REPLACE_LOCK_IF_CROSS:
         do_replace = False
@@ -1679,7 +1625,7 @@ def mutate_class(content, class_name, lock_fields, methods):
         if r and r[0].get("op") == "add_sync_block":
             sync_block_name = r[0].get("name")
 
-    # 5. mock 链
+    # 5. mock chain
     if random.random() < P_ADD_MOCK_METHOD:
         insert_target = None
         candidates = [m for m in methods
@@ -1697,7 +1643,7 @@ def mutate_class(content, class_name, lock_fields, methods):
         if lock_fields:
             mock_lock = random.choice(lock_fields)["name"]
 
-        # 关键：mock 链尾优先调"被变异加了 synchronized 的方法"
+        # The tail of the mock chain should preferentially call the method that was mutated by adding `synchronized`
         must_call = None
         if mutated_methods_with_lock:
             must_call = random.choice(list(mutated_methods_with_lock))
@@ -1714,7 +1660,7 @@ def mutate_class(content, class_name, lock_fields, methods):
         )
         records.extend(r)
 
-    # 6. 统一把 pending_decls 插入到类体末尾
+    # 6. Uniformly insert `pending_decls` at the end of the class body.
     if pending_decls:
         merged_lines = []
         seen_names = set()
@@ -1739,11 +1685,7 @@ def mutate_class(content, class_name, lock_fields, methods):
 
     return new_content, records, cross_info
 
-
-# ============================================================
 # Harness
-# ============================================================
-
 def _emit_call(lines, class_name, m, indent="        "):
     args = ", ".join(simple_args_for(m["params"]))
     if m.get("is_static"):
