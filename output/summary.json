@@ -1,0 +1,55 @@
+{
+  "config": {
+    "data_dir": "train",
+    "test_dir": "test",
+    "out_dir": "./output",
+    "label_mode": "three_way",
+    "n_splits": 5,
+    "gnn_epochs": 100,
+    "gnn_hidden": 64,
+    "gnn_layers": 2,
+    "gnn_lr": 0.001,
+    "gnn_dropout": 0.3,
+    "do_rf": true,
+    "do_gnn": true,
+    "do_grid": false,
+    "do_ablation": true
+  },
+  "n_samples": 1778,
+  "n_structures": 489,
+  "y_distribution": {
+    "2": 903,
+    "1": 476,
+    "0": 399
+  },
+  "rule_baseline": {
+    "acc": 0.22440944881889763,
+    "f1_macro": 0.12218649517684887
+  },
+  "random_forest": {
+    "f1_macro": 0.5648433371657686,
+    "acc": 0.68789840164583
+  },
+  "hetero_gnn": {
+    "f1_macro": 0.6726976011274765,
+    "acc": 0.7306377591391042
+  },
+  "ablation": {
+    "full": {
+      "f1_macro": 0.6601780393935053,
+      "acc": 0.7053267922139579
+    },
+    "no_cross": {
+      "f1_macro": 0.6067360556814719,
+      "acc": 0.7030922614337711
+    },
+    "no_lock_edge": {
+      "f1_macro": 0.6888287889032173,
+      "acc": 0.7368238645355276
+    },
+    "no_call_edge": {
+      "f1_macro": 0.5993937669799685,
+      "acc": 0.6738518752967242
+    }
+  }
+}
