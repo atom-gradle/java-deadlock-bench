@@ -11,10 +11,6 @@ Unified evaluation protocol:
   - The three models share the same fold split to ensure a fair comparison
   - Support binary classification (`label==2` vs `label==0`) and three-class classification (2 / 1 / 0)
   - Support ablation (removing cross-layer edges / `lock_edge` / `call_edge`)
-
-How to use?
-  python evaluate.py --label_mode binary_strong
-  python evaluate.py --label_mode three_way --do_grid --do_ablation
 """
 
 import argparse,glob,hashlib,json,os,re,warnings,joblib
@@ -36,7 +32,6 @@ from torch_geometric.nn import GINEConv, HeteroConv, Linear, global_mean_pool
 
 warnings.filterwarnings("ignore")
 
-# Settings
 RANDOM_SEED = 42
 np.random.seed(RANDOM_SEED)
 torch.manual_seed(RANDOM_SEED)
@@ -56,13 +51,13 @@ GRAPH_FEATS = [
     "avg_call_dist", "nested_ratio",
 ]
 
-# CYCLE_FEATURES（仅用于泄漏检测，不进入模型）
+# CYCLE_FEATURES (only used for leakage detection, not fed into the model)
 CYCLE_FEATS = [
     "thread_count", "max_thread_occurrence", "edge_count",
     "all_edges_same_thread", "all_edges_reachable", "has_non_adjacent_edge",
 ]
 
-# 1. 解析器
+# 1. Parser
 def parse_file(filepath):
     cycles = []
     cur = None
@@ -91,7 +86,7 @@ def parse_file(filepath):
 
         if line.startswith("LOCK_NODE"):
             _, rest = line.split(None, 1)
-            # 从右往左切 3 刀：obj_type, is_static, obj_nonnull（这三个不含逗号）
+            # Split 3 times from right to left: `obj_type`, `is_static`, `obj_nonnull` (these three do not contain commas)
             key_part, obj_type, is_static, obj_nonnull = rest.rsplit(",", 3)
             nid, obj_key = key_part.split(",", 1)
             cur["lock_nodes"].append({
@@ -151,7 +146,7 @@ def parse_file(filepath):
             cur["labels"]["cycle"] = int(line.split()[1])
 
         elif line.startswith("LABEL_REAL"):
-            # 4 值 ground truth（2/1/0/-1）
+            # 4-value ground truth (2/1/0/-1)
             cur["labels"]["real"] = int(line.split()[1])
 
     if cur is not None:
@@ -161,14 +156,14 @@ def parse_file(filepath):
 
 def load_all(data_dir, pattern="graph-*-copy.txt"):
     """
-    默认只读 -copy.txt（细粒度 LABEL_REAL 标注的版本）。
-    如果找不到 -copy，退回 graph-*.txt。
+    By default, read only `-copy.txt` (the version with fine-grained `LABEL_REAL` annotations).
+    If no `-copy` file is found, fall back to `graph-*.txt`
     """
     files = sorted(glob.glob(os.path.join(data_dir, pattern)))
     if not files:
         print(f"[load] 未找到 {pattern}，尝试 graph-*.txt")
         files = sorted(glob.glob(os.path.join(data_dir, "graph-*.txt")))
-        # 排除 -copy.txt（避免重复）
+        # Exclude `-copy.txt` (to avoid duplicates)
         files = [f for f in files if "-copy" not in f]
     print(f"[load] {data_dir}: {len(files)} 个文件")
     cycles = []
@@ -277,26 +272,26 @@ def apply_label_mode(df, label_mode):
 
 # 3. Data quality report
 def quality_report(df, out_dir):
-    print("\n" + "=" * 30)
-    print("数据质量评估")
-    print("=" * 30)
+    print("\n\n\n")
+    print("Data quality assessment")
+    print()
 
-    print("\n[label_real 原始分布]")
+    print("\n[label_real raw distribution]")
     print(df["label_real"].value_counts().sort_index())
 
-    print("\n[y 分布 (after label_mode)]")
+    print("\n[y Distribution (after label_mode)]")
     print(df["y"].value_counts().sort_index())
 
-    print(f"\n[结构重复] 唯一 struct_hash = {df['struct_hash'].nunique()} / 总样本 {len(df)}")
+    print(f"\n[Duplicate structures] unique struct_hash = {df['struct_hash'].nunique()} / 总样本 {len(df)}")
 
-    print("\n[缺失值]")
+    print("\n[Missing values]")
     miss = df.isnull().sum()
     miss = miss[miss > 0]
-    print(miss if len(miss) else "  无缺失")
+    print(miss if len(miss) else "  No missing values")
 
     # Single-feature Mann-Whitney (for binary classification)
     if df["y"].nunique() == 2:
-        print("\n[单特征判别性 (Mann-Whitney U)]")
+        print("\n[Single-feature discriminative power (Mann-Whitney U)]")
         print(f"  {'feature':28s} {'p-value':>12s} {'AUC':>8s}")
         pos = df[df["y"] == 1]; neg = df[df["y"] == 0]
         results = []
@@ -385,7 +380,7 @@ def make_folds(df, n_splits=5):
     n_groups = len(np.unique(groups))
     n_splits = min(n_splits, n_groups)
     if n_splits < 2:
-        raise ValueError(f"唯一结构数太少 ({n_groups})")
+        raise ValueError(f"Too few unique structure ({n_groups})")
 
     gkf = GroupKFold(n_splits=n_splits)
     return list(gkf.split(np.zeros(len(df)), y, groups))
@@ -399,7 +394,7 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
     y = df["y"].values.astype(int)
     is_binary = df["y"].nunique() == 2
 
-    # ---- Use GridSearch to find the best hyperparameters. ----
+    # Use GridSearch to find the best hyperparameters
     best_params = None
     if do_grid:
         print(f"\n  [GridSearch] ...")
@@ -409,7 +404,7 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
             "min_samples_leaf": [1, 2, 4],
             "class_weight": ["balanced", "balanced_subsample"],
         }
-        # Use the training set of the first fold for GridSearch.
+        # Use the training set of the first fold for GridSearch
         tr0, _ = folds[0]
         rf = RandomForestClassifier(random_state=RANDOM_SEED, n_jobs=-1)
         scoring = "roc_auc" if is_binary else "f1_macro"
@@ -526,7 +521,7 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
     else:
         data["acq"].x = torch.zeros((0, ACQ_FEAT_DIM), dtype=torch.float)
 
-    # lock_edge（带 edge_attr：dist / may_alias / same_lock_obj） ---
+    # lock_edge (with edge_attr：dist / may_alias / same_lock_obj)
     if c["lock_edges"] and not drop_lock_edge:
         le = torch.tensor([[e["from"] for e in c["lock_edges"]],
                            [e["to"] for e in c["lock_edges"]]], dtype=torch.long)
@@ -541,7 +536,7 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
     data["lock", "lock_edge", "lock"].edge_index = le
     data["lock", "lock_edge", "lock"].edge_attr = le_attr
 
-    # --- call_edge（带 edge_attr：dist / same_method / nested） ---
+    # call_edge (with edge_attr：dist / same_method / nested)
     if c["call_edges"] and not drop_call_edge:
         ce = torch.tensor([[e["src"] for e in c["call_edges"]],
                            [e["dst"] for e in c["call_edges"]]], dtype=torch.long)
