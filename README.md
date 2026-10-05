@@ -3,7 +3,7 @@
 This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Pipeline
-MutationGenerator -> Java Parser -> Pipneliner -> (dataset) -> Evaluation(Baseling/ML/GNN)
+MutationGenerator -> Java Parser -> Pipneliner -> (dataset) -> Evaluation & Comparison(Baseling/ML/GNN)
 
 ---
 
