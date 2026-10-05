@@ -18,10 +18,12 @@ python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classe
 
 Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like
 
--JavaProjects
+```
+-Projects
 |-Disruptor
-|-Agrona
-|-RxJava
+|-Guava
+|-Jsoup
+```
 
 Here we chose `Apache Commons Collections`, `Apache Commons IO`, `Apache Commons Lang`, `Guava 32.1.2`, `Disruptor`, and `Jsoup` thanks to their clear project structure and few dependencies.
 The program's output goes like this.
@@ -162,8 +164,13 @@ Unified evaluation protocol:
   - Support binary classification (`label==2` vs `label==0`) and three-class classification (2 / 1 / 0)
   - Support ablation (removing cross-layer edges / `lock_edge` / `call_edge`)
 
----
-
+### How to use?
+```bash
+python evaluate.py --label_mode three_way
+python evaluate.py --label_mode binary_strong
+python evaluate.py --label_mode binary_weak
+python evaluate.py --label_mode three_way --do_grid --do_ablation
+```
 
 ---
 
