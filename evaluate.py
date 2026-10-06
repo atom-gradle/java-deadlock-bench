@@ -161,18 +161,18 @@ def load_all(data_dir, pattern="graph-*-copy.txt"):
     """
     files = sorted(glob.glob(os.path.join(data_dir, pattern)))
     if not files:
-        print(f"[load] 未找到 {pattern}，尝试 graph-*.txt")
+        print(f"[load] {pattern} not found, search for graph-*.txt")
         files = sorted(glob.glob(os.path.join(data_dir, "graph-*.txt")))
         # Exclude `-copy.txt` (to avoid duplicates)
         files = [f for f in files if "-copy" not in f]
-    print(f"[load] {data_dir}: {len(files)} 个文件")
+    print(f"[load] {data_dir}: {len(files)} files")
     cycles = []
     for f in files:
         try:
             cycles.extend(parse_file(f))
         except Exception as e:
-            print(f"[warn] 解析 {f} 失败: {e}")
-    print(f"[load] 共 {len(cycles)} 个 CYCLE")
+            print(f"[warn] failed to parse {f} : {e}")
+    print(f"[load] {len(cycles)} CYCLE in total")
     return cycles
 
 # 2. Feature table + structure hash + label
@@ -282,7 +282,7 @@ def quality_report(df, out_dir):
     print("\n[y Distribution (after label_mode)]")
     print(df["y"].value_counts().sort_index())
 
-    print(f"\n[Duplicate structures] unique struct_hash = {df['struct_hash'].nunique()} / 总样本 {len(df)}")
+    print(f"\n[Duplicate structures] unique struct_hash = {df['struct_hash'].nunique()} / total samples: {len(df)}")
 
     print("\n[Missing values]")
     miss = df.isnull().sum()
@@ -357,7 +357,7 @@ def rule_baseline(df):
         p  = precision_score(y, pred, zero_division=0)
         r  = recall_score(y, pred, zero_division=0)
         print(f"  Acc={acc:.4f}  AUC={auc:.4f}  F1={f1:.4f}  P={p:.4f}  R={r:.4f}")
-        print(f"  预测正类比例={pred.mean():.4f}  真实正类比例={y.mean():.4f}")
+        print(f"  Predicted positive class ratio={pred.mean():.4f}  True positive class ratio={y.mean():.4f}")
         return {"acc": float(acc), "auc": float(auc),
                 "f1": float(f1), "precision": float(p), "recall": float(r)}
     else:
@@ -366,8 +366,8 @@ def rule_baseline(df):
         pred3 = np.where(pred == 1, 2, 0)
         acc = (pred3 == y).mean()
         f1m = f1_score(y, pred3, average="macro", zero_division=0)
-        print(f"  [三分类] Acc={acc:.4f}  macro-F1={f1m:.4f}")
-        print(f"  规则只能输出 0/2，无法区分 label 1")
+        print(f"  [Three-class classification] Acc={acc:.4f}  macro-F1={f1m:.4f}")
+        print(f"  The rule can only output 0/2 and cannot distinguish label 1.")
         return {"acc": float(acc), "f1_macro": float(f1m)}
 
 # 5. Unified K-Fold split (shared by the three models)
@@ -855,7 +855,6 @@ def main():
     print(f"  n_splits   = {args.n_splits}")
     print(f"  gnn        = hidden={args.gnn_hidden}, layers={args.gnn_layers}, "
           f"lr={args.gnn_lr}, dropout={args.gnn_dropout}, epochs={args.gnn_epochs}")
-    print("\n\n\n")
 
     # 1) Load train + test (merged, no split)
     cycles_train = load_all(args.data_dir)
@@ -877,13 +876,13 @@ def main():
     print(f"\n[fold] GroupKFold n_splits={len(folds)}  (After merging train+test, group by `struct_hash`)")
 
     # 3) rule baseline
-    print("\n\n\n")
+    print("\n\n")
     print("1. Rule Baseline")
     print()
     rule_res = rule_baseline(df)
 
     # 4) random forest
-    print("\n\n\n")
+    print("\n\n")
     print("2. Random Forest")
     print()
     rf_res = None
@@ -891,10 +890,10 @@ def main():
         rf_res, rf_oof_prob, rf_oof_pred = eval_rf_on_folds(
             df, GRAPH_FEATS, folds, tag="rf",
             do_grid=args.do_grid, out_dir=args.out_dir)
-        print(f"\n  [RF GroupCV average] {rf_res}")
+        print(f"  [RF GroupCV average] {rf_res}")
 
     # 5) Heterogeneous GNN
-    print("\n\n\n")
+    print("\n\n")
     print("3. Heterogeneous GNN")
     print()
     gnn_res = None
@@ -906,12 +905,12 @@ def main():
             num_layers=args.gnn_layers, dropout=args.gnn_dropout,
             lr=args.gnn_lr, tag="gnn_full")
         if gnn_res:
-            print(f"\n  [GNN GroupCV average] {gnn_res}")
+            print(f"  [GNN GroupCV average] {gnn_res}")
 
     # 6) Ablation study
     ablation_res = {}
     if args.do_ablation:
-        print("\n\n\n")
+        print("\n\n")
         print("4. Ablation study (GNN)")
         print()
         num_classes = 2 if args.label_mode.startswith("binary") else 3
@@ -931,7 +930,7 @@ def main():
             print(f"  [{name:15s}] {res}")
 
     # 7) Summary
-    print("\n\n\n")
+    print("\n\n")
     print("Final comparison (GroupKFold by struct_hash)")
     is_binary = args.label_mode.startswith("binary")
 
