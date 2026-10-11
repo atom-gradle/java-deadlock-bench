@@ -3,17 +3,17 @@
 This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Pipeline
-MutationGenerator -> Java Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
+Generate Mutation -> Java Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
 
-### MutationGenerator.py
-Perform lock-related mutations on plain Java projects to generate reproducible samples.
+### mutation_generator.py
+Perform lock-related mutations on Java projects to generate reproducible samples.
 
 **How to use?**
 
 ```bash
-python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
+python mutation_generator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
 ```
 
 Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to mutate. For example, the directory can be like
@@ -25,12 +25,12 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 |-commons-collections-master
 ```
 
-Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
+Note: mutation_generator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
 or "src" is not directly settled in project root folder.
 
 If you want to retain all original classes in Java project for convinient replacement and compile, then add this param `--retain-all-classes`
 ```bash
-python MutationGenerator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
+python mutation_generator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
 ```
 
 ---
