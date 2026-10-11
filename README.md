@@ -70,7 +70,7 @@ plugins: # | [ pluginClass, ... ]
 ```
 cs: 1-call # | k-[obj|type|call][-k'h]
 only-app: true # only analyze application code
-handle-invokedynamic: true**
+handle-invokedynamic: true
 plugins: [ MyPlugin ] # | [ pluginClass, ... ]
 ```
 
