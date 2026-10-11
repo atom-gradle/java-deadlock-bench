@@ -1,7 +1,5 @@
 import pascal.taie.World;
-import pascal.taie.analysis.graph.callgraph.CallKind;
-import pascal.taie.analysis.graph.callgraph.CallGraphs;
-import pascal.taie.analysis.graph.callgraph.Edge;
+import pascal.taie.analysis.graph.callgraph.*;
 import pascal.taie.analysis.graph.flowgraph.FlowKind;
 import pascal.taie.analysis.pta.core.cs.context.Context;
 import pascal.taie.analysis.pta.core.cs.element.*;
@@ -17,8 +15,7 @@ import pascal.taie.language.classes.*;
 import pascal.taie.language.type.ClassType;
 import pascal.taie.language.type.Type;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -144,7 +141,7 @@ public class MyPlugin implements Plugin {
         Context context = csMethod.getContext();
         InvokeExp invokeExp = stmt.getInvokeExp();
 
-        // ReentrantLock.lock/unlock
+        // 4.1 ReentrantLock.lock/unlock
         if (invokeExp instanceof InvokeInstanceExp instanceExp) {
             Var base = instanceExp.getBase();
             if (base != null) {
@@ -168,7 +165,7 @@ public class MyPlugin implements Plugin {
             }
         }
 
-        // invokedynamic & lambda
+        // 4.2 invokedynamic → lambda
         if (invokeExp instanceof InvokeDynamic dynamicExp) {
             System.out.println("[handleInvoke]: invokedynamic");
             MethodHandle implHandle = null;
@@ -196,11 +193,11 @@ public class MyPlugin implements Plugin {
 
                 Type lambdaType = stmt.getInvokeExp().getType();
                 Obj lambdaObj = solver.getHeapModel().getMockObj(
-                        () -> "Lambda@" + stmt.getLineNumber(),   // Descriptor
-                        stmt,                                     // alloc site
-                        lambdaType,                               // Type
-                        csMethod.getMethod(),                     // container JMethod
-                        true                                      // isFunctional
+                        () -> "Lambda@" + stmt.getLineNumber(),
+                        stmt,
+                        lambdaType,
+                        csMethod.getMethod(),
+                        true
                 );
 
                 CSObj csLambdaObj = solver.getCSManager().getCSObj(
@@ -218,9 +215,9 @@ public class MyPlugin implements Plugin {
         Context recvContext = recv.getContext();
         for (Invoke callSite : recv.getVar().getInvokes()) {
             JMethod callee = resolveCallee(recvObj, callSite);
-            // [processCall] recv=[]:<Deadlock: void main(java.lang.String[])>/%v3
-            // recvObj=[]:NewObj{<Deadlock: void main(java.lang.String[])>[0@L15] new java.lang.Thread}
-            // callSite=<Deadlock: void main(java.lang.String[])>[3@L15] invokespecial %v3.<init>(%v4)
+            // [processCall] recv=[]:<Deadlock_Reentrant: void main(java.lang.String[])>/%v3
+            // recvObj=[]:NewObj{<Deadlock_Reentrant: void main(java.lang.String[])>[0@L15] new java.lang.Thread}
+            // callSite=<Deadlock_Reentrant: void main(java.lang.String[])>[3@L15] invokespecial %v3.<init>(%v4)
             // callee=<java.lang.Thread: void <init>(java.lang.Runnable)>
             // [processCall]: init- <java.lang.Thread: java.lang.Runnable target>
             System.out.println("[processCall] recv=" + recv
@@ -229,7 +226,6 @@ public class MyPlugin implements Plugin {
                     + ", callee=" + callee);
             if (callee == null) continue;
 
-            // ---- Thread.<init>(Runnable) ----
             if (isThreadMethod(callee, "<init>")) {
                 JField targetField = World.get().getClassHierarchy()
                         .getClass("java.lang.Thread").getDeclaredField("target");
@@ -249,7 +245,6 @@ public class MyPlugin implements Plugin {
             }
 
             if (isThreadMethod(callee, "start")) {
-
                 String key = System.identityHashCode(recvObj) + "@"
                         + System.identityHashCode(callSite);
                 if (!processedCalls.add(key)) continue;
@@ -325,7 +320,6 @@ public class MyPlugin implements Plugin {
         if (callee != null) return callee;
         return invoke.getInvokeExp().getMethodRef().resolve();
     }
-
 
     @Override
     public void onFinish() {
@@ -455,7 +449,6 @@ public class MyPlugin implements Plugin {
                     Set<CSObj> toObjs = new HashSet<>(la.lockObjs);
                     if (toObjs.isEmpty())
                         solver.getPointsToSetOf(la.lockVar).forEach(toObjs::add);
-
                     System.out.println("[buildLockOrderGraph] la=" + la
                             + ", la.lockVar identity = " + System.identityHashCode(la.lockVar)
                             + ", pts = " + solver.getPointsToSetOf(la.lockVar)
@@ -688,6 +681,7 @@ public class MyPlugin implements Plugin {
                 }
                 writer.write("\n");
 
+                // 环上所有边的 fromLa / toLa 涉及的获锁点
                 Map<String, Integer> acqNodeId = new LinkedHashMap<>();
                 List<LockAcquisition> acqNodeList = new ArrayList<>();
 
@@ -765,12 +759,10 @@ public class MyPlugin implements Plugin {
                         feat.threadCount, feat.maxThreadOccurrence,
                         feat.allEdgesSameThread, feat.allEdgesReachable,
                         feat.hasNonAdjacentEdge, feat.edgeCount));
-
                 StringBuilder nodeLabels = new StringBuilder();
                 for (int i = 0; i < lockNodeObj.size(); i++)
                     nodeLabels.append(i).append(",");
-                writer.write("LABEL_LOCK_NODES " + nodeLabels + "\n");
-
+                writer.write("LABEL_LOCK_NODES " + nodeLabels + "\n");1
                 StringBuilder edgeLabels = new StringBuilder();
                 for (int i = 0; i < cycle.size(); i++)
                     edgeLabels.append(i).append(",");
@@ -813,7 +805,6 @@ public class MyPlugin implements Plugin {
     }
 
     private boolean hasIntermediateLock(LockAcquisition from, LockAcquisition to) {
-
         List<CSMethod> path = shortestPath(from.method, to.method);
         if (path == null || path.size() <= 2) return false;
 
@@ -863,7 +854,6 @@ public class MyPlugin implements Plugin {
         CycleFeatures f = new CycleFeatures();
         f.edgeCount = cycle.size();
 
-
         List<String> edgeFromThreads = new ArrayList<>();
         List<String> edgeToThreads   = new ArrayList<>();
         boolean allSame = true;
@@ -901,7 +891,7 @@ public class MyPlugin implements Plugin {
 
         f.hasNonAdjacentEdge = hasNonAdjacentEdge(cycle);
 
-        f.isReal = allReachable; // conservative
+        f.isReal = allReachable;
 
         return f;
     }
@@ -1024,7 +1014,6 @@ public class MyPlugin implements Plugin {
 
                 Var lhs = invoke.getLValue();
                 if (lhs == null) continue;
-
 
                 String tid = findThreadForRunnableVar(csMethod, lhs);
                 if (tid != null) return tid;
@@ -1174,6 +1163,12 @@ public class MyPlugin implements Plugin {
         while (!queue.isEmpty()) {
             CSMethod cur = queue.poll();
             int d = dist.get(cur);
+
+            JMethod curJMethod = cur.getMethod();
+            if (curJMethod == null || curJMethod.isAbstract() || curJMethod.isNative()) {
+                continue;
+            }
+
             for (CSCallSite csCallSite : solver.getCallGraph().getCallSitesIn(cur)) {
                 for (Edge<CSCallSite, CSMethod> e
                         : solver.getCallGraph().edgesOutOf(csCallSite).toList()) {
