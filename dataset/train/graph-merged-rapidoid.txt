@@ -1,0 +1,3739 @@
+CYCLE 0
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[11@L243] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[8@L242] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[14@L244] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,DefaultSessionManager.crossLock_g2_ring1_9106,215,DefaultSessionManager.crossLock_g2_ring2_166,222,1,false,false
+LOCK_EDGE 1,2,DefaultSessionManager.mockMethod_0_9068,235,DefaultSessionManager.saveSession,108,1,false,false
+LOCK_EDGE 2,0,DefaultSessionManager.saveSession,108,DefaultSessionManager.saveSession,110,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.crossLock_g2_ring1_9106,215,%v4,false,false,1,1
+ACQ_NODE 1,DefaultSessionManager.crossLock_g2_ring2_166,222,%v4,false,false,1,1
+ACQ_NODE 2,DefaultSessionManager.mockMethod_0_9068,235,%v3,false,false,1,1
+ACQ_NODE 3,DefaultSessionManager.saveSession,108,%v15,false,false,1,1
+ACQ_NODE 4,DefaultSessionManager.saveSession,110,%v18,false,false,2,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 2,4,1,false,true
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,4,0,true,true
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 1
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[11@L243] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[8@L242] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,DefaultSessionManager.crossLock_g2_ring1_9106,215,DefaultSessionManager.crossLock_g2_ring2_166,222,1,false,false
+LOCK_EDGE 1,0,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,DefaultSessionManager.crossLock_g0_ring1_1729,155,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.crossLock_g2_ring1_9106,215,%v4,false,false,1,1
+ACQ_NODE 1,DefaultSessionManager.crossLock_g2_ring2_166,222,%v4,false,false,1,1
+ACQ_NODE 2,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,%v4,false,false,1,1
+ACQ_NODE 3,DefaultSessionManager.crossLock_g0_ring1_1729,155,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 2
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[11@L243] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,DefaultSessionManager.crossLock_g0_ring1_1729,155,DefaultSessionManager.crossLock_g0_ring1_1729,155,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.crossLock_g0_ring1_1729,155,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 3
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[11@L243] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[14@L244] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[8@L242] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,DefaultSessionManager.crossLock_g0_ring1_1729,155,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,6,false,false
+LOCK_EDGE 1,2,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,3,false,false
+LOCK_EDGE 2,0,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,DefaultSessionManager.crossLock_g0_ring1_1729,155,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.crossLock_g0_ring1_1729,155,%v4,false,false,1,1
+ACQ_NODE 1,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,%v4,false,false,1,1
+ACQ_NODE 2,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,%v4,false,false,1,1
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 4
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[11@L243] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[14@L244] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,DefaultSessionManager.crossLock_g0_ring1_1729,155,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,6,false,false
+LOCK_EDGE 1,0,DefaultSessionManager.saveSession,108,DefaultSessionManager.saveSession,110,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.crossLock_g0_ring1_1729,155,%v4,false,false,1,1
+ACQ_NODE 1,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,%v4,false,false,1,1
+ACQ_NODE 2,DefaultSessionManager.saveSession,108,%v15,false,false,1,1
+ACQ_NODE 3,DefaultSessionManager.saveSession,110,%v18,false,false,2,1
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 5
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[14@L244] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 6
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[14@L244] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[8@L242] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,3,false,false
+LOCK_EDGE 1,0,DefaultSessionManager.mockMethod_0_9068,235,DefaultSessionManager.saveSession,108,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.__ring_crossLock_g0_ring0_8031_9707_m1,138,%v4,false,false,1,1
+ACQ_NODE 1,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,%v4,false,false,1,1
+ACQ_NODE 2,DefaultSessionManager.mockMethod_0_9068,235,%v3,false,false,1,1
+ACQ_NODE 3,DefaultSessionManager.saveSession,108,%v15,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 7
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[8@L242] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.__ring_crossLock_g0_ring2_7102_7135_m0,167,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 8
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[17@L245] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,DefaultSessionManager.__ring_crossLock_g1_ring1_3995_470_m1,191,DefaultSessionManager.__ring_crossLock_g1_ring1_3995_470_m1,191,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.__ring_crossLock_g1_ring1_3995_470_m1,191,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 9
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[17@L245] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[5@L241] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,DefaultSessionManager.__ring_crossLock_g1_ring1_3995_470_m1,191,DefaultSessionManager.__ring_crossLock_g1_ring0_7385_3475_m0,179,2,false,false
+LOCK_EDGE 1,0,DefaultSessionManager.__ring_crossLock_g1_ring0_7385_3475_m0,179,DefaultSessionManager.__ring_crossLock_g1_ring1_3995_470_m1,191,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.__ring_crossLock_g1_ring1_3995_470_m1,191,%v4,false,false,1,1
+ACQ_NODE 1,DefaultSessionManager.__ring_crossLock_g1_ring0_7385_3475_m0,179,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 10
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.customize.defaults.DefaultSessionManager: void <init>()>[5@L241] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,DefaultSessionManager.__ring_crossLock_g1_ring0_7385_3475_m0,179,DefaultSessionManager.__ring_crossLock_g1_ring0_7385_3475_m0,179,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,DefaultSessionManager.__ring_crossLock_g1_ring0_7385_3475_m0,179,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 11
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,2,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.remove,471,HttpRoutesImpl.remove,489,0,false,false
+LOCK_EDGE 2,3,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring2_4636,778,4,false,false
+LOCK_EDGE 3,0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring0_8595,758,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.remove,471,%v21,false,true,2,1
+ACQ_NODE 3,HttpRoutesImpl.remove,489,%v31,false,true,4,1
+ACQ_NODE 4,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 6,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,5,4,false,false
+CALL_EDGE 4,6,2,false,false
+CALL_EDGE 5,4,2,false,false
+CALL_EDGE 5,6,4,false,false
+CALL_EDGE 6,4,4,false,false
+CALL_EDGE 6,5,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 12
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring0_8595,758,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,4,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring2_4636,778,4,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring0_8595,758,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 13
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring0_8595,758,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,4,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring2_4636,778,4,false,false
+LOCK_EDGE 2,3,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring1_9777,768,5,false,false
+LOCK_EDGE 3,0,HttpRoutesImpl.mockMethod_1_2847,897,HttpRoutesImpl.remove,462,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 4,HttpRoutesImpl.mockMethod_1_2847,897,%v7,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.remove,462,%v16,false,true,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,0,5,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 4,5,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 14
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring1_9777,768,5,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.remove,471,HttpRoutesImpl.remove,489,0,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring2_4636,778,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.remove,471,%v21,false,true,2,1
+ACQ_NODE 3,HttpRoutesImpl.remove,489,%v31,false,true,4,1
+ACQ_NODE 4,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,4,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,4,3,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,0,4,false,false
+CALL_EDGE 4,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 15
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,2,false,false
+LOCK_EDGE 1,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring2_4636,778,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 16
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,2,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.mockMethod_1_2847,898,HttpRoutesImpl.remove,480,1,false,false
+LOCK_EDGE 2,3,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,2,false,false
+LOCK_EDGE 3,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring0_8595,758,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.mockMethod_1_2847,898,%v8,false,false,2,1
+ACQ_NODE 3,HttpRoutesImpl.remove,480,%v26,false,true,3,1
+ACQ_NODE 4,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 6,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 4,5,2,false,false
+CALL_EDGE 4,6,4,false,false
+CALL_EDGE 5,4,4,false,false
+CALL_EDGE 5,6,2,false,false
+CALL_EDGE 6,4,2,false,false
+CALL_EDGE 6,5,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 17
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,2,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.remove,471,HttpRoutesImpl.remove,489,0,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring0_8595,758,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.remove,471,%v21,false,true,2,1
+ACQ_NODE 3,HttpRoutesImpl.remove,489,%v31,false,true,4,1
+ACQ_NODE 4,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,5,2,false,false
+CALL_EDGE 5,4,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 18
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring0_8595,758,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,4,false,false
+LOCK_EDGE 1,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring0_8595,758,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 19
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.crossLock_g2_ring2_2485,878,3,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring1_9777,768,5,false,false
+LOCK_EDGE 2,3,HttpRoutesImpl.remove,471,HttpRoutesImpl.remove,489,0,false,false
+LOCK_EDGE 3,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring0_8595,758,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g2_ring2_2485,878,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 4,HttpRoutesImpl.remove,471,%v21,false,true,2,1
+ACQ_NODE 5,HttpRoutesImpl.remove,489,%v31,false,true,4,1
+ACQ_NODE 6,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 7,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 2,6,2,false,false
+CALL_EDGE 2,7,4,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 3,6,3,false,false
+CALL_EDGE 3,7,5,false,false
+CALL_EDGE 4,5,0,true,true
+CALL_EDGE 5,4,0,true,false
+CALL_EDGE 6,2,4,false,false
+CALL_EDGE 6,3,3,false,false
+CALL_EDGE 6,7,2,false,false
+CALL_EDGE 7,2,2,false,false
+CALL_EDGE 7,3,1,false,false
+CALL_EDGE 7,6,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=7 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 20
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.crossLock_g2_ring2_2485,878,3,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,2,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring0_8595,758,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g2_ring2_2485,878,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 4,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 2,4,4,false,false
+CALL_EDGE 3,2,4,false,false
+CALL_EDGE 3,4,2,false,false
+CALL_EDGE 4,2,2,false,false
+CALL_EDGE 4,3,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 21
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring0_8595,758,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,4,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring1_9777,768,3,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.mockMethod_1_2847,897,HttpRoutesImpl.remove,462,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.mockMethod_1_2847,897,%v7,false,false,1,1
+ACQ_NODE 4,HttpRoutesImpl.remove,462,%v16,false,true,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 22
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.crossLock_g2_ring2_2485,878,3,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,2,false,false
+LOCK_EDGE 2,3,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring1_9777,768,3,false,false
+LOCK_EDGE 3,0,HttpRoutesImpl.mockMethod_1_2847,897,HttpRoutesImpl.remove,462,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g2_ring2_2485,878,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 4,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.mockMethod_1_2847,897,%v7,false,false,1,1
+ACQ_NODE 6,HttpRoutesImpl.remove,462,%v16,false,true,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 2,4,5,false,false
+CALL_EDGE 3,2,4,false,false
+CALL_EDGE 3,4,3,false,false
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,3,false,false
+CALL_EDGE 5,6,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=6 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 23
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring0_8595,758,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,4,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring1_9777,768,3,false,false
+LOCK_EDGE 2,3,HttpRoutesImpl.mockMethod_1_2847,898,HttpRoutesImpl.remove,480,1,false,false
+LOCK_EDGE 3,0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring0_8595,758,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.mockMethod_1_2847,898,%v8,false,false,2,1
+ACQ_NODE 4,HttpRoutesImpl.remove,480,%v26,false,true,3,1
+ACQ_NODE 5,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,5,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,5,4,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,5,1,false,false
+CALL_EDGE 3,4,1,false,true
+CALL_EDGE 5,0,4,false,false
+CALL_EDGE 5,1,2,false,false
+CALL_EDGE 5,2,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 24
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,2,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring1_9777,768,3,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.mockMethod_1_2847,898,HttpRoutesImpl.remove,480,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.mockMethod_1_2847,898,%v8,false,false,2,1
+ACQ_NODE 4,HttpRoutesImpl.remove,480,%v26,false,true,3,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 3,4,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 25
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.remove,471,HttpRoutesImpl.remove,489,0,false,false
+LOCK_EDGE 1,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.crossLock_g0_ring1_9777,768,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.remove,471,%v21,false,true,2,1
+ACQ_NODE 1,HttpRoutesImpl.remove,489,%v31,false,true,4,1
+ACQ_NODE 2,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 26
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[83@L907] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g0_ring3_1647_5912_m0,796,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 27
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,2,false,false
+LOCK_EDGE 1,0,HttpRoutesImpl.mockMethod_1_2847,897,HttpRoutesImpl.remove,462,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.mockMethod_1_2847,897,%v7,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.remove,462,%v16,false,true,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 28
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,2,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.mockMethod_1_2847,898,HttpRoutesImpl.remove,480,1,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring0_8595,758,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.__ring_crossLock_g2_ring1_878_6818_m0,860,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.mockMethod_1_2847,898,%v8,false,false,2,1
+ACQ_NODE 3,HttpRoutesImpl.remove,480,%v26,false,true,3,1
+ACQ_NODE 4,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,1,false,true
+CALL_EDGE 4,5,4,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 29
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,HttpRoutesImpl.crossLock_g0_ring0_8595,758,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 30
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.crossLock_g2_ring2_2485,878,3,false,false
+LOCK_EDGE 1,0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring0_8595,758,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g2_ring2_2485,878,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.crossLock_g0_ring0_8595,758,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 31
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[74@L755] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,HttpRoutesImpl.crossLock_g2_ring2_2485,878,3,false,false
+LOCK_EDGE 1,2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring1_9777,768,5,false,false
+LOCK_EDGE 2,0,HttpRoutesImpl.mockMethod_1_2847,897,HttpRoutesImpl.remove,462,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.__ring_crossLock_g2_ring0_9453_7253_m1,834,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g2_ring2_2485,878,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 3,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 4,HttpRoutesImpl.mockMethod_1_2847,897,%v7,false,false,1,1
+ACQ_NODE 5,HttpRoutesImpl.remove,462,%v16,false,true,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,2,1,false,false
+CALL_EDGE 4,5,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 32
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpRoutesImpl.mockMethod_1_2847,898,HttpRoutesImpl.remove,471,1,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.mockMethod_1_2847,898,%v8,false,false,2,1
+ACQ_NODE 1,HttpRoutesImpl.remove,471,%v21,false,true,2,1
+CALL_EDGE 0,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 33
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[80@L906] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,HttpRoutesImpl.crossLock_g0_ring2_4636,778,HttpRoutesImpl.crossLock_g0_ring1_9777,768,5,false,false
+LOCK_EDGE 1,0,HttpRoutesImpl.mockMethod_1_2847,898,HttpRoutesImpl.remove,480,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g0_ring2_4636,778,%v4,false,false,1,1
+ACQ_NODE 1,HttpRoutesImpl.crossLock_g0_ring1_9777,768,%v4,false,false,1,1
+ACQ_NODE 2,HttpRoutesImpl.mockMethod_1_2847,898,%v8,false,false,2,1
+ACQ_NODE 3,HttpRoutesImpl.remove,480,%v26,false,true,3,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,1,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 34
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.HttpRoutesImpl: void <init>(java.lang.String,org.rapidoid.http.customize.Customization)>[77@L905] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,HttpRoutesImpl.crossLock_g2_ring2_2485,878,HttpRoutesImpl.crossLock_g2_ring2_2485,878,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,HttpRoutesImpl.crossLock_g2_ring2_2485,878,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 35
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.token,705,ReqImpl.token,713,0,false,false
+LOCK_EDGE 1,2,ReqImpl.posted,240,ReqImpl.posted,241,0,false,false
+LOCK_EDGE 2,0,ReqImpl.posted,241,ReqImpl.posted,244,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,705,%v16,false,false,2,1
+ACQ_NODE 1,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 2,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 3,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 4,ReqImpl.posted,244,%v15,false,false,3,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 0,4,4,false,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 1,3,4,false,false
+CALL_EDGE 1,4,4,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 2,4,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 3,4,0,true,true
+CALL_EDGE 4,2,0,true,false
+CALL_EDGE 4,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=6 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 36
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring0_5460,1065,1,false,false
+LOCK_EDGE 1,2,ReqImpl.posted,241,ReqImpl.posted,244,0,false,false
+LOCK_EDGE 2,3,ReqImpl.token,705,ReqImpl.token,713,0,false,false
+LOCK_EDGE 3,0,ReqImpl.token,713,ReqImpl.posted,247,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 3,ReqImpl.posted,244,%v15,false,false,3,1
+ACQ_NODE 4,ReqImpl.token,705,%v16,false,false,2,1
+ACQ_NODE 5,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 6,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 2,6,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 3,6,0,true,true
+CALL_EDGE 4,2,4,false,false
+CALL_EDGE 4,3,4,false,true
+CALL_EDGE 4,5,0,true,true
+CALL_EDGE 4,6,4,false,true
+CALL_EDGE 5,2,4,false,false
+CALL_EDGE 5,3,4,false,false
+CALL_EDGE 5,4,0,true,false
+CALL_EDGE 5,6,4,false,false
+CALL_EDGE 6,2,0,true,false
+CALL_EDGE 6,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=6 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 37
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.crossLock_g2_ring0_5460,1065,4,false,false
+LOCK_EDGE 1,0,ReqImpl.posted,241,ReqImpl.posted,244,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 3,ReqImpl.posted,244,%v15,false,false,3,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 38
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.token,707,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 1,2,ReqImpl.posted,240,ReqImpl.posted,241,0,false,false
+LOCK_EDGE 2,3,ReqImpl.posted,241,ReqImpl.posted,244,0,false,false
+LOCK_EDGE 3,0,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,707,%v19,false,false,3,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 3,ReqImpl.posted,244,%v15,false,false,3,1
+ACQ_NODE 4,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 5,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,2,0,true,true
+CALL_EDGE 1,3,0,true,true
+CALL_EDGE 2,1,0,true,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,1,0,true,false
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=6 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 39
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring0_5460,1065,1,false,false
+LOCK_EDGE 1,2,ReqImpl.posted,241,ReqImpl.posted,244,0,false,false
+LOCK_EDGE 2,0,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 3,ReqImpl.posted,244,%v15,false,false,3,1
+ACQ_NODE 4,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,4,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,4,1,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 4,0,3,false,false
+CALL_EDGE 4,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 40
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring1_5260,1072,2,false,false
+LOCK_EDGE 1,2,ReqImpl.token,705,ReqImpl.token,713,0,false,false
+LOCK_EDGE 2,3,ReqImpl.posted,240,ReqImpl.posted,241,0,false,false
+LOCK_EDGE 3,0,ReqImpl.posted,241,ReqImpl.posted,247,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,705,%v16,false,false,2,1
+ACQ_NODE 3,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 4,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 5,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 6,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 2,4,4,false,false
+CALL_EDGE 2,5,4,false,false
+CALL_EDGE 2,6,4,false,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 3,4,4,false,false
+CALL_EDGE 3,5,4,false,false
+CALL_EDGE 3,6,4,false,false
+CALL_EDGE 4,5,0,true,true
+CALL_EDGE 4,6,0,true,true
+CALL_EDGE 5,4,0,true,false
+CALL_EDGE 5,6,0,true,true
+CALL_EDGE 6,4,0,true,false
+CALL_EDGE 6,5,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=6 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 41
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring1_5260,1072,2,false,false
+LOCK_EDGE 1,2,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.crossLock_g2_ring0_5460,1065,4,false,false
+LOCK_EDGE 2,0,ReqImpl.posted,241,ReqImpl.posted,247,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 3,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 4,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 3,4,0,true,true
+CALL_EDGE 4,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 42
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.token,707,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 1,2,ReqImpl.posted,240,ReqImpl.posted,241,0,false,false
+LOCK_EDGE 2,0,ReqImpl.posted,241,ReqImpl.posted,247,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,707,%v19,false,false,3,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 3,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 0,3,4,false,true
+CALL_EDGE 1,2,0,true,true
+CALL_EDGE 1,3,0,true,true
+CALL_EDGE 2,1,0,true,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,1,0,true,false
+CALL_EDGE 3,2,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=6 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 43
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.token,707,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 1,2,ReqImpl.token,713,ReqImpl.posted,244,4,false,false
+LOCK_EDGE 2,3,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.crossLock_g2_ring0_5460,1065,4,false,false
+LOCK_EDGE 3,0,ReqImpl.posted,241,ReqImpl.posted,247,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,707,%v19,false,false,3,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 3,ReqImpl.posted,244,%v15,false,false,3,1
+ACQ_NODE 4,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 5,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 6,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 7,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,0,true,true
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 0,6,4,false,false
+CALL_EDGE 0,7,4,false,true
+CALL_EDGE 1,3,0,true,true
+CALL_EDGE 1,6,0,true,true
+CALL_EDGE 1,7,0,true,true
+CALL_EDGE 2,0,0,true,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 2,6,4,false,false
+CALL_EDGE 2,7,4,false,false
+CALL_EDGE 3,1,0,true,false
+CALL_EDGE 3,6,0,true,false
+CALL_EDGE 3,7,0,true,true
+CALL_EDGE 4,5,4,false,false
+CALL_EDGE 5,4,1,false,false
+CALL_EDGE 6,1,0,true,false
+CALL_EDGE 6,3,0,true,true
+CALL_EDGE 6,7,0,true,true
+CALL_EDGE 7,1,0,true,false
+CALL_EDGE 7,3,0,true,false
+CALL_EDGE 7,6,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+ACQ_TO_LOCK 7,0
+LOCK_TO_ACQ 0,7
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=6 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,7,
+
+CYCLE 44
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring0_5460,1065,1,false,false
+LOCK_EDGE 1,0,ReqImpl.posted,241,ReqImpl.posted,247,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+ACQ_NODE 3,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 3,2,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 45
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.token,703,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 1,0,ReqImpl.posted,240,ReqImpl.posted,241,0,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,703,%v13,false,false,1,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 2,ReqImpl.posted,241,%v12,false,false,2,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,4,false,true
+CALL_EDGE 1,2,0,true,true
+CALL_EDGE 2,1,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,0
+LOCK_TO_ACQ 0,2
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=4 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 46
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring1_5260,1072,2,false,false
+LOCK_EDGE 1,2,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.crossLock_g2_ring0_5460,1065,4,false,false
+LOCK_EDGE 2,3,ReqImpl.token,703,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 3,0,ReqImpl.token,713,ReqImpl.posted,247,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 3,ReqImpl.token,703,%v13,false,false,1,1
+ACQ_NODE 4,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 5,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 6,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 3,4,4,false,false
+CALL_EDGE 3,5,0,true,true
+CALL_EDGE 3,6,4,false,true
+CALL_EDGE 4,6,0,true,true
+CALL_EDGE 5,3,0,true,false
+CALL_EDGE 5,4,4,false,false
+CALL_EDGE 5,6,4,false,false
+CALL_EDGE 6,4,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,3
+LOCK_TO_ACQ 3,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,0
+LOCK_TO_ACQ 0,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 47
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring0_5460,1065,1,false,false
+LOCK_EDGE 1,2,ReqImpl.token,703,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 2,0,ReqImpl.token,713,ReqImpl.posted,247,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,703,%v13,false,false,1,1
+ACQ_NODE 3,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 4,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 5,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 2,4,0,true,true
+CALL_EDGE 2,5,4,false,true
+CALL_EDGE 3,5,0,true,true
+CALL_EDGE 4,2,0,true,false
+CALL_EDGE 4,3,4,false,false
+CALL_EDGE 4,5,4,false,false
+CALL_EDGE 5,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 48
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.crossLock_g2_ring0_5460,1065,4,false,false
+LOCK_EDGE 1,2,ReqImpl.token,703,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 2,0,ReqImpl.token,713,ReqImpl.posted,244,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,703,%v13,false,false,1,1
+ACQ_NODE 3,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 4,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 5,ReqImpl.posted,244,%v15,false,false,3,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 2,4,0,true,true
+CALL_EDGE 2,5,4,false,true
+CALL_EDGE 3,5,0,true,true
+CALL_EDGE 4,2,0,true,false
+CALL_EDGE 4,3,4,false,false
+CALL_EDGE 4,5,4,false,false
+CALL_EDGE 5,3,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 49
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring0_5460,1065,1,false,false
+LOCK_EDGE 1,2,ReqImpl.token,703,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 2,3,ReqImpl.token,713,ReqImpl.posted,244,4,false,false
+LOCK_EDGE 3,0,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring0_5460,1065,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,703,%v13,false,false,1,1
+ACQ_NODE 3,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 4,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 5,ReqImpl.posted,244,%v15,false,false,3,1
+ACQ_NODE 6,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,6,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,6,1,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 2,4,0,true,true
+CALL_EDGE 2,5,4,false,true
+CALL_EDGE 3,5,0,true,true
+CALL_EDGE 4,2,0,true,false
+CALL_EDGE 4,3,4,false,false
+CALL_EDGE 4,5,4,false,false
+CALL_EDGE 5,3,0,true,false
+CALL_EDGE 6,0,3,false,false
+CALL_EDGE 6,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,3
+LOCK_TO_ACQ 3,5
+ACQ_TO_LOCK 6,3
+LOCK_TO_ACQ 3,6
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,4,5,6,
+
+CYCLE 50
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[23@L1117] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,ReqImpl.crossLock_g0_ring0_3683,996,ReqImpl.crossLock_g0_ring0_3683,996,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.crossLock_g0_ring0_3683,996,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 51
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[29@L1119] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 52
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[26@L1118] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[32@L1120] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[29@L1119] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,ReqImpl.crossLock_g1_ring3_9891,1058,3,false,false
+LOCK_EDGE 1,2,ReqImpl.crossLock_g1_ring3_9891,1058,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,6,false,false
+LOCK_EDGE 2,0,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g1_ring3_9891,1058,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 53
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[26@L1118] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[29@L1119] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,2,false,false
+LOCK_EDGE 1,0,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 54
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[29@L1119] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[32@L1120] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,ReqImpl.crossLock_g1_ring3_9891,1058,1,false,false
+LOCK_EDGE 1,0,ReqImpl.crossLock_g1_ring3_9891,1058,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,6,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g1_ring3_9891,1058,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 55
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[26@L1118] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[29@L1119] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[32@L1120] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,2,false,false
+LOCK_EDGE 1,2,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,ReqImpl.crossLock_g1_ring3_9891,1058,1,false,false
+LOCK_EDGE 2,0,ReqImpl.crossLock_g1_ring3_9891,1058,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.__ring_crossLock_g1_ring2_5280_9441_m0,1046,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.crossLock_g1_ring3_9891,1058,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 56
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[26@L1118] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[32@L1120] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,ReqImpl.crossLock_g1_ring3_9891,1058,3,false,false
+LOCK_EDGE 1,0,ReqImpl.crossLock_g1_ring3_9891,1058,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g1_ring3_9891,1058,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 57
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[32@L1120] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,ReqImpl.crossLock_g1_ring3_9891,1058,ReqImpl.crossLock_g1_ring3_9891,1058,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.crossLock_g1_ring3_9891,1058,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 58
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,0,ReqImpl.token,713,ReqImpl.posted,240,4,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 59
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring1_5260,1072,2,false,false
+LOCK_EDGE 1,2,ReqImpl.token,705,ReqImpl.token,713,0,false,false
+LOCK_EDGE 2,0,ReqImpl.token,713,ReqImpl.posted,247,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,705,%v16,false,false,2,1
+ACQ_NODE 3,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 4,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 2,3,0,true,true
+CALL_EDGE 2,4,4,false,true
+CALL_EDGE 3,2,0,true,false
+CALL_EDGE 3,4,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 60
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.token,707,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 1,0,ReqImpl.token,713,ReqImpl.posted,247,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,707,%v19,false,false,3,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 3,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,0,true,true
+CALL_EDGE 0,3,4,false,true
+CALL_EDGE 1,3,0,true,true
+CALL_EDGE 2,0,0,true,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,1,0,true,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=4 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 61
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_EDGE 0,1,ReqImpl.token,705,ReqImpl.token,713,0,false,false
+LOCK_EDGE 1,0,ReqImpl.token,713,ReqImpl.posted,244,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,705,%v16,false,false,2,1
+ACQ_NODE 1,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 2,ReqImpl.posted,244,%v15,false,false,3,1
+CALL_EDGE 0,1,0,true,true
+CALL_EDGE 0,2,4,false,true
+CALL_EDGE 1,0,0,true,false
+CALL_EDGE 1,2,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,0
+LOCK_TO_ACQ 0,2
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=4 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 62
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImplHarness: void main(java.lang.String[])>[1@L5] new org.rapidoid.http.impl.ReqImpl},org.rapidoid.http.impl.ReqImpl,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.token,707,ReqImpl.posted,240,4,false,false
+LOCK_EDGE 1,2,ReqImpl.token,713,ReqImpl.posted,244,4,false,false
+LOCK_EDGE 2,0,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,707,%v19,false,false,3,1
+ACQ_NODE 1,ReqImpl.posted,240,this,false,false,1,1
+ACQ_NODE 2,ReqImpl.token,713,this,false,false,5,1
+ACQ_NODE 3,ReqImpl.posted,244,%v15,false,false,3,1
+ACQ_NODE 4,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+ACQ_NODE 5,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,0,true,true
+CALL_EDGE 0,3,4,false,false
+CALL_EDGE 1,3,0,true,true
+CALL_EDGE 2,0,0,true,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,1,0,true,false
+CALL_EDGE 4,5,3,false,false
+CALL_EDGE 5,4,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,2
+LOCK_TO_ACQ 2,4
+ACQ_TO_LOCK 5,0
+LOCK_TO_ACQ 0,5
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=4 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,5,
+
+CYCLE 63
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,ReqImpl.token,705,ReqImpl.posted,244,4,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,705,%v16,false,false,2,1
+ACQ_NODE 1,ReqImpl.posted,244,%v15,false,false,3,1
+CALL_EDGE 0,1,4,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 64
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[20@L1116] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,ReqImpl.crossLock_g2_ring1_5260,1072,2,false,false
+LOCK_EDGE 1,0,ReqImpl.crossLock_g2_ring1_5260,1072,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g2_ring2_1713_8117_m1,1079,%v4,false,false,1,1
+ACQ_NODE 1,ReqImpl.crossLock_g2_ring1_5260,1072,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 65
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[17@L1115] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,ReqImpl.token,707,ReqImpl.posted,247,4,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.token,707,%v19,false,false,3,1
+ACQ_NODE 1,ReqImpl.posted,247,%v18,false,false,4,1
+CALL_EDGE 0,1,4,false,true
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,0
+LOCK_TO_ACQ 0,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 66
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.ReqImpl: void <init>(org.rapidoid.http.FastHttp,org.rapidoid.net.abstracts.Channel,boolean,java.lang.String,java.lang.String,java.lang.String,java.lang.String,byte[],java.util.Map,java.util.Map,java.util.Map,java.util.Map,java.util.Map,boolean,org.rapidoid.http.MediaType,java.lang.String,org.rapidoid.http.Route)>[26@L1118] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,ReqImpl.__ring_crossLock_g1_ring1_7078_8502_m0,1034,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 67
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[10@L606] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[7@L605] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g0_ring0_2344,494,LowLevelHttpIO.crossLock_g0_ring1_3804,501,1,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.crossLock_g2_ring1_9935,559,LowLevelHttpIO.crossLock_g2_ring0_803,551,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g0_ring0_2344,494,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g0_ring1_3804,501,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g2_ring1_9935,559,%v5,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.crossLock_g2_ring0_803,551,%v5,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 68
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[10@L606] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[7@L605] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g2_ring0_803,551,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,4,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,LowLevelHttpIO.crossLock_g2_ring1_9935,559,2,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.crossLock_g2_ring1_9935,559,LowLevelHttpIO.crossLock_g2_ring0_803,551,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g2_ring0_803,551,%v5,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,%v6,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g2_ring1_9935,559,%v5,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 69
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[7@L605] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LowLevelHttpIO.crossLock_g2_ring1_9935,559,LowLevelHttpIO.crossLock_g2_ring1_9935,559,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g2_ring1_9935,559,%v5,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 70
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[7@L605] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,LowLevelHttpIO.crossLock_g2_ring1_9935,559,2,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.crossLock_g2_ring1_9935,559,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,%v6,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g2_ring1_9935,559,%v5,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 71
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[10@L606] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[7@L605] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g0_ring0_2344,494,LowLevelHttpIO.crossLock_g0_ring1_3804,501,1,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g2_ring1_9935,559,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,3,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,LowLevelHttpIO.crossLock_g2_ring0_803,551,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g0_ring0_2344,494,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g0_ring1_3804,501,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g2_ring1_9935,559,%v5,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,%v6,false,false,1,1
+ACQ_NODE 4,LowLevelHttpIO.crossLock_g2_ring0_803,551,%v5,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 2,4,4,false,false
+CALL_EDGE 3,2,2,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,2,1,false,false
+CALL_EDGE 4,3,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 72
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring3_4901,539,1,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,4,false,false
+LOCK_EDGE 2,3,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring0_7237,508,3,false,false
+LOCK_EDGE 3,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring2_9626,532,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 0,3,2,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 1,3,1,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,5,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 73
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,4,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring0_7237,508,3,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring3_4901,539,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 74
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring0_7237,508,2,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring3_4901,539,5,false,false
+LOCK_EDGE 2,3,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,4,false,false
+LOCK_EDGE 3,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring2_9626,532,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,5,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,1,false,false
+CALL_EDGE 2,3,4,false,false
+CALL_EDGE 3,0,1,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 75
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring3_4901,539,1,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,4,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring2_9626,532,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 76
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,4,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring3_4901,539,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 77
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring3_4901,539,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 78
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring0_7237,508,2,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,3,false,false
+LOCK_EDGE 2,3,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring3_4901,539,2,false,false
+LOCK_EDGE 3,0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring2_9626,532,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,5,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,2,false,false
+CALL_EDGE 3,0,5,false,false
+CALL_EDGE 3,1,1,false,false
+CALL_EDGE 3,2,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 79
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring0_7237,508,2,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring3_4901,539,5,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring2_9626,532,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,5,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 80
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring3_4901,539,1,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring2_9626,532,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 81
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,5,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring0_7237,508,3,false,false
+LOCK_EDGE 2,3,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring3_4901,539,5,false,false
+LOCK_EDGE 3,0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring2_9626,532,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,3,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 1,3,2,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+CALL_EDGE 2,3,5,false,false
+CALL_EDGE 3,0,5,false,false
+CALL_EDGE 3,1,4,false,false
+CALL_EDGE 3,2,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 82
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,5,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring3_4901,539,2,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring2_9626,532,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 83
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring3_4901,539,1,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring0_7237,508,1,false,false
+LOCK_EDGE 2,3,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,3,false,false
+LOCK_EDGE 3,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring2_9626,532,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 0,3,5,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 1,3,4,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,5,false,false
+CALL_EDGE 2,3,3,false,false
+CALL_EDGE 3,0,1,false,false
+CALL_EDGE 3,1,2,false,false
+CALL_EDGE 3,2,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 84
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring0_7237,508,1,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,3,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring3_4901,539,2,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,4,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 85
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring3_4901,539,1,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring0_7237,508,1,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring2_9626,532,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,5,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 86
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 3,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,5,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring3_4901,539,2,false,false
+LOCK_EDGE 2,3,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring0_7237,508,1,false,false
+LOCK_EDGE 3,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring2_9626,532,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 3,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,1,false,false
+CALL_EDGE 0,3,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,2,false,false
+CALL_EDGE 1,3,3,false,false
+CALL_EDGE 2,0,5,false,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,0,4,false,false
+CALL_EDGE 3,1,3,false,false
+CALL_EDGE 3,2,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,3
+LOCK_TO_ACQ 3,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=4
+LABEL_LOCK_NODES 0,1,2,3,
+LABEL_LOCK_EDGES 0,1,2,3,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 87
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[16@L608] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring3_4901,539,LowLevelHttpIO.crossLock_g1_ring0_7237,508,1,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring3_4901,539,5,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring3_4901,539,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,1,false,false
+CALL_EDGE 1,0,5,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 88
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring0_7237,508,3,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 89
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,5,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring0_7237,508,3,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring2_9626,532,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,1,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,4,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 90
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 2,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring0_7237,508,2,false,false
+LOCK_EDGE 1,2,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,3,false,false
+LOCK_EDGE 2,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring2_9626,532,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+ACQ_NODE 2,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,5,false,false
+CALL_EDGE 1,0,4,false,false
+CALL_EDGE 1,2,3,false,false
+CALL_EDGE 2,0,1,false,false
+CALL_EDGE 2,1,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 91
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,5,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.crossLock_g1_ring2_9626,532,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+CALL_EDGE 0,1,5,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 92
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[1@L603] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.__ring_crossLock_g1_ring1_5661_3886_m1,515,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 93
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring2_9626,532,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 94
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[13@L607] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g1_ring2_9626,532,LowLevelHttpIO.crossLock_g1_ring0_7237,508,2,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.crossLock_g1_ring0_7237,508,LowLevelHttpIO.crossLock_g1_ring2_9626,532,4,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g1_ring2_9626,532,%v4,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.crossLock_g1_ring0_7237,508,%v4,false,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,4,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 95
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[10@L606] new java.lang.Object},java.lang.Object,false,1
+LOCK_NODE 1,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,1,LowLevelHttpIO.crossLock_g2_ring0_803,551,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,4,false,false
+LOCK_EDGE 1,0,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,LowLevelHttpIO.crossLock_g2_ring0_803,551,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g2_ring0_803,551,%v5,false,false,1,1
+ACQ_NODE 1,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,%v6,false,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 96
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[10@L606] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LowLevelHttpIO.crossLock_g0_ring0_2344,494,LowLevelHttpIO.crossLock_g0_ring0_2344,494,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.crossLock_g0_ring0_2344,494,%v4,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 97
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.http.impl.lowlevel.LowLevelHttpIO: void <init>()>[4@L604] new java.lang.Object},java.lang.Object,false,1
+LOCK_EDGE 0,0,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,LowLevelHttpIO.__ring_crossLock_g2_ring2_8138_9946_m1,567,%v6,false,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 0
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 98
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[8@L281] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,0,My.crossLock_g0_ring2_6464,226,My.crossLock_g0_ring2_6464,226,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.crossLock_g0_ring2_6464,226,%v4,true,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 99
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[11@L282] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 1,NewObj{<org.rapidoid.setup.My: void <clinit>()>[8@L281] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,1,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,My.crossLock_g1_ring2_9995,257,2,false,false
+LOCK_EDGE 1,0,My.crossLock_g1_ring2_9995,257,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,%v4,true,false,1,1
+ACQ_NODE 1,My.crossLock_g1_ring2_9995,257,%v4,true,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 1,0,3,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 100
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[11@L282] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 1,NewObj{<org.rapidoid.setup.My: void <clinit>()>[5@L209] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 2,NewObj{<org.rapidoid.setup.My: void <clinit>()>[8@L281] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,1,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,My.crossLock_g1_ring0_9198,233,3,false,false
+LOCK_EDGE 1,2,My.crossLock_g1_ring0_9198,233,My.crossLock_g1_ring2_9995,257,4,false,false
+LOCK_EDGE 2,0,My.crossLock_g1_ring2_9995,257,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,3,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,%v4,true,false,1,1
+ACQ_NODE 1,My.crossLock_g1_ring0_9198,233,%v4,true,false,1,1
+ACQ_NODE 2,My.crossLock_g1_ring2_9995,257,%v4,true,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 0,2,2,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 1,2,4,false,false
+CALL_EDGE 2,0,3,false,false
+CALL_EDGE 2,1,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=3 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,
+
+CYCLE 101
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[5@L209] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 1,NewObj{<org.rapidoid.setup.My: void <clinit>()>[8@L281] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,1,My.crossLock_g1_ring0_9198,233,My.crossLock_g1_ring2_9995,257,4,false,false
+LOCK_EDGE 1,0,My.crossLock_g1_ring2_9995,257,My.crossLock_g1_ring0_9198,233,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.crossLock_g1_ring0_9198,233,%v4,true,false,1,1
+ACQ_NODE 1,My.crossLock_g1_ring2_9995,257,%v4,true,false,1,1
+CALL_EDGE 0,1,4,false,false
+CALL_EDGE 1,0,1,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=2 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,
+
+CYCLE 102
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[11@L282] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 1,NewObj{<org.rapidoid.setup.My: void <clinit>()>[8@L281] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 2,NewObj{<org.rapidoid.setup.My: void <clinit>()>[5@L209] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,1,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,My.crossLock_g1_ring2_9995,257,2,false,false
+LOCK_EDGE 1,2,My.crossLock_g1_ring2_9995,257,My.crossLock_g1_ring0_9198,233,1,false,false
+LOCK_EDGE 2,0,My.crossLock_g0_ring0_5992,212,My.crossLock_g0_ring1_1479,219,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,%v4,true,false,1,1
+ACQ_NODE 1,My.crossLock_g1_ring2_9995,257,%v4,true,false,1,1
+ACQ_NODE 2,My.crossLock_g1_ring0_9198,233,%v4,true,false,1,1
+ACQ_NODE 3,My.crossLock_g0_ring0_5992,212,%v4,true,false,1,1
+ACQ_NODE 4,My.crossLock_g0_ring1_1479,219,%v4,true,false,1,1
+CALL_EDGE 0,1,2,false,false
+CALL_EDGE 0,2,3,false,false
+CALL_EDGE 1,0,3,false,false
+CALL_EDGE 1,2,1,false,false
+CALL_EDGE 2,0,2,false,false
+CALL_EDGE 2,1,4,false,false
+CALL_EDGE 3,4,1,false,false
+CALL_EDGE 4,3,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,2
+LOCK_TO_ACQ 2,2
+ACQ_TO_LOCK 3,2
+LOCK_TO_ACQ 2,3
+ACQ_TO_LOCK 4,0
+LOCK_TO_ACQ 0,4
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=5 max_thread_occurrence=2 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=false edge_count=3
+LABEL_LOCK_NODES 0,1,2,
+LABEL_LOCK_EDGES 0,1,2,
+LABEL_ACQ_NODES 0,1,2,3,4,
+
+CYCLE 103
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[11@L282] new java.lang.Object},java.lang.Object,true,1
+LOCK_NODE 1,NewObj{<org.rapidoid.setup.My: void <clinit>()>[5@L209] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,1,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,My.crossLock_g1_ring0_9198,233,3,false,false
+LOCK_EDGE 1,0,My.crossLock_g0_ring0_5992,212,My.crossLock_g0_ring1_1479,219,1,false,false
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.__ring_crossLock_g1_ring1_5374_1911_m0,245,%v4,true,false,1,1
+ACQ_NODE 1,My.crossLock_g1_ring0_9198,233,%v4,true,false,1,1
+ACQ_NODE 2,My.crossLock_g0_ring0_5992,212,%v4,true,false,1,1
+ACQ_NODE 3,My.crossLock_g0_ring1_1479,219,%v4,true,false,1,1
+CALL_EDGE 0,1,3,false,false
+CALL_EDGE 1,0,2,false,false
+CALL_EDGE 2,3,1,false,false
+CALL_EDGE 3,2,2,false,false
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+ACQ_TO_LOCK 1,1
+LOCK_TO_ACQ 1,1
+ACQ_TO_LOCK 2,1
+LOCK_TO_ACQ 1,2
+ACQ_TO_LOCK 3,0
+LOCK_TO_ACQ 0,3
+
+LABEL_CYCLE 1
+LABEL_REAL 2
+CYCLE_FEATURES thread_count=4 max_thread_occurrence=1 all_edges_same_thread=false all_edges_reachable=true has_non_adjacent_edge=true edge_count=2
+LABEL_LOCK_NODES 0,1,
+LABEL_LOCK_EDGES 0,1,
+LABEL_ACQ_NODES 0,1,2,3,
+
+CYCLE 104
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[5@L209] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,0,My.crossLock_g1_ring0_9198,233,My.crossLock_g1_ring0_9198,233,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.crossLock_g1_ring0_9198,233,%v4,true,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
+
+CYCLE 105
+
+# Layer 1: Lock Objects
+LOCK_NODE 0,NewObj{<org.rapidoid.setup.My: void <clinit>()>[11@L282] new java.lang.Object},java.lang.Object,true,1
+LOCK_EDGE 0,0,My.crossLock_g2_ring1_2222,271,My.crossLock_g2_ring1_2222,271,0,true,true
+
+# Layer 2: Lock Acquisitions
+ACQ_NODE 0,My.crossLock_g2_ring1_2222,271,%v4,true,false,1,1
+
+# Cross-layer edges
+ACQ_TO_LOCK 0,0
+LOCK_TO_ACQ 0,0
+
+LABEL_CYCLE 1
+LABEL_REAL 1
+CYCLE_FEATURES thread_count=1 max_thread_occurrence=2 all_edges_same_thread=true all_edges_reachable=true has_non_adjacent_edge=false edge_count=1
+LABEL_LOCK_NODES 0,
+LABEL_LOCK_EDGES 0,
+LABEL_ACQ_NODES 0,
