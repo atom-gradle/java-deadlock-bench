@@ -55,6 +55,7 @@ jar xf tai-e-0.5.4.jar tai-e-analyses.yml
 ```
 
 modify the following attributes:
+
 **from**
 
 ```
@@ -75,7 +76,7 @@ plugins: [ MyPlugin ] # | [ pluginClass, ... ]
 
 4. run
 
-- See **Pipeliner.py**
+ See **Pipeliner.py**
 
 ---
 
