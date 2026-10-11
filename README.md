@@ -3,7 +3,7 @@
 This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
 
 ## Pipeline
-MutationGenerator -> Java Parser -> Pipneliner -> (dataset) -> Evaluation & Comparison(Baseling/ML/GNN)
+MutationGenerator -> Java Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
 
@@ -20,80 +20,9 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 
 ```
 -Projects
-|-Disruptor
-|-Guava
-|-Jsoup
-```
-
-Here we chose `Apache Commons Collections 4.6.0`, `Apache Commons IO 2.22.0`, `Guava 32.1.2`, `Disruptor 4.0.0`, and `Jsoup 1.23.2` thanks to their clear project structure and few dependencies.
-The program's output goes like this.
-
-```
-[INFO] found 5 projects: ['commons-collections-master', 'commons-io-master', 'disruptor-master', 'guava-master', 'jsoup-master']
-[INFO] commons-collections-master: found 367 java files in D:\Projects\commons-collections-master\src\main\java
-creating harness: org.apache.commons.collections4.BagUtilsHarness
-creating harness: org.apache.commons.collections4.CollectionUtilsHarness
-creating harness: org.apache.commons.collections4.ListUtilsHarness
-creating harness: org.apache.commons.collections4.MapUtilsHarness
-creating harness: org.apache.commons.collections4.MultiSetUtilsHarness
-creating harness: org.apache.commons.collections4.QueueUtilsHarness
-creating harness: org.apache.commons.collections4.SetUtilsHarness
-creating harness: org.apache.commons.collections4.bag.SynchronizedBagHarness
-creating harness: org.apache.commons.collections4.bag.SynchronizedSortedBagHarness
-creating harness: org.apache.commons.collections4.collection.SynchronizedCollectionHarness
-creating harness: org.apache.commons.collections4.map.ConcurrentReferenceHashMapHarness
-creating harness: org.apache.commons.collections4.map.StaticBucketMapHarness
-creating harness: org.apache.commons.collections4.multiset.SynchronizedMultiSetHarness
-creating harness: org.apache.commons.collections4.multiset.SynchronizedSortedMultiSetHarness
-creating harness: org.apache.commons.collections4.properties.OrderedPropertiesHarness
-creating harness: org.apache.commons.collections4.queue.SynchronizedQueueHarness
-[INFO] commons-io-master: found 277 java files in D:\Projects\commons-io-master\src\main\java
-creating harness: org.apache.commons.io.FileCleanerHarness
-creating harness: org.apache.commons.io.FileCleaningTrackerHarness
-creating harness: org.apache.commons.io.channels.ByteArraySeekableByteChannelHarness
-creating harness: org.apache.commons.io.input.NullInputStreamHarness
-creating harness: org.apache.commons.io.input.ProxyInputStreamHarness
-creating harness: org.apache.commons.io.input.ProxyReaderHarness
-creating harness: org.apache.commons.io.input.ReadAheadInputStreamHarness
-creating harness: org.apache.commons.io.monitor.FileAlterationObserverHarness
-creating harness: org.apache.commons.io.output.ByteArrayOutputStreamHarness
-creating harness: org.apache.commons.io.output.LockableFileWriterHarness
-[INFO] disruptor-master: found 71 java files in D:\Projects\disruptor-master\src\main\java
-creating harness: com.lmax.disruptor.BlockingWaitStrategyHarness
-creating harness: com.lmax.disruptor.LiteBlockingWaitStrategyHarness
-creating harness: com.lmax.disruptor.LiteTimeoutBlockingWaitStrategyHarness
-creating harness: com.lmax.disruptor.TimeoutBlockingWaitStrategyHarness
-[INFO] guava-master: found 611 java files in D:\Projects\guava-master\guava\src
-creating harness: com.google.common.base.EnumsHarness
-creating harness: com.google.common.base.SuppliersHarness
-creating harness: com.google.common.cache.LocalCacheHarness
-creating harness: com.google.common.collect.MapsHarness
-creating harness: com.google.common.collect.MultimapsHarness
-creating harness: com.google.common.collect.QueuesHarness
-creating harness: com.google.common.collect.SetsHarness
-creating harness: com.google.common.collect.SynchronizedHarness
-creating harness: com.google.common.collect.TablesHarness
-creating harness: com.google.common.eventbus.SubscriberHarness
-creating harness: com.google.common.util.concurrent.AbstractScheduledServiceHarness
-creating harness: com.google.common.util.concurrent.AbstractServiceHarness
-creating harness: com.google.common.util.concurrent.ClosingFutureHarness
-creating harness: com.google.common.util.concurrent.CycleDetectingLockFactoryHarness
-creating harness: com.google.common.util.concurrent.DirectExecutorServiceHarness
-creating harness: com.google.common.util.concurrent.ExecutionListHarness
-creating harness: com.google.common.util.concurrent.InterruptibleTaskHarness
-creating harness: com.google.common.util.concurrent.LazyLoggerHarness
-creating harness: com.google.common.util.concurrent.ListenerCallQueueHarness
-creating harness: com.google.common.util.concurrent.MonitorHarness
-creating harness: com.google.common.util.concurrent.RateLimiterHarness
-creating harness: com.google.common.util.concurrent.SequentialExecutorHarness
-creating harness: com.google.common.util.concurrent.ServiceManagerHarness
-creating harness: com.google.common.util.concurrent.StripedHarness
-[INFO] jsoup-master: found 95 java files in D:\Projects\jsoup-master\src\main\java
-creating harness: org.jsoup.helper.HttpConnectionHarness
-creating harness: org.jsoup.nodes.ElementHarness
-creating harness: org.jsoup.parser.ParserHarness
-[INFO] report written to ./mutated-1791003708068\mutation_report.json
-[INFO] mutated 58 classes
+|-reactor-master
+|-guava-master
+|-commons-collections-master
 ```
 
 Note: MutationGenerator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
@@ -126,7 +55,7 @@ jar xf tai-e-0.5.4.jar tai-e-analyses.yml
 ```
 
 modify the following attributes:
-from
+**from**
 
 ```
 cs: ci # | k-[obj|type|call][-k'h]
@@ -135,7 +64,7 @@ handle-invokedynamic: false
 plugins: # | [ pluginClass, ... ]
 ```
 
-to
+**to**
 
 ```
 cs: 1-call # | k-[obj|type|call][-k'h]
@@ -151,7 +80,7 @@ plugins: [ MyPlugin ] # | [ pluginClass, ... ]
 ---
 
 ### Pipeliner.py
-This script automatically runs `ParserB.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence.
+This script automatically runs `Parser.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence.
 
 **How to use?**
 ```bash
@@ -163,22 +92,13 @@ python Pipeliner.py --input-dir "YOUR_INPUT_DIR"
 ### evaluate.py
 Uniformly evaluate the performance of three models on the "mutation ground truth (LABEL_REAL)":
 
-  1. Rule-based baseline (replicating the logic of `classifyCycle.isReal`)
-  2. Random forest (graph-level statistical features)
-  3. Heterogeneous GNN (heterogeneous graph structure + edge-weight features)
-
-Unified evaluation protocol:
-  - GroupKFold by `struct_hash` (the same structure does not span train/test)
-  - The three models share the same fold split to ensure a fair comparison
-  - Support binary classification (`label==2` vs `label==0`) and three-class classification (2 / 1 / 0)
-  - Support ablation (removing cross-layer edges / `lock_edge` / `call_edge`)
-
 **How to use?**
 ```bash
 python evaluate.py --label_mode three_way
 python evaluate.py --label_mode binary_strong
 python evaluate.py --label_mode binary_weak
-python evaluate.py --label_mode three_way --do_grid --do_ablation
+python evaluate.py --label_mode three_way --do_gnn_ablation
+python evaluate.py --label_mode three_way --seed 2026 --do_gnn_ablation
 ```
 
 ---
