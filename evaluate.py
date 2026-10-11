@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
-"""
-Uniformly evaluate the performance of three models on the "mutation ground truth (LABEL_REAL)":
 
-  1. Rule-based baseline (replicating the logic of `classifyCycle.isReal`)
-  2. Random forest (graph-level statistical features)
-  3. Heterogeneous GNN (heterogeneous graph structure + edge-weight features)
-
-Unified evaluation protocol:
-  - GroupKFold by `struct_hash` (the same structure does not span train/test)
-  - The three models share the same fold split to ensure a fair comparison
-  - Support binary classification (`label==2` vs `label==0`) and three-class classification (2 / 1 / 0)
-  - Support ablation (removing cross-layer edges / `lock_edge` / `call_edge`)
-"""
-
-import argparse,glob,hashlib,json,os,re,warnings,joblib
+import argparse,glob,hashlib,json,os,re,warnings,joblib,time,sys,copy
 from collections import Counter
 
 import numpy as np
 import pandas as pd
 import torch
 import torch.nn.functional as F
-from scipy.stats import mannwhitneyu
+from scipy.stats import mannwhitneyu, t, ttest_rel, wilcoxon
+from xgboost import XGBClassifier
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     roc_auc_score, f1_score, precision_score, recall_score,
@@ -28,8 +20,7 @@ from sklearn.metrics import (
 from sklearn.model_selection import GroupKFold, GridSearchCV
 from torch_geometric.data import HeteroData, Batch
 from torch_geometric.loader import DataLoader
-from torch_geometric.nn import GINEConv, HeteroConv, Linear, global_mean_pool
-
+from torch_geometric.nn import GINEConv, HeteroConv, Linear, global_mean_pool, global_max_pool
 warnings.filterwarnings("ignore")
 
 RANDOM_SEED = 42
@@ -56,6 +47,82 @@ CYCLE_FEATS = [
     "thread_count", "max_thread_occurrence", "edge_count",
     "all_edges_same_thread", "all_edges_reachable", "has_non_adjacent_edge",
 ]
+
+# Global feature-normalization statistics
+FEAT_STATS = {
+    "lock":      {"mean": None, "std": None},
+    "acq":       {"mean": None, "std": None},
+    "lock_edge": {"mean": None, "std": None},
+    "call_edge": {"mean": None, "std": None},
+}
+
+FOLD_METRICS = {}   # tag -> list of per-fold dicts
+
+def _normalize(x: torch.Tensor, key: str):
+    st = FEAT_STATS.get(key)
+    if st is None or st["mean"] is None:
+        return x
+    mean = torch.as_tensor(st["mean"], dtype=x.dtype, device=x.device)
+    std  = torch.as_tensor(st["std"],  dtype=x.dtype, device=x.device)
+    return (x - mean) / std.clamp_min(1e-6)
+
+
+def compute_feat_stats(data_list):
+    for key, dim in [("lock", LOCK_FEAT_DIM), ("acq", ACQ_FEAT_DIM)]:
+        vecs = []
+        for d in data_list:
+            if d[key].x.numel() > 0:
+                vecs.append(d[key].x)
+        if vecs:
+            allx = torch.cat(vecs, dim=0)
+            FEAT_STATS[key]["mean"] = allx.mean(dim=0).tolist()
+            FEAT_STATS[key]["std"]  = allx.std(dim=0).clamp_min(1e-6).tolist()
+
+    for key, etype, dim in [
+        ("lock_edge", ("lock", "lock_edge", "lock"), LOCK_EDGE_FEAT_DIM),
+        ("call_edge", ("acq", "call_edge", "acq"),   CALL_EDGE_FEAT_DIM),
+    ]:
+        vecs = []
+        for d in data_list:
+            ea = d[etype].edge_attr
+            if ea is not None and ea.numel() > 0:
+                vecs.append(ea)
+        if vecs:
+            alle = torch.cat(vecs, dim=0)
+            FEAT_STATS[key]["mean"] = alle.mean(dim=0).tolist()
+            FEAT_STATS[key]["std"]  = alle.std(dim=0).clamp_min(1e-6).tolist()
+
+
+# Focal loss
+class FocalLoss(torch.nn.Module):
+    def __init__(self, gamma=2.0, alpha=None, reduction="mean"):
+        super().__init__()
+        self.gamma = gamma
+        self.alpha = alpha
+        self.reduction = reduction
+
+    def forward(self, logits, target):
+        logp = F.log_softmax(logits, dim=-1)
+        p = logp.exp()
+        target = target.view(-1, 1)
+        logpt = logp.gather(1, target).squeeze(1)
+        pt = p.gather(1, target).squeeze(1)
+        loss = -((1 - pt) ** self.gamma) * logpt
+        if self.alpha is not None:
+            at = self.alpha.to(logits.device).gather(0, target.squeeze(1))
+            loss = at * loss
+        return loss.mean() if self.reduction == "mean" else loss
+
+# CORAL loss (domain adaptation)
+def coral_loss(src: torch.Tensor, tgt: torch.Tensor) -> torch.Tensor:
+    if src.size(0) < 2 or tgt.size(0) < 2:
+        return torch.tensor(0.0, device=src.device)
+    d = src.size(1)
+    src_c = src - src.mean(dim=0, keepdim=True)
+    tgt_c = tgt - tgt.mean(dim=0, keepdim=True)
+    cov_s = (src_c.t() @ src_c) / (src.size(0) - 1)
+    cov_t = (tgt_c.t() @ tgt_c) / (tgt.size(0) - 1)
+    return ((cov_s - cov_t) ** 2).sum() / (4.0 * d * d)
 
 # 1. Parser
 def parse_file(filepath):
@@ -86,7 +153,6 @@ def parse_file(filepath):
 
         if line.startswith("LOCK_NODE"):
             _, rest = line.split(None, 1)
-            # Split 3 times from right to left: `obj_type`, `is_static`, `obj_nonnull` (these three do not contain commas)
             key_part, obj_type, is_static, obj_nonnull = rest.rsplit(",", 3)
             nid, obj_key = key_part.split(",", 1)
             cur["lock_nodes"].append({
@@ -146,7 +212,6 @@ def parse_file(filepath):
             cur["labels"]["cycle"] = int(line.split()[1])
 
         elif line.startswith("LABEL_REAL"):
-            # 4-value ground truth (2/1/0/-1)
             cur["labels"]["real"] = int(line.split()[1])
 
     if cur is not None:
@@ -154,16 +219,11 @@ def parse_file(filepath):
     return cycles
 
 
-def load_all(data_dir, pattern="graph-*-copy.txt"):
-    """
-    By default, read only `-copy.txt` (the version with fine-grained `LABEL_REAL` annotations).
-    If no `-copy` file is found, fall back to `graph-*.txt`
-    """
+def load_all(data_dir, pattern="graph-*.txt"):
     files = sorted(glob.glob(os.path.join(data_dir, pattern)))
     if not files:
         print(f"[load] {pattern} not found, search for graph-*.txt")
         files = sorted(glob.glob(os.path.join(data_dir, "graph-*.txt")))
-        # Exclude `-copy.txt` (to avoid duplicates)
         files = [f for f in files if "-copy" not in f]
     print(f"[load] {data_dir}: {len(files)} files")
     cycles = []
@@ -223,7 +283,7 @@ def build_feature_table(cycles):
         rows.append({
             "file": c["file"], "cycle_id": c["cycle_id"],
             "label_cycle": c["labels"].get("cycle", -1),
-            "label_real":  c["labels"].get("real", -1),  # 4 values ground truth
+            "label_real":  c["labels"].get("real", -1),
             "struct_hash": struct_hash,
             "n_lock": n_lock, "n_acq": n_acq,
             "n_lock_edge": n_le, "n_call_edge": n_ce,
@@ -245,20 +305,6 @@ def build_feature_table(cycles):
 
 
 def apply_label_mode(df, label_mode):
-    """
-    Determine the binary/three-class `y` based on `--label_mode`.
-
-    `label_real` semantics (4-value ground truth):
-      2 = strong positive (≥2 real cycle entries)
-      1 = weak positive (1 entry / ring helper / mock)
-      0 = negative (fake cycle / native)
-      -1 = unknown (discard)
-
-    label_mode:
-      binary_strong : y = (label_real == 2)  →  strict positive samples
-      binary_loose  : y = (label_real >= 1)  →  loose positive samples
-      three_way     : y = label_real (keep 0/1/2)
-    """
     df = df[df["label_real"].isin([0, 1, 2])].copy()
     if label_mode == "binary_strong":
         df["y"] = (df["label_real"] == 2).astype(int)
@@ -272,9 +318,8 @@ def apply_label_mode(df, label_mode):
 
 # 3. Data quality report
 def quality_report(df, out_dir):
-    print("\n\n\n")
+    print("\n\n")
     print("Data quality assessment")
-    print()
 
     print("\n[label_real raw distribution]")
     print(df["label_real"].value_counts().sort_index())
@@ -289,7 +334,6 @@ def quality_report(df, out_dir):
     miss = miss[miss > 0]
     print(miss if len(miss) else "  No missing values")
 
-    # Single-feature Mann-Whitney (for binary classification)
     if df["y"].nunique() == 2:
         print("\n[Single-feature discriminative power (Mann-Whitney U)]")
         print(f"  {'feature':28s} {'p-value':>12s} {'AUC':>8s}")
@@ -317,7 +361,7 @@ def quality_report(df, out_dir):
         print("\n[Leakage detection]")
         if leaky:
             for c, a in leaky:
-                print(f"  ⚠ {c}: AUC={a:.3f}")
+                print(f"  Warning! {c}: AUC={a:.3f}")
         else:
             print("No obvious leakage found.")
 
@@ -327,13 +371,6 @@ def quality_report(df, out_dir):
 
 # 4. rule baseline
 def rule_baseline(df):
-    """
-    Replicate `classifyCycle.isReal`:
-      all_edges_same_thread && all_edges_reachable
-      && thread_count >= 2 && max_thread_occurrence <= 1
-
-    Note: this is the parser's rule and differs from the source of `LABEL_REAL`.
-    """
     pred = (
         (df["all_edges_same_thread"] == 1)
         & (df["all_edges_reachable"] == 1)
@@ -361,8 +398,6 @@ def rule_baseline(df):
         return {"acc": float(acc), "auc": float(auc),
                 "f1": float(f1), "precision": float(p), "recall": float(r)}
     else:
-        # Three-class classification: the rule outputs 0/1, and mapping to anything other than labels 0/2 counts as wrong.
-        # If the rule judges it as true -> predict 2; otherwise predict 0.
         pred3 = np.where(pred == 1, 2, 0)
         acc = (pred3 == y).mean()
         f1m = f1_score(y, pred3, average="macro", zero_division=0)
@@ -370,11 +405,8 @@ def rule_baseline(df):
         print(f"  The rule can only output 0/2 and cannot distinguish label 1.")
         return {"acc": float(acc), "f1_macro": float(f1m)}
 
-# 5. Unified K-Fold split (shared by the three models)
+# 5. Unified K-Fold split
 def make_folds(df, n_splits=5):
-    """
-    Group by {struct_hash} and perform GroupKFold, returning [(tr_idx, te_idx), ...].
-    """
     groups = df["struct_hash"].values
     y = df["y"].values
     n_groups = len(np.unique(groups))
@@ -387,14 +419,10 @@ def make_folds(df, n_splits=5):
 
 # 6. random forest
 def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None):
-    """
-    Evaluate RF on the given fold split. Return `(mean_metrics, oof_prob, oof_pred, model)`
-    """
     X = df[feat_cols].fillna(0).values.astype(np.float32)
     y = df["y"].values.astype(int)
     is_binary = df["y"].nunique() == 2
 
-    # Use GridSearch to find the best hyperparameters
     best_params = None
     if do_grid:
         print(f"\n  [GridSearch] ...")
@@ -404,7 +432,6 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
             "min_samples_leaf": [1, 2, 4],
             "class_weight": ["balanced", "balanced_subsample"],
         }
-        # Use the training set of the first fold for GridSearch
         tr0, _ = folds[0]
         rf = RandomForestClassifier(random_state=RANDOM_SEED, n_jobs=-1)
         scoring = "roc_auc" if is_binary else "f1_macro"
@@ -414,7 +441,6 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
         best_params = gs.best_params_
         print(f"  [GridSearch] best={best_params}, score={gs.best_score_:.4f}")
 
-    # evaluate fold by fold
     oof_prob = np.zeros(len(y))
     oof_pred = np.zeros(len(y), dtype=int)
     fold_metrics = []
@@ -455,27 +481,24 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
             fold_metrics.append(m)
             print(f"  fold {k}: {m}")
 
-    # summarize
     if is_binary:
-        mean_metrics = {
-            "auc": float(np.mean([m["auc"] for m in fold_metrics])),
-            "auc_std": float(np.std([m["auc"] for m in fold_metrics])),
-            "f1": float(np.mean([m["f1"] for m in fold_metrics])),
-            "precision": float(np.mean([m["p"] for m in fold_metrics])),
-            "recall": float(np.mean([m["r"] for m in fold_metrics])),
-            "acc": float(np.mean([m["acc"] for m in fold_metrics])),
-        }
+        mean_metrics = {}
+        for key, src in [("auc", "auc"), ("f1", "f1"),
+                         ("precision", "p"), ("recall", "r"), ("acc", "acc")]:
+            m, hw = mean_ci95([x[src] for x in fold_metrics])
+            mean_metrics[key] = m
+            mean_metrics[f"{key}_ci95"] = hw
         try:
             mean_metrics["oof_auc"] = float(roc_auc_score(y, oof_prob))
         except Exception:
             mean_metrics["oof_auc"] = float("nan")
     else:
-        mean_metrics = {
-            "f1_macro": float(np.mean([m["f1_macro"] for m in fold_metrics])),
-            "acc": float(np.mean([m["acc"] for m in fold_metrics])),
-        }
+        mean_metrics = {}
+        for key in ["f1_macro", "acc"]:
+            m, hw = mean_ci95([x[key] for x in fold_metrics])
+            mean_metrics[key] = m
+            mean_metrics[f"{key}_ci95"] = hw
 
-    # Feature importance & saving
     if out_dir:
         final_model = RandomForestClassifier(
             n_estimators=500, random_state=RANDOM_SEED, n_jobs=-1,
@@ -494,64 +517,316 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
         oof_df["oof_pred"] = oof_pred
         oof_df.to_csv(os.path.join(out_dir, f"{tag}_oof.csv"), index=False)
 
+    FOLD_METRICS[tag] = fold_metrics
     return mean_metrics, oof_prob, oof_pred
 
-# 7. Heterogeneous GNN
-def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=False):
+def mean_ci95(values):
+    arr = np.asarray(values, dtype=float)
+    arr = arr[~np.isnan(arr)]
+    if len(arr) < 2:
+        return float(arr.mean()) if len(arr) else float("nan"), 0.0
+    m = float(arr.mean())
+    hw = float(t.interval(0.95, len(arr) - 1, loc=m, scale=arr.std(ddof=1) / np.sqrt(len(arr)))[1] - m)
+    return m, hw
+
+def paired_ttest(a, b):
+    """
+    Paired t-test. a, b are equal-length and paired (same fold)
+    Returns (t_stat, p_value, mean_diff)
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    mask = ~(np.isnan(a) | np.isnan(b))
+    a, b = a[mask], b[mask]
+    if len(a) < 2:
+        return float("nan"), float("nan"), float("nan")
+    t_stat, p_val = ttest_rel(a, b)
+    return float(t_stat), float(p_val), float(np.mean(a - b))
+
+
+def wilcoxon_test(a, b):
+    """
+    Wilcoxon signed-rank test (non-parametric paired test)
+    More robust when n=5
+    Returns (stat, p_value, mean_diff)
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    mask = ~(np.isnan(a) | np.isnan(b))
+    a, b = a[mask], b[mask]
+    if len(a) < 2:
+        return float("nan"), float("nan"), float("nan")
+    diff = a - b
+    if np.allclose(diff, 0):
+        return float("nan"), 1.0, 0.0
+    try:
+        stat, p_val = wilcoxon(a, b)
+        return float(stat), float(p_val), float(np.mean(diff))
+    except Exception:
+        return float("nan"), float("nan"), float(np.mean(diff))
+
+def corrected_resampled_ttest(a, b, n_train, n_test):
+    """
+    Nadeau & Bengio (2003) corrected resampled t-test
+    a, b: per-fold metrics / n_train: per-fold training set size / n_test: per-fold test set size
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    d = a - b
+    n = len(d)
+    if n < 2:
+        return float("nan"), float("nan")
+    mean_d = d.mean()
+    var_d = d.var(ddof=1)
+    # Correction factor: account for non-independence between CV folds
+    correction = 1.0 / n + n_test / n_train
+    t_stat = mean_d / np.sqrt(var_d * correction)
+    # Degrees of freedom = n - 1
+    from scipy.stats import t as t_dist
+    p_val = 2 * (1 - t_dist.cdf(abs(t_stat), df=n-1))
+    return float(t_stat), float(p_val)
+
+def make_sklearn_model(tag, is_binary):
+    if tag == "lr":
+        return Pipeline([
+            ("scaler", StandardScaler()),
+            ("clf", LogisticRegression(
+                max_iter=2000, class_weight="balanced",
+                random_state=RANDOM_SEED, n_jobs=-1)),
+        ])
+    if tag == "xgb":
+        return XGBClassifier(
+            n_estimators=400, max_depth=4, learning_rate=0.05,
+            subsample=0.9, colsample_bytree=0.9,
+            reg_lambda=1.0, min_child_weight=1,
+            objective="binary:logistic" if is_binary else "multi:softprob",
+            num_class=None if is_binary else 3,
+            eval_metric="logloss" if is_binary else "mlogloss",
+            tree_method="hist", random_state=RANDOM_SEED, n_jobs=-1,
+        )
+    if tag == "svm":
+        return Pipeline([
+            ("scaler", StandardScaler()),
+            ("clf", SVC(
+                kernel="rbf",
+                C=1.0,
+                gamma="scale",
+                probability=True,
+                class_weight="balanced",
+                random_state=RANDOM_SEED,
+            )),
+        ])
+    raise ValueError(tag)
+
+
+def eval_sklearn_on_folds(df, feat_cols, folds, tag="lr", out_dir=None):
+    X = df[feat_cols].fillna(0).values.astype(np.float32)
+    y = df["y"].values.astype(int)
+    is_binary = df["y"].nunique() == 2
+
+    oof_prob = np.zeros(len(y))
+    oof_pred = np.zeros(len(y), dtype=int)
+
+    fold_raw = {"auc": [], "f1": [], "p": [], "r": [], "acc": [],
+                "f1_macro": []}
+
+    for k, (tr, te) in enumerate(folds):
+        model = make_sklearn_model(tag, is_binary)
+        model.fit(X[tr], y[tr])
+
+        if is_binary:
+            prob = model.predict_proba(X[te])[:, 1]
+            pred = (prob >= 0.5).astype(int)
+            oof_prob[te] = prob
+            oof_pred[te] = pred
+            try:
+                fold_raw["auc"].append(roc_auc_score(y[te], prob))
+            except Exception:
+                pass
+            fold_raw["f1"].append(f1_score(y[te], pred, zero_division=0))
+            fold_raw["p"].append(precision_score(y[te], pred, zero_division=0))
+            fold_raw["r"].append(recall_score(y[te], pred, zero_division=0))
+            fold_raw["acc"].append(accuracy_score(y[te], pred))
+            print(f"  fold {k}: auc={fold_raw['auc'][-1]:.4f} "
+                  f"f1={fold_raw['f1'][-1]:.4f} acc={fold_raw['acc'][-1]:.4f}")
+        else:
+            prob = model.predict_proba(X[te])
+            pred = model.predict(X[te])
+            oof_pred[te] = pred
+            fold_raw["f1_macro"].append(
+                f1_score(y[te], pred, average="macro", zero_division=0))
+            fold_raw["acc"].append(accuracy_score(y[te], pred))
+            print(f"  fold {k}: f1_macro={fold_raw['f1_macro'][-1]:.4f} "
+                  f"acc={fold_raw['acc'][-1]:.4f}")
+
+    mean_metrics = {}
+    if is_binary:
+        for key in ["auc", "f1", "p", "r", "acc"]:
+            m, hw = mean_ci95(fold_raw[key])
+            mean_metrics[key] = m
+            mean_metrics[f"{key}_ci95"] = hw
+        mean_metrics["f1_macro"] = mean_metrics["f1"]
+        try:
+            mean_metrics["oof_auc"] = float(roc_auc_score(y, oof_prob))
+        except Exception:
+            mean_metrics["oof_auc"] = float("nan")
+    else:
+        for key in ["f1_macro", "acc"]:
+            m, hw = mean_ci95(fold_raw[key])
+            mean_metrics[key] = m
+            mean_metrics[f"{key}_ci95"] = hw
+
+    if out_dir:
+        oof_df = df[["file", "cycle_id", "struct_hash", "label_real", "y"]].copy()
+        oof_df["oof_prob"] = oof_prob if is_binary else -1
+        oof_df["oof_pred"] = oof_pred
+        oof_df.to_csv(os.path.join(out_dir, f"{tag}_oof.csv"), index=False)
+
+    # # Reshape fold_raw into a list of dicts, consistent with fold_metrics structure
+    fold_metrics_list = []
+    n_folds = len(fold_raw["acc"])
+    for i in range(n_folds):
+        d = {"acc": fold_raw["acc"][i]}
+        if is_binary:
+            d["auc"] = fold_raw["auc"][i] if i < len(fold_raw["auc"]) else None
+            d["f1"]  = fold_raw["f1"][i]  if i < len(fold_raw["f1"])  else None
+        else:
+            d["f1_macro"] = fold_raw["f1_macro"][i]
+        fold_metrics_list.append(d)
+    FOLD_METRICS[tag] = fold_metrics_list
+    return mean_metrics, oof_prob, oof_pred
+
+# 7. HeteroData builder  (with node/edge feature ablation)
+def cycle_to_hetero(c,
+                    drop_lock_edge=False, drop_call_edge=False, drop_cross=False,
+                    abl_node="full", abl_edge="full"):
+    """
+    Build HeteroData.
+
+    abl_node:
+      - "full"      : original node features
+      - "no_static" : remove is_static / obj_nonnull (structural attributes)
+      - "no_degree" : remove in/out/total degree (topological degree)
+      - "zero"      : zero out all node features (pure structure)
+
+    abl_edge:
+      - "full"   : original edge features
+      - "no_attr": clear edge_attr (equivalent to GINEConv without edge_dim input)
+      - "zero"   : keep edge_attr dimension but zero it out
+    """
     data = HeteroData()
     n_lock = len(c["lock_nodes"]); n_acq = len(c["acq_nodes"])
 
     # lock node features
+    lock_in  = Counter()
+    lock_out = Counter()
+    for e in c["lock_edges"]:
+        lock_out[e["from"]] += 1
+        lock_in[e["to"]]   += 1
+    for (t, a, b) in c["cross"]:
+        if t == "ACQ_TO_LOCK":
+            lock_in[b]  += 1
+        else:
+            lock_out[a] += 1
+
     if n_lock > 0:
-        lf = [[float(n["is_static"]), float(n["obj_nonnull"]),
-               1.0 if "LockBox" in n["obj_key"] else 0.0,
-               1.0 if "Object" in n["obj_type"] else 0.0,
-               float(len(n["obj_key"]))] for n in c["lock_nodes"]]
+        lf = []
+        for n in c["lock_nodes"]:
+            nid = n["id"]
+            feat = [
+                float(n["is_static"]),
+                float(n["obj_nonnull"]),
+                float(lock_in.get(nid, 0)),
+                float(lock_out.get(nid, 0)),
+                float(lock_in.get(nid, 0) + lock_out.get(nid, 0)),
+            ]
+            if abl_node == "no_static":
+                feat[0] = 0.0; feat[1] = 0.0
+            elif abl_node == "no_degree":
+                feat[2] = 0.0; feat[3] = 0.0; feat[4] = 0.0
+            elif abl_node == "zero":
+                feat = [0.0] * LOCK_FEAT_DIM
+            lf.append(feat)
         data["lock"].x = torch.tensor(lf, dtype=torch.float)
     else:
         data["lock"].x = torch.zeros((0, LOCK_FEAT_DIM), dtype=torch.float)
 
     # acq node features
+    acq_in  = Counter()
+    acq_out = Counter()
+    for e in c["call_edges"]:
+        acq_out[e["src"]] += 1
+        acq_in[e["dst"]]  += 1
+    for (t, a, b) in c["cross"]:
+        if t == "ACQ_TO_LOCK":
+            acq_out[a] += 1
+        else:
+            acq_in[b]  += 1
+
     if n_acq > 0:
-        af = [[float(a["line"] if a["line"] >= 0 else 0),
-               float(a["is_static"]), float(a["is_sync"]),
-               float(a["nesting"]), float(a["pts_size"]),
-               float(len(a["var"]))] for a in c["acq_nodes"]]
+        af = []
+        for a in c["acq_nodes"]:
+            aid = a["id"]
+            feat = [
+                float(a["line"] if a["line"] >= 0 else 0),
+                float(a["is_static"]),
+                float(a["is_sync"]),
+                float(a["nesting"]),
+                float(a["pts_size"]),
+                float(acq_in.get(aid, 0) + acq_out.get(aid, 0)),
+            ]
+            if abl_node == "no_static":
+                feat[1] = 0.0; feat[2] = 0.0
+            elif abl_node == "no_degree":
+                feat[5] = 0.0
+            elif abl_node == "zero":
+                feat = [0.0] * ACQ_FEAT_DIM
+            af.append(feat)
         data["acq"].x = torch.tensor(af, dtype=torch.float)
     else:
         data["acq"].x = torch.zeros((0, ACQ_FEAT_DIM), dtype=torch.float)
 
-    # lock_edge (with edge_attr：dist / may_alias / same_lock_obj)
+    # lock_edge
     if c["lock_edges"] and not drop_lock_edge:
         le = torch.tensor([[e["from"] for e in c["lock_edges"]],
                            [e["to"] for e in c["lock_edges"]]], dtype=torch.long)
-        le_attr = torch.tensor(
-            [[float(e["dist"]),
-              float(e["may_alias"]),
-              float(e["same_lock_obj"])] for e in c["lock_edges"]],
-            dtype=torch.float)
+        if abl_edge == "no_attr":
+            le_attr = torch.zeros((0, LOCK_EDGE_FEAT_DIM), dtype=torch.float)
+        elif abl_edge == "zero":
+            le_attr = torch.zeros((len(c["lock_edges"]), LOCK_EDGE_FEAT_DIM), dtype=torch.float)
+        else:
+            le_attr = torch.tensor(
+                [[float(e["dist"]),
+                  float(e["may_alias"]),
+                  float(e["same_lock_obj"])] for e in c["lock_edges"]],
+                dtype=torch.float)
     else:
         le = torch.zeros((2, 0), dtype=torch.long)
         le_attr = torch.zeros((0, LOCK_EDGE_FEAT_DIM), dtype=torch.float)
     data["lock", "lock_edge", "lock"].edge_index = le
     data["lock", "lock_edge", "lock"].edge_attr = le_attr
 
-    # call_edge (with edge_attr：dist / same_method / nested)
+    # call_edge
     if c["call_edges"] and not drop_call_edge:
         ce = torch.tensor([[e["src"] for e in c["call_edges"]],
                            [e["dst"] for e in c["call_edges"]]], dtype=torch.long)
-        ce_attr = torch.tensor(
-            [[float(e["dist"]),
-              float(e["same_method"]),
-              float(e["nested"])] for e in c["call_edges"]],
-            dtype=torch.float)
+        if abl_edge == "no_attr":
+            ce_attr = torch.zeros((0, CALL_EDGE_FEAT_DIM), dtype=torch.float)
+        elif abl_edge == "zero":
+            ce_attr = torch.zeros((len(c["call_edges"]), CALL_EDGE_FEAT_DIM), dtype=torch.float)
+        else:
+            ce_attr = torch.tensor(
+                [[float(e["dist"]),
+                  float(e["same_method"]),
+                  float(e["nested"])] for e in c["call_edges"]],
+                dtype=torch.float)
     else:
         ce = torch.zeros((2, 0), dtype=torch.long)
         ce_attr = torch.zeros((0, CALL_EDGE_FEAT_DIM), dtype=torch.float)
     data["acq", "call_edge", "acq"].edge_index = ce
     data["acq", "call_edge", "acq"].edge_attr = ce_attr
 
-    # Cross-layer edges (no {edge_attr}, use a zero-dimensional placeholder)
+    # cross-layer edges
     if drop_cross:
         atl, lta = [], []
     else:
@@ -573,22 +848,17 @@ def collate_hetero(batch):
     return Batch.from_data_list(batch)
 
 
+# 7a. HeteroGNN
 class HeteroGNN(torch.nn.Module):
-    """
-    Use `GINEConv` instead of `SAGEConv` to support `edge_attr`.
-    `GINEConv` requires an `nn` module as the edge encoder to project `edge_attr` into the hidden dimension
-    """
-    def __init__(self, hidden=64, num_classes=2, num_layers=2, dropout=0.3):
+    def __init__(self, hidden=32, num_classes=2, num_layers=1, dropout=0.3):
         super().__init__()
         self.lin_lock = Linear(LOCK_FEAT_DIM, hidden)
         self.lin_acq  = Linear(ACQ_FEAT_DIM, hidden)
         self.hidden = hidden
 
-        # Edge encoder: map edge features to hidden (required by GINEConv)
         self.edge_encoder_lock = torch.nn.Linear(LOCK_EDGE_FEAT_DIM, hidden)
         self.edge_encoder_call = torch.nn.Linear(CALL_EDGE_FEAT_DIM, hidden)
 
-        # GINEConv's inner MLP (in the paper it is ReLU + Linear).
         def make_nn():
             return torch.nn.Sequential(
                 torch.nn.Linear(hidden, hidden),
@@ -615,26 +885,21 @@ class HeteroGNN(torch.nn.Module):
         )
 
     def _make_edge_attr(self, kind, data, device):
-        """
-        Return a dict of `edge_attr` with shapes aligned to `edge_index`.
-        For cross-layer edges (which have no `edge_attr`), use a zero vector as a placeholder
-        """
         if kind == "lock":
             n = data["lock", "lock_edge", "lock"].edge_index.size(1)
             if hasattr(data["lock", "lock_edge", "lock"], "edge_attr") \
                and data["lock", "lock_edge", "lock"].edge_attr.numel() > 0:
-                return self.edge_encoder_lock(
-                    data["lock", "lock_edge", "lock"].edge_attr)
+                ea = _normalize(data["lock", "lock_edge", "lock"].edge_attr, "lock_edge")
+                return self.edge_encoder_lock(ea)
             return torch.zeros(n, self.hidden, device=device)
         elif kind == "call":
             n = data["acq", "call_edge", "acq"].edge_index.size(1)
             if hasattr(data["acq", "call_edge", "acq"], "edge_attr") \
                and data["acq", "call_edge", "acq"].edge_attr.numel() > 0:
-                return self.edge_encoder_call(
-                    data["acq", "call_edge", "acq"].edge_attr)
+                ea = _normalize(data["acq", "call_edge", "acq"].edge_attr, "call_edge")
+                return self.edge_encoder_call(ea)
             return torch.zeros(n, self.hidden, device=device)
-        else:  # cross
-            # Use the corresponding number of src nodes as a placeholder (cross-layer edges have no attr, so directly 0)
+        else:
             if kind == "atl":
                 n = data["acq", "acq_to_lock", "lock"].edge_index.size(1)
             else:
@@ -642,9 +907,11 @@ class HeteroGNN(torch.nn.Module):
             return torch.zeros(n, self.hidden, device=device)
 
     def forward(self, data):
+        lock_x = _normalize(data["lock"].x, "lock")
+        acq_x  = _normalize(data["acq"].x,  "acq")
         x_dict = {
-            "lock": F.relu(self.lin_lock(data["lock"].x)),
-            "acq":  F.relu(self.lin_acq(data["acq"].x)),
+            "lock": F.relu(self.lin_lock(lock_x)),
+            "acq":  F.relu(self.lin_acq(acq_x)),
         }
         edge_index_dict = {
             ("lock", "lock_edge", "lock"):  data["lock", "lock_edge", "lock"].edge_index,
@@ -654,7 +921,6 @@ class HeteroGNN(torch.nn.Module):
         }
         device = x_dict["lock"].device if x_dict["lock"].size(0) > 0 else x_dict["acq"].device
 
-        # GINEConv requires {edge_attr} to have the same dimension as {edge_index}
         edge_attr_dict = {
             ("lock", "lock_edge", "lock"):  self._make_edge_attr("lock", data, device),
             ("acq", "call_edge", "acq"):    self._make_edge_attr("call", data, device),
@@ -679,31 +945,78 @@ class HeteroGNN(torch.nn.Module):
         return self.classifier(g)
 
 
-def train_one_fold_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=64,
-                       num_layers=2, dropout=0.3, lr=1e-3, patience=15):
+# 7b. Training loop
+def _split_train_val(train_ds, val_ratio=0.15, seed=RANDOM_SEED):
+    n = len(train_ds)
+    if n < 5:
+        return train_ds, train_ds[:0]
+    rng = np.random.RandomState(seed)
+    idx = np.arange(n)
+    rng.shuffle(idx)
+    n_val = max(1, int(n * val_ratio))
+    val_idx = idx[:n_val]
+    tr_idx  = idx[n_val:]
+    return [train_ds[i] for i in tr_idx], [train_ds[i] for i in val_idx]
+
+
+def _evaluate_loader(model, loader, device, num_classes):
+    model.eval()
+    all_prob, all_y = [], []
+    with torch.no_grad():
+        for batch in loader:
+            batch = batch.to(device)
+            out = model(batch)
+            prob = F.softmax(out, dim=-1)
+            all_prob.append(prob.cpu().numpy())
+            all_y.append(batch.y.view(-1).cpu().numpy())
+    if not all_prob:
+        return None, None, None
+    all_prob = np.concatenate(all_prob, axis=0)
+    all_y = np.concatenate(all_y)
+    pred = all_prob.argmax(axis=1)
+    acc = float(accuracy_score(all_y, pred))
+    try:
+        if num_classes == 2:
+            auc = float(roc_auc_score(all_y, all_prob[:, 1]))
+        else:
+            auc = None
+    except Exception:
+        auc = None
+    f1 = float(f1_score(all_y, pred, average="macro", zero_division=0))
+    return auc, f1, acc
+
+
+def train_and_eval_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=32,
+                       num_layers=1, dropout=0.3, lr=1e-3, patience=15,
+                       model_cls=HeteroGNN, use_focal=False,
+                       use_coral=False, coral_weight=1.0,
+                       domain_label=None, **model_kwargs):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = HeteroGNN(hidden=hidden, num_classes=num_classes,
-                      num_layers=num_layers, dropout=dropout).to(device)
-    opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
 
-    labels_tr = np.array([d.y.item() for d in train_ds])
-    cnt = Counter(labels_tr)
-    # sqrt gentle weighting (to avoid being too aggressive)
-    w = torch.tensor([1.0 / np.sqrt(max(cnt.get(i, 1), 1)) for i in range(num_classes)],
-                     dtype=torch.float, device=device)
-    w = w / w.sum() * num_classes
-    criterion = torch.nn.CrossEntropyLoss(weight=w)
+    compute_feat_stats(train_ds)
 
-    train_loader = DataLoader(train_ds, batch_size=16, shuffle=True, collate_fn=collate_hetero)
-    test_loader  = DataLoader(test_ds, batch_size=16, shuffle=False, collate_fn=collate_hetero)
+    model = model_cls(hidden=hidden, num_classes=num_classes,
+                      num_layers=num_layers, dropout=dropout,
+                      **model_kwargs).to(device)
+    opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-3)
 
-    best_loss = float("inf")
+    if use_focal:
+        criterion = FocalLoss(gamma=2.0)
+    else:
+        criterion = torch.nn.CrossEntropyLoss()
+
+    tr_ds, val_ds = _split_train_val(train_ds, val_ratio=0.15, seed=RANDOM_SEED)
+    train_loader = DataLoader(tr_ds, batch_size=16, shuffle=True,
+                              collate_fn=collate_hetero)
+    val_loader   = DataLoader(val_ds, batch_size=16, shuffle=False,
+                              collate_fn=collate_hetero) if len(val_ds) > 0 else None
+
+    best_score = -np.inf
     best_state = None
     no_improve = 0
 
     for epoch in range(1, epochs + 1):
         model.train()
-        epoch_loss, n_seen = 0.0, 0
         for batch in train_loader:
             batch = batch.to(device)
             opt.zero_grad()
@@ -711,13 +1024,18 @@ def train_one_fold_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=64,
             loss = criterion(out, batch.y.view(-1))
             loss.backward()
             opt.step()
-            epoch_loss += loss.item() * batch.y.size(0)
-            n_seen += batch.y.size(0)
-        epoch_loss /= max(n_seen, 1)
 
-        # Use training loss to select the best epoch (without touching test)
-        if epoch_loss < best_loss - 1e-5:
-            best_loss = epoch_loss
+        if val_loader is not None:
+            v_auc, v_f1, v_acc = _evaluate_loader(model, val_loader, device, num_classes)
+            if num_classes == 2 and v_auc is not None:
+                score = v_auc
+            else:
+                score = v_f1 if v_f1 is not None else -np.inf
+        else:
+            score = -epoch
+
+        if score > best_score + 1e-5:
+            best_score = score
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             no_improve = 0
         else:
@@ -725,11 +1043,12 @@ def train_one_fold_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=64,
             if no_improve >= patience:
                 break
 
-    # Restore the model using {best_state}, and run it once on test.
     if best_state is not None:
         model.load_state_dict({k: v.to(device) for k, v in best_state.items()})
 
     model.eval()
+    test_loader = DataLoader(test_ds, batch_size=16, shuffle=False,
+                             collate_fn=collate_hetero)
     all_prob, all_y = [], []
     with torch.no_grad():
         for batch in test_loader:
@@ -740,24 +1059,26 @@ def train_one_fold_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=64,
             all_y.append(batch.y.view(-1).cpu().numpy())
     all_prob = np.concatenate(all_prob, axis=0) if all_prob else None
     all_y = np.concatenate(all_y) if all_y else None
-    return best_loss, all_prob, all_y
+    return best_score, all_prob, all_y
 
 
-def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=64,
-                      num_layers=2, dropout=0.3, lr=1e-3,
+def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=32,
+                      num_layers=1, dropout=0.3, lr=1e-3,
                       drop_lock_edge=False, drop_call_edge=False, drop_cross=False,
-                      tag="gnn"):
-    """
-    Evaluate the GNN on the given fold split
-    """
+                      abl_node="full", abl_edge="full",
+                      tag="gnn", model_cls=HeteroGNN, use_focal=False,
+                      use_coral=False, model_kwargs=None):
     valid_mask = df["label_real"].isin([0, 1, 2]).values
     valid_cycles = [c for c, m in zip(cycles, valid_mask) if m]
-    data_list = [cycle_to_hetero(c, drop_lock_edge=drop_lock_edge,
+    data_list = [cycle_to_hetero(c,
+                                 drop_lock_edge=drop_lock_edge,
                                  drop_call_edge=drop_call_edge,
-                                 drop_cross=drop_cross) for c in valid_cycles]
+                                 drop_cross=drop_cross,
+                                 abl_node=abl_node,
+                                 abl_edge=abl_edge)
+                 for c in valid_cycles]
     labels = np.array([d.y.item() for d in data_list])
 
-    # In three-class classification, label 2 -> y=2; in binary classification, label 2 -> y=1.
     if num_classes == 2:
         df_eff = df[valid_mask].copy()
         y = df_eff["y"].values.astype(int)
@@ -779,10 +1100,12 @@ def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=64,
             print(f"  fold {k}: The test set has only one class, skipping")
             continue
 
-        _, prob, _ = train_one_fold_gnn(
+        _, prob, _ = train_and_eval_gnn(
             tr_ds, te_ds, num_classes=num_classes,
             epochs=epochs, hidden=hidden, num_layers=num_layers,
-            dropout=dropout, lr=lr)
+            dropout=dropout, lr=lr, model_cls=model_cls,
+            use_focal=use_focal, use_coral=use_coral,
+            **(model_kwargs or {}))
         if prob is None:
             print(f"  fold {k}: train failed")
             continue
@@ -812,40 +1135,403 @@ def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=64,
         return None, oof_prob, oof_pred
 
     if num_classes == 2:
-        mean_metrics = {
-            "auc": float(np.mean([m["auc"] for m in fold_metrics])),
-            "auc_std": float(np.std([m["auc"] for m in fold_metrics])),
-            "f1": float(np.mean([m["f1"] for m in fold_metrics])),
-            "acc": float(np.mean([m["acc"] for m in fold_metrics])),
+        mean_metrics = {}
+        for key in ["auc", "f1", "acc"]:
+            m, hw = mean_ci95([x[key] for x in fold_metrics])
+            mean_metrics[key] = m
+            mean_metrics[f"{key}_ci95"] = hw
+    else:
+        mean_metrics = {}
+        for key in ["f1_macro", "acc"]:
+            m, hw = mean_ci95([x[key] for x in fold_metrics])
+            mean_metrics[key] = m
+            mean_metrics[f"{key}_ci95"] = hw
+
+    FOLD_METRICS[tag] = fold_metrics
+    return mean_metrics, oof_prob, oof_pred
+
+# Triage analysis
+def triage_at_recall(df, prob_col="oof_prob", y_col="y", target_recall=0.90):
+    if len(df) == 0:
+        return None
+    d = df.sort_values(prob_col, ascending=False).reset_index(drop=True)
+    y = d[y_col].values.astype(int)
+    n_pos = int(y.sum())
+    if n_pos == 0:
+        return {"n_total": len(d), "n_pos": 0, "target_recall": target_recall,
+                "need_pos": 0, "inspections": 0, "review_reduction": 0.0,
+                "random_expected": 0, "reduction_vs_random": 0.0}
+    need = int(np.ceil(target_recall * n_pos))
+    cum_pos = np.cumsum(y)
+    k = int(np.argmax(cum_pos >= need)) + 1
+    return {
+        "n_total": len(d),
+        "n_pos": n_pos,
+        "target_recall": target_recall,
+        "need_pos": need,
+        "inspections": k,
+        "review_reduction": float(1 - k / len(d)),
+        "random_expected": int(np.ceil(target_recall * len(d))),
+        "reduction_vs_random": float(1 - k / (target_recall * len(d))),
+    }
+
+
+def triage_at_precision(df, prob_col="oof_prob", y_col="y", target_precision=0.80):
+    if len(df) == 0:
+        return None
+    d = df.sort_values(prob_col, ascending=False).reset_index(drop=True)
+    y = d[y_col].values.astype(int)
+    n_pos = int(y.sum())
+    if n_pos == 0:
+        return {"target_precision": target_precision, "recall": 0.0, "k": 0}
+    cum_tp = np.cumsum(y)
+    cum_fp = np.cumsum(1 - y)
+    precision = cum_tp / (cum_tp + cum_fp + 1e-12)
+    valid = np.where(precision >= target_precision)[0]
+    if len(valid) == 0:
+        return {"target_precision": target_precision, "recall": 0.0, "k": 0}
+    k = int(valid[-1]) + 1
+    recall = float(cum_tp[k - 1] / n_pos)
+    return {"target_precision": target_precision, "recall": recall, "k": k}
+
+
+def triage_report(oof_path, tag, label_mode):
+    if not label_mode.startswith("binary"):
+        return None
+    if not os.path.exists(oof_path):
+        return None
+    df = pd.read_csv(oof_path)
+    if "oof_prob" not in df.columns or "y" not in df.columns:
+        return None
+    if (df["oof_prob"] == -1).all():
+        return None
+
+    res = {
+        "tag": tag,
+        "recall@0.90": triage_at_recall(df, target_recall=0.90),
+        "recall@0.95": triage_at_recall(df, target_recall=0.95),
+        "precision@0.80": triage_at_precision(df, target_precision=0.80),
+        "precision@0.90": triage_at_precision(df, target_precision=0.90),
+    }
+    return res
+
+
+def eval_cross_project(df_train, df_test, cycles_train, cycles_test,
+                       label_mode="binary_strong", out_dir=None,
+                       gnn_epochs=100, gnn_hidden=32, gnn_layers=1,
+                       gnn_dropout=0.3, gnn_lr=1e-3):
+    df_tr = apply_label_mode(df_train, label_mode)
+    df_te = apply_label_mode(df_test, label_mode)
+
+    print(f"\n[cross-project] train samples = {len(df_tr)}, test samples = {len(df_te)}")
+    print(f"[cross-project] train y = {df_tr['y'].value_counts().to_dict()}")
+    print(f"[cross-project] test  y = {df_te['y'].value_counts().to_dict()}")
+
+    is_binary = df_tr["y"].nunique() == 2
+    y_te = df_te["y"].values.astype(int)
+    results = {}
+
+    pred_rule = (
+        (df_te["all_edges_same_thread"] == 1)
+        & (df_te["all_edges_reachable"] == 1)
+        & (df_te["thread_count"] >= 2)
+        & (df_te["max_thread_occurrence"] <= 1)
+    ).astype(int).values
+    if is_binary:
+        results["rule"] = {
+            "auc": float(roc_auc_score(y_te, pred_rule)) if len(np.unique(y_te)) > 1 else float("nan"),
+            "f1": float(f1_score(y_te, pred_rule, zero_division=0)),
+            "acc": float(accuracy_score(y_te, pred_rule)),
         }
     else:
-        mean_metrics = {
-            "f1_macro": float(np.mean([m["f1_macro"] for m in fold_metrics])),
-            "acc": float(np.mean([m["acc"] for m in fold_metrics])),
+        pred3 = np.where(pred_rule == 1, 2, 0)
+        results["rule"] = {
+            "f1_macro": float(f1_score(y_te, pred3, average="macro", zero_division=0)),
+            "acc": float(accuracy_score(y_te, pred3)),
         }
-    return mean_metrics, oof_prob, oof_pred
+    print(f"  [rule] {results['rule']}")
+
+    X_tr = df_tr[GRAPH_FEATS].fillna(0).values.astype(np.float32)
+    X_te = df_te[GRAPH_FEATS].fillna(0).values.astype(np.float32)
+    y_tr = df_tr["y"].values.astype(int)
+
+    for tag in ["rf", "lr", "xgb", "svm"]:
+        if tag == "rf":
+            model = RandomForestClassifier(
+                n_estimators=300, random_state=RANDOM_SEED, n_jobs=-1,
+                class_weight="balanced")
+        elif tag == "lr":
+            model = Pipeline([
+                ("scaler", StandardScaler()),
+                ("clf", LogisticRegression(
+                    max_iter=2000, class_weight="balanced",
+                    random_state=RANDOM_SEED)),
+            ])
+        elif tag == "svm":
+            model = Pipeline([
+                ("scaler", StandardScaler()),
+                ("clf", SVC(kernel="rbf", C=1.0, gamma="scale",
+                            probability=True, class_weight="balanced",
+                            random_state=RANDOM_SEED)),
+            ])
+        else:
+            model = XGBClassifier(
+                n_estimators=400, max_depth=4, learning_rate=0.05,
+                subsample=0.9, colsample_bytree=0.9,
+                reg_lambda=1.0, min_child_weight=1,
+                objective="binary:logistic" if is_binary else "multi:softprob",
+                num_class=None if is_binary else 3,
+                eval_metric="logloss" if is_binary else "mlogloss",
+                tree_method="hist", random_state=RANDOM_SEED, n_jobs=-1,
+            )
+        model.fit(X_tr, y_tr)
+        if is_binary:
+            prob = model.predict_proba(X_te)[:, 1]
+            pred = (prob >= 0.5).astype(int)
+            res = {
+                "auc": float(roc_auc_score(y_te, prob)) if len(np.unique(y_te)) > 1 else float("nan"),
+                "f1": float(f1_score(y_te, pred, zero_division=0)),
+                "acc": float(accuracy_score(y_te, pred)),
+            }
+        else:
+            prob = model.predict_proba(X_te)
+            pred = model.predict(X_te)
+            res = {
+                "f1_macro": float(f1_score(y_te, pred, average="macro", zero_division=0)),
+                "acc": float(accuracy_score(y_te, pred)),
+            }
+        results[tag] = res
+        print(f"  [{tag}] {res}")
+
+    valid_tr = df_tr["label_real"].isin([0, 1, 2]).values
+    valid_te = df_te["label_real"].isin([0, 1, 2]).values
+    cycles_tr = [c for c, m in zip(cycles_train, valid_tr) if m]
+    cycles_te = [c for c, m in zip(cycles_test, valid_te) if m]
+
+    num_classes = 2 if is_binary else 3
+    data_tr = [cycle_to_hetero(c) for c in cycles_tr]
+    data_te = [cycle_to_hetero(c) for c in cycles_te]
+
+    y_tr_eff = df_tr["y"].values.astype(int)
+    y_te_eff = df_te["y"].values.astype(int)
+    for i, d in enumerate(data_tr):
+        d.y = torch.tensor([int(y_tr_eff[i])], dtype=torch.long)
+    for i, d in enumerate(data_te):
+        d.y = torch.tensor([int(y_te_eff[i])], dtype=torch.long)
+
+    _, prob_gnn, _ = train_and_eval_gnn(
+        data_tr, data_te, num_classes=num_classes,
+        epochs=gnn_epochs, hidden=gnn_hidden, num_layers=gnn_layers,
+        dropout=gnn_dropout, lr=gnn_lr, model_cls=HeteroGNN)
+
+    if prob_gnn is not None:
+        if num_classes == 2:
+            pred_gnn = prob_gnn[:, 1] >= 0.5
+            results["gnn"] = {
+                "auc": float(roc_auc_score(y_te_eff, prob_gnn[:, 1])) if len(np.unique(y_te_eff)) > 1 else float("nan"),
+                "f1": float(f1_score(y_te_eff, pred_gnn, zero_division=0)),
+                "acc": float(accuracy_score(y_te_eff, pred_gnn)),
+            }
+            if out_dir:
+                oof = df_te.copy()
+                oof["oof_prob"] = prob_gnn[:, 1]
+                oof["oof_pred"] = pred_gnn.astype(int)
+                oof.to_csv(os.path.join(out_dir, "cross_gnn_oof.csv"), index=False)
+        else:
+            pred_gnn = prob_gnn.argmax(axis=1)
+            results["gnn"] = {
+                "f1_macro": float(f1_score(y_te_eff, pred_gnn, average="macro", zero_division=0)),
+                "acc": float(accuracy_score(y_te_eff, pred_gnn)),
+            }
+        print(f"  [gnn] {results['gnn']}")
+
+    if out_dir and is_binary:
+        for tag in ["rf", "lr", "xgb", "svm"]:
+            if tag == "rf":
+                model = RandomForestClassifier(
+                    n_estimators=300, random_state=RANDOM_SEED, n_jobs=-1,
+                    class_weight="balanced")
+            elif tag == "lr":
+                model = Pipeline([
+                    ("scaler", StandardScaler()),
+                    ("clf", LogisticRegression(
+                        max_iter=2000, class_weight="balanced",
+                        random_state=RANDOM_SEED)),
+                ])
+            else:
+                model = XGBClassifier(
+                    n_estimators=400, max_depth=4, learning_rate=0.05,
+                    subsample=0.9, colsample_bytree=0.9,
+                    reg_lambda=1.0, min_child_weight=1,
+                    objective="binary:logistic",
+                    eval_metric="logloss",
+                    tree_method="hist", random_state=RANDOM_SEED, n_jobs=-1,
+                )
+            model.fit(X_tr, y_tr)
+            prob = model.predict_proba(X_te)[:, 1]
+            oof = df_te.copy()
+            oof["oof_prob"] = prob
+            oof["oof_pred"] = (prob >= 0.5).astype(int)
+            oof.to_csv(os.path.join(out_dir, f"cross_{tag}_oof.csv"), index=False)
+
+    return results
+
+
+# 8. GNN ablation definitions
+GNN_ABLATIONS = {
+    # node feature
+    "node_full":      dict(abl_node="full",      model_cls=HeteroGNN),
+    "node_no_static": dict(abl_node="no_static", model_cls=HeteroGNN),
+    "node_no_degree": dict(abl_node="no_degree", model_cls=HeteroGNN),
+    "node_zero":      dict(abl_node="zero",      model_cls=HeteroGNN),
+
+    # edge feature
+    "edge_full":      dict(abl_edge="full",      model_cls=HeteroGNN),
+    "edge_zero":      dict(abl_edge="zero",      model_cls=HeteroGNN),
+    "edge_no_attr":   dict(abl_edge="no_attr",   model_cls=HeteroGNN),
+
+    # architecture
+    "arch_full":      dict(model_cls=HeteroGNN),
+    "arch_no_cross":  dict(model_cls=HeteroGNN, drop_cross=True),
+    "arch_no_lock":   dict(model_cls=HeteroGNN, drop_lock_edge=True),
+    "arch_no_call":   dict(model_cls=HeteroGNN, drop_call_edge=True),
+}
+
+ABL_KIND_MAP = {
+    "node": ["node_full", "node_no_static", "node_no_degree", "node_zero"],
+    "edge": ["edge_full", "edge_zero", "edge_no_attr"],
+    "arch": ["arch_full", "arch_no_cross", "arch_no_lock", "arch_no_call"],
+}
+
+def run_gnn_ablation(cycles, df, folds, num_classes, args, kinds=None):
+    """Run the selected ablation groups and return a dict of results."""
+    if kinds is None:
+        kinds = ["node", "edge", "arch"]
+
+    selected = []
+    for k in kinds:
+        for name in ABL_KIND_MAP.get(k, []):
+            selected.append(name)
+
+    results = {}
+    print("\n\n")
+    print("4. GNN ablation study")
+    print(f"   kinds = {kinds}")
+    print(f"   runs  = {len(selected)}")
+
+    for name in selected:
+        cfg = dict(GNN_ABLATIONS[name])
+        model_cls = cfg.pop("model_cls", HeteroGNN)
+        model_kwargs = cfg.pop("model_kwargs", None)
+        print(f"\n  [{name}]  cls={model_cls.__name__}  cfg={cfg}  kwargs={model_kwargs}")
+
+        res, oof_prob, oof_pred = eval_gnn_on_folds(
+            cycles, df, folds, num_classes=num_classes,
+            epochs=args.gnn_epochs, hidden=args.gnn_hidden,
+            num_layers=args.gnn_layers, dropout=args.gnn_dropout,
+            lr=args.gnn_lr, tag=f"gnn_{name}",
+            model_cls=model_cls, use_focal=args.use_focal,
+            model_kwargs=model_kwargs,
+            **cfg)
+        results[name] = res
+        print(f"    -> {res}")
+
+        oof_df = df[df["label_real"].isin([0, 1, 2])][
+            ["file", "cycle_id", "struct_hash", "label_real", "y"]].copy()
+        if num_classes == 2 and oof_prob is not None:
+            oof_df["oof_prob"] = oof_prob[:, 1]
+        else:
+            oof_df["oof_prob"] = -1
+        oof_df["oof_pred"] = oof_pred
+        oof_df.to_csv(os.path.join(args.out_dir, f"gnn_{name}_oof.csv"), index=False)
+
+    # Save a compact table
+    rows = []
+    for name, m in results.items():
+        if m is None:
+            continue
+        if num_classes == 2:
+            rows.append({
+                "ablation": name,
+                "auc": m.get("auc"),
+                "auc_ci95": m.get("auc_ci95"),
+                "f1": m.get("f1"),
+                "f1_ci95": m.get("f1_ci95"),
+                "acc": m.get("acc"),
+                "acc_ci95": m.get("acc_ci95"),
+            })
+        else:
+            rows.append({
+                "ablation": name,
+                "f1_macro": m.get("f1_macro"),
+                "f1_macro_ci95": m.get("f1_macro_ci95"),
+                "acc": m.get("acc"),
+                "acc_ci95": m.get("acc_ci95"),
+            })
+    if rows:
+        pd.DataFrame(rows).to_csv(
+            os.path.join(args.out_dir, "gnn_ablation.csv"), index=False)
+        print(f"\n[save] {args.out_dir}/gnn_ablation.csv")
+
+    return results
+
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data_dir", default="train")
     ap.add_argument("--test_dir", default="test")
     ap.add_argument("--out_dir", default="./output")
+    ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--label_mode", default="binary_strong",
                     choices=["binary_strong", "binary_loose", "three_way"],
                     help="Label modes: strong = train only on L2; loose = both L2+L1 count as positive; three_way = L0/L1/L2.")
     ap.add_argument("--n_splits", type=int, default=5)
     ap.add_argument("--gnn_epochs", type=int, default=100)
-    ap.add_argument("--gnn_hidden", type=int, default=64)
-    ap.add_argument("--gnn_layers", type=int, default=2)
+    ap.add_argument("--gnn_hidden", type=int, default=32)
+    ap.add_argument("--gnn_layers", type=int, default=1)
     ap.add_argument("--gnn_lr", type=float, default=1e-3)
     ap.add_argument("--gnn_dropout", type=float, default=0.3)
+    ap.add_argument("--use_focal", action="store_true", default=False)
+    ap.add_argument("--use_coral", action="store_true", default=False)
     ap.add_argument("--do_rf", action="store_true", default=True)
     ap.add_argument("--do_gnn", action="store_true", default=True)
     ap.add_argument("--do_grid", action="store_true")
-    ap.add_argument("--do_ablation", action="store_true")
+    ap.add_argument("--do_gnn_ablation", action="store_true",
+                    help="Run GNN node/edge/arch ablation study")
+    ap.add_argument("--abl_kinds", nargs="+", default=["node", "edge", "arch"],
+                    choices=["node", "edge", "arch"],
+                    help="Which ablation groups to run")
+    ap.add_argument("--do_lr",  action="store_true", default=True)
+    ap.add_argument("--do_xgb", action="store_true", default=True)
+    ap.add_argument("--do_svm", action="store_true", default=True)
     args = ap.parse_args()
 
+    global RANDOM_SEED
+    RANDOM_SEED = args.seed
+    np.random.seed(RANDOM_SEED)
+    torch.manual_seed(RANDOM_SEED)
+
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    run_tag = f"output-seed{RANDOM_SEED}-{timestamp}"
+    args.out_dir = os.path.join(args.out_dir, run_tag)
     os.makedirs(args.out_dir, exist_ok=True)
+
+    console_path = os.path.join(args.out_dir, "console-output.txt")
+    console_file = open(console_path, "w", encoding="utf-8")
+
+    class Tee:
+        def __init__(self, *streams):
+            self.streams = streams
+        def write(self, data):
+            for s in self.streams:
+                s.write(data)
+                s.flush()
+        def flush(self):
+            for s in self.streams:
+                s.flush()
+
+    sys.stdout = Tee(sys.__stdout__, console_file)
+    sys.stderr = Tee(sys.__stderr__, console_file)
 
     print("Unified comparison of rule-based / random forest / heterogeneous GNN")
     print(f"  data_dir   = {args.data_dir}")
@@ -855,8 +1541,11 @@ def main():
     print(f"  n_splits   = {args.n_splits}")
     print(f"  gnn        = hidden={args.gnn_hidden}, layers={args.gnn_layers}, "
           f"lr={args.gnn_lr}, dropout={args.gnn_dropout}, epochs={args.gnn_epochs}")
+    print(f"  loss       = {'focal' if args.use_focal else 'cross-entropy (no class weights)'}")
+    print(f"  coral      = {args.use_coral}")
+    print(f"  gnn_ablation = {args.do_gnn_ablation}  kinds={args.abl_kinds}")
 
-    # 1) Load train + test (merged, no split)
+    # 1) Load
     cycles_train = load_all(args.data_dir)
     cycles_test  = load_all(args.test_dir)
     cycles = cycles_train + cycles_test
@@ -866,25 +1555,23 @@ def main():
 
     df = build_feature_table(cycles)
     df = apply_label_mode(df, args.label_mode)
-    print(f"\n[data] Total samples = {len(df)}  Unique structure={df['struct_hash'].nunique()}")
+    print(f"\n[data] Total samples={len(df)}  Unique structure={df['struct_hash'].nunique()}")
     print(f"[data] y Distribution = {df['y'].value_counts().to_dict()}")
 
     quality_report(df, args.out_dir)
 
-    # 2) Unified fold split (shared by the three models)
+    # 2) Fold
     folds = make_folds(df, n_splits=args.n_splits)
     print(f"\n[fold] GroupKFold n_splits={len(folds)}  (After merging train+test, group by `struct_hash`)")
 
-    # 3) rule baseline
+    # 3) Rule
     print("\n\n")
     print("1. Rule Baseline")
-    print()
     rule_res = rule_baseline(df)
 
-    # 4) random forest
+    # 4) RF
     print("\n\n")
     print("2. Random Forest")
-    print()
     rf_res = None
     if args.do_rf:
         rf_res, rf_oof_prob, rf_oof_pred = eval_rf_on_folds(
@@ -892,44 +1579,97 @@ def main():
             do_grid=args.do_grid, out_dir=args.out_dir)
         print(f"  [RF GroupCV average] {rf_res}")
 
-    # 5) Heterogeneous GNN
+    # 4.5) LR
+    print("\n\n")
+    print("2b. Logistic Regression")
+    lr_res = None
+    if args.do_lr:
+        lr_res, lr_oof_prob, lr_oof_pred = eval_sklearn_on_folds(
+            df, GRAPH_FEATS, folds, tag="lr", out_dir=args.out_dir)
+        print(f"  [LR GroupCV] {lr_res}")
+
+    # 4.6) XGB
+    print("\n\n")
+    print("2c. XGBoost")
+    xgb_res = None
+    if args.do_xgb:
+        xgb_res, xgb_oof_prob, xgb_oof_pred = eval_sklearn_on_folds(
+            df, GRAPH_FEATS, folds, tag="xgb", out_dir=args.out_dir)
+        print(f"  [XGB GroupCV] {xgb_res}")
+
+    # 4.7) SVM
+    print("\n\n")
+    print("2d. SVM (RBF)")
+    svm_res = None
+    if args.do_svm:
+        svm_res, svm_oof_prob, svm_oof_pred = eval_sklearn_on_folds(
+            df, GRAPH_FEATS, folds, tag="svm", out_dir=args.out_dir)
+        print(f"  [SVM GroupCV] {svm_res}")
+
+    # 5) GNN
     print("\n\n")
     print("3. Heterogeneous GNN")
-    print()
     gnn_res = None
     if args.do_gnn:
         num_classes = 2 if args.label_mode.startswith("binary") else 3
-        gnn_res, _, _ = eval_gnn_on_folds(
+        gnn_res, gnn_oof_prob, gnn_oof_pred = eval_gnn_on_folds(
             cycles, df, folds, num_classes=num_classes,
             epochs=args.gnn_epochs, hidden=args.gnn_hidden,
             num_layers=args.gnn_layers, dropout=args.gnn_dropout,
-            lr=args.gnn_lr, tag="gnn_full")
+            lr=args.gnn_lr, tag="gnn_full",
+            model_cls=HeteroGNN, use_focal=args.use_focal)
         if gnn_res:
             print(f"  [GNN GroupCV average] {gnn_res}")
+            oof_df = df[df["label_real"].isin([0, 1, 2])][["file", "cycle_id", "struct_hash", "label_real", "y"]].copy()
+            if num_classes == 2:
+                oof_df["oof_prob"] = gnn_oof_prob[:, 1]
+            else:
+                oof_df["oof_prob"] = -1
+            oof_df["oof_pred"] = gnn_oof_pred
+            oof_df.to_csv(os.path.join(args.out_dir, "gnn_oof.csv"), index=False)
 
-    # 6) Ablation study
-    ablation_res = {}
-    if args.do_ablation:
-        print("\n\n")
-        print("4. Ablation study (GNN)")
-        print()
+    # 6) node/edge/arch ablation
+    gnn_ablation_res = {}
+    if args.do_gnn_ablation:
         num_classes = 2 if args.label_mode.startswith("binary") else 3
-        for name, kwargs in [
-            ("full",         {}),
-            ("no_cross",     dict(drop_cross=True)),
-            ("no_lock_edge", dict(drop_lock_edge=True)),
-            ("no_call_edge", dict(drop_call_edge=True)),
-        ]:
-            res, _, _ = eval_gnn_on_folds(
-                cycles, df, folds, num_classes=num_classes,
-                epochs=args.gnn_epochs, hidden=args.gnn_hidden,
-                num_layers=args.gnn_layers, dropout=args.gnn_dropout,
-                lr=args.gnn_lr, tag=f"gnn_{name}",
-                **kwargs)
-            ablation_res[name] = res
-            print(f"  [{name:15s}] {res}")
+        gnn_ablation_res = run_gnn_ablation(
+            cycles, df, folds, num_classes, args,
+            kinds=args.abl_kinds)
 
-    # 7) Summary
+    # 7) Cross-project
+    print("\n\n")
+    print("5. Cross-project generalization (train on train_dir, test on test_dir)")
+    df_train_only = build_feature_table(cycles_train)
+    df_test_only  = build_feature_table(cycles_test)
+
+    cross_res = eval_cross_project(
+        df_train_only, df_test_only,
+        cycles_train, cycles_test,
+        label_mode=args.label_mode,
+        out_dir=args.out_dir,
+        gnn_epochs=args.gnn_epochs,
+        gnn_hidden=args.gnn_hidden,
+        gnn_layers=args.gnn_layers,
+        gnn_dropout=args.gnn_dropout,
+        gnn_lr=args.gnn_lr)
+
+    print("\n[cross-project summary]")
+    for k, v in cross_res.items():
+        print(f"  {k:8s} {v}")
+
+    cross_triage = {}
+    if args.label_mode.startswith("binary"):
+        for tag in ["rf", "lr", "xgb", "svm", "gnn"]:
+            path = os.path.join(args.out_dir, f"cross_{tag}_oof.csv")
+            r = triage_report(path, tag=tag, label_mode=args.label_mode)
+            if r is not None:
+                cross_triage[tag] = r
+                print(f"  [cross-{tag:6s}] "
+                      f"inspect {r['recall@0.90']['inspections']:>4d}/{r['recall@0.90']['n_total']:<4d} "
+                      f"for R=0.90 (reduce {r['recall@0.90']['review_reduction']:5.1%}) | "
+                      f"R@P=0.80 = {r['precision@0.80']['recall']:.3f}")
+
+    # 8) Summary
     print("\n\n")
     print("Final comparison (GroupKFold by struct_hash)")
     is_binary = args.label_mode.startswith("binary")
@@ -939,22 +1679,132 @@ def main():
         rows.append(("Rule baseline", rule_res))
     if rf_res:
         rows.append(("Random Forest", rf_res))
+    if lr_res:
+        rows.append(("LogisticReg", lr_res))
+    if xgb_res:
+        rows.append(("XGBoost", xgb_res))
+    if svm_res:
+        rows.append(("SVM-RBF", svm_res))
     if gnn_res:
         rows.append(("HeteroGNN", gnn_res))
 
     if is_binary:
-        print(f"  {'Model':20s} {'AUC':>8s} {'F1':>8s} {'Acc':>8s}")
+        print(f"  {'Model':16s} {'AUC (95% CI)':>22s} {'F1':>8s} {'Acc':>8s}")
         for name, m in rows:
-            print(f"  {name:20s} {m.get('auc', float('nan')):8.4f} "
+            auc = m.get("auc", float("nan"))
+            hw  = m.get("auc_ci95", 0.0)
+            print(f"  {name:16s} {auc:.4f} ± {hw:.4f}       "
                   f"{m.get('f1', float('nan')):8.4f} "
                   f"{m.get('acc', float('nan')):8.4f}")
     else:
-        print(f"  {'Model':20s} {'macroF1':>10s} {'Acc':>10s}")
+        print(f"  {'Model':16s} {'macroF1 (95% CI)':>24s} {'Acc':>8s}")
         for name, m in rows:
-            print(f"  {name:20s} {m.get('f1_macro', float('nan')):10.4f} "
-                  f"{m.get('acc', float('nan')):10.4f}")
+            f1 = m.get("f1_macro", float("nan"))
+            hw = m.get("f1_macro_ci95", 0.0)
+            print(f"  {name:16s} {f1:.4f} ± {hw:.4f}        "
+                  f"{m.get('acc', float('nan')):8.4f}")
 
-    # 8) Saving
+    # 9) Triage
+    print("\n\n")
+    print("Triage analysis (binary only; needs oof_prob)")
+    triage_res = {}
+    if is_binary:
+        triage_targets = [
+            ("Rule baseline", None),
+            ("Random Forest", os.path.join(args.out_dir, "rf_oof.csv")),
+            ("LogisticReg", os.path.join(args.out_dir, "lr_oof.csv")),
+            ("XGBoost", os.path.join(args.out_dir, "xgb_oof.csv")),
+            ("SVM-RBF", os.path.join(args.out_dir, "svm_oof.csv")),
+            ("HeteroGNN", os.path.join(args.out_dir, "gnn_oof.csv")),
+        ]
+        for name, path in triage_targets:
+            if path is None:
+                continue
+            r = triage_report(path, tag=name, label_mode=args.label_mode)
+            if r is None:
+                print(f"  [{name}] no oof_prob, skipped")
+                continue
+            triage_res[name] = r
+            rr90 = r["recall@0.90"]["review_reduction"]
+            rr95 = r["recall@0.95"]["review_reduction"]
+            pr80 = r["precision@0.80"]["recall"]
+            print(f"  [{name:14s}] "
+                  f"inspect {r['recall@0.90']['inspections']:>4d}/{r['recall@0.90']['n_total']:<4d} "
+                  f"for R=0.90 (reduce {rr90:5.1%}) | "
+                  f"R=0.95 reduce {rr95:5.1%} | "
+                  f"R@P=0.80 = {pr80:.3f}")
+
+        if triage_res:
+            rows_tri = []
+            for name, r in triage_res.items():
+                rows_tri.append({
+                    "model": name,
+                    "n_total": r["recall@0.90"]["n_total"],
+                    "n_pos": r["recall@0.90"]["n_pos"],
+                    "inspections@R90": r["recall@0.90"]["inspections"],
+                    "review_reduction@R90": r["recall@0.90"]["review_reduction"],
+                    "reduction_vs_random@R90": r["recall@0.90"]["reduction_vs_random"],
+                    "inspections@R95": r["recall@0.95"]["inspections"],
+                    "review_reduction@R95": r["recall@0.95"]["review_reduction"],
+                    "recall@P80": r["precision@0.80"]["recall"],
+                    "k@P80": r["precision@0.80"]["k"],
+                    "recall@P90": r["precision@0.90"]["recall"],
+                    "k@P90": r["precision@0.90"]["k"],
+                })
+            pd.DataFrame(rows_tri).to_csv(
+                os.path.join(args.out_dir, "triage_summary.csv"), index=False)
+            print(f"\n[save] {args.out_dir}/triage_summary.csv")
+
+    # 10) GNN vs baselines: paired significance tests
+    print("\n\n")
+    print("GNN vs baselines: paired significance tests")
+    metric = "auc" if is_binary else "f1_macro"
+    gnn_tag = "gnn_full"
+    baseline_tags = [
+        ("Random Forest", "rf"),
+        ("LogisticReg",   "lr"),
+        ("XGBoost",       "xgb"),
+        ("SVM-RBF",       "svm"),
+    ]
+
+    sig_res = {}
+    if gnn_tag in FOLD_METRICS:
+        gnn_vals = [m.get(metric) for m in FOLD_METRICS[gnn_tag]
+                    if m.get(metric) is not None]
+        print(f"  metric = {metric}   (paired by fold, n={len(gnn_vals)})")
+        print(f"  {'Baseline':16s} {'mean(GNN)':>10s} {'mean(B)':>10s} "
+              f"{'diff':>8s} {'t-p':>10s} {'w-p':>10s} {'c-p':>10s} {'sig':>5s}")
+        for name, tag in baseline_tags:
+            if tag not in FOLD_METRICS:
+                continue
+            b_vals = [m.get(metric) for m in FOLD_METRICS[tag]
+                      if m.get(metric) is not None]
+            n = min(len(gnn_vals), len(b_vals))
+            if n < 2:
+                continue
+            gv, bv = gnn_vals[:n], b_vals[:n]
+            _, p_t, diff = paired_ttest(gv, bv)
+            _, p_w, _ = wilcoxon_test(gv, bv)
+            n_train_fold = int(np.mean([len(tr) for tr, _ in folds]))
+            n_test_fold = int(np.mean([len(te) for _, te in folds]))
+            _, p_c = corrected_resampled_ttest(gv, bv, n_train_fold, n_test_fold)
+
+            sig = "***" if p_t < 0.001 else "**" if p_t < 0.01 else "*" if p_t < 0.05 else ""
+            print(f"  {name:16s} {np.mean(gv):>10.4f} {np.mean(bv):>10.4f} "
+                  f"{diff:>8.4f} {p_t:>10.4g} {p_w:>10.4g} {p_c:>10.4g} {sig:>5s}")
+            sig_res[name] = {
+                "metric": metric,
+                "mean_gnn": float(np.mean(gv)),
+                "mean_baseline": float(np.mean(bv)),
+                "mean_diff": float(diff),
+                "paired_ttest_p": p_t,
+                "wilcoxon_p": p_w,
+                "corrected_resampled_ttest_p": p_c,
+                "n_folds": n,
+            }
+    else:
+        print("  [skip] GNN fold metrics not found")
+
     summary = {
         "config": vars(args),
         "n_samples": len(df),
@@ -962,14 +1812,27 @@ def main():
         "y_distribution": df["y"].value_counts().to_dict(),
         "rule_baseline": rule_res,
         "random_forest": rf_res,
+        "logistic_regression": lr_res,
+        "xgboost": xgb_res,
+        "svm": svm_res,
         "hetero_gnn": gnn_res,
-        "ablation": ablation_res,
+        "gnn_ablation": gnn_ablation_res,
+        "triage": triage_res,
+        "cross_project": cross_res,
+        "cross_triage": cross_triage,
+        "gnn_vs_baselines": sig_res
     }
 
     file_name = f"summary-{args.label_mode}.json"
     with open(os.path.join(args.out_dir, file_name), "w") as f:
         json.dump(summary, f, indent=2, default=str)
     print(f"\n[save] {args.out_dir}/{file_name}")
+
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+    console_file.close()
+    print(f"[save] {console_path}")
+
 
 if __name__ == "__main__":
     main()
