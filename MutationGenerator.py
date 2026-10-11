@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Perform lock-related mutations on plain Java projects
+Perform lock-related mutations on Java projects
 to generate reproducible samples.
 """
 
 import os, re, json, random, shutil, time, argparse
 
 # replace with YOUR WORKING_DIR
-WORKING_DIR = r"D:\Projects"
+WORKING_DIR = r"D:\Projects3"
 
 OUTPUT_DIR = "./mutated-" + str(round(1000 * time.time()))
 REPORT_PATH = os.path.join(OUTPUT_DIR, "mutation_report.json")
@@ -93,6 +93,12 @@ RE_CLASS = re.compile(
     r'(?:abstract\s+|final\s+)?class\s+(\w+)',
     re.MULTILINE
 )
+RE_ABSTRACT_CLASS = re.compile(
+    r'(?:^|\n)\s*(?:public\s+|protected\s+|private\s+)?'
+    r'(?:abstract\s+)'
+    r'(?:final\s+)?class\s+(\w+)',
+    re.MULTILINE
+)
 RE_PACKAGE = re.compile(r'^\s*package\s+([\w\.]+)\s*;', re.MULTILINE)
 RE_PUBLIC_METHOD = re.compile(
     r'(?:^|\n)[ \t]*public[ \t]+'
@@ -110,6 +116,7 @@ RE_TRY_FINALLY_LOCK = re.compile(
     r'\b(\w+)\s*\.\s*lock\s*\(\s*\)\s*;\s*try\s*\{',
     re.MULTILINE
 )
+
 
 # sample
 def sample_normal_int(mean, std, lo, hi):
@@ -129,6 +136,7 @@ def sample_call_distance():
 
 def sample_ring_chain_dist():
     return random.randint(RING_CHAIN_DIST_MIN, RING_CHAIN_DIST_MAX)
+
 
 # IO
 def read_file(path):
@@ -161,29 +169,44 @@ def resolve_source_root(project_dir):
     for c in (
         os.path.join(project_dir, "src", "main", "java"),
         os.path.join(project_dir, "src"),
+        os.path.join(project_dir, "core", "src", "main", "java"),
         os.path.join(project_dir, "agrona", "src", "main", "java"),
         os.path.join(project_dir, "jctools-core", "src", "main", "java"),
         os.path.join(project_dir, "guava", "src"),
         os.path.join(project_dir, "flyway-core", "src", "main", "java"),
+        os.path.join(project_dir, "h2", "src", "main"),
+        os.path.join(project_dir, "reactor-core", "src", "main", "java"),
+        os.path.join(project_dir, "rapidoid-http-server", "src", "main", "java"),
     ):
         if os.path.isdir(c):
             return c
     return None
 
+
 # Comment stripping / parenthesis scanning
-def strip_comments(content):
+def strip_comments_with_map(content):
+    """
+    Return (clean, index_map) where:
+      - clean is the comment-stripped content
+      - index_map[i] is the index in the original content of clean[i]
+
+    Strings and char literals are preserved (but escape backslashes are
+    removed), and comments are removed entirely. The map lets callers convert
+    positions in `clean` back to exact positions in `content`.
+    """
     result = []
+    index_map = []
     i = 0
     n = len(content)
     while i < n:
         c = content[i]
-        if c == '/' and i + 1 < n and content[i+1] == '/':
+        if c == '/' and i + 1 < n and content[i + 1] == '/':
             j = content.find('\n', i)
             if j == -1:
                 break
             i = j
             continue
-        if c == '/' and i + 1 < n and content[i+1] == '*':
+        if c == '/' and i + 1 < n and content[i + 1] == '*':
             j = content.find('*/', i + 2)
             if j == -1:
                 break
@@ -191,15 +214,17 @@ def strip_comments(content):
             continue
         if c == '"':
             result.append(c)
+            index_map.append(i)
             i += 1
             while i < n:
-                result.append(content[i])
                 if content[i] == '\\':
-                    i += 1
-                    if i < n:
-                        result.append(content[i])
-                    i += 1
+                    if i + 1 < n:
+                        result.append(content[i + 1])
+                        index_map.append(i + 1)
+                    i += 2
                     continue
+                result.append(content[i])
+                index_map.append(i)
                 if content[i] == '"':
                     i += 1
                     break
@@ -207,32 +232,77 @@ def strip_comments(content):
             continue
         if c == '\'':
             result.append(c)
+            index_map.append(i)
             i += 1
             while i < n:
-                result.append(content[i])
                 if content[i] == '\\':
-                    i += 1
-                    if i < n:
-                        result.append(content[i])
-                    i += 1
+                    if i + 1 < n:
+                        result.append(content[i + 1])
+                        index_map.append(i + 1)
+                    i += 2
                     continue
+                result.append(content[i])
+                index_map.append(i)
                 if content[i] == '\'':
                     i += 1
                     break
                 i += 1
             continue
         result.append(c)
+        index_map.append(i)
         i += 1
-    return ''.join(result)
+    return ''.join(result), index_map
 
 
-def _scan_balanced_braces(text, start):
+def strip_comments(content):
+    clean, _ = strip_comments_with_map(content)
+    return clean
+
+
+def _map_clean_pos_to_content(content, clean, clean_pos):
+    """
+    Map a position in `clean` back to the original content.
+
+    Prefer strip_comments_with_map for exact mapping; this function is kept
+    for compatibility and falls back to a two-pointer walk.
+    """
+    if clean_pos <= 0:
+        return 0
+    if clean_pos >= len(clean):
+        return len(content)
+    clean2, index_map = strip_comments_with_map(content)
+    if clean2 == clean and clean_pos < len(index_map):
+        return index_map[clean_pos]
+    # Fallback: old behaviour
+    ci = 0
+    n_clean = len(clean)
+    for oi, ch in enumerate(content):
+        if ci >= clean_pos:
+            return oi
+        if ci < n_clean and ch == clean[ci]:
+            ci += 1
+    return len(content)
+
+
+def _scan_balanced_braces(text, start, max_scan=None):
+    """
+    Scan from `start` (right after an opening '{') until the matching '}'.
+
+    Returns the index right after the matching '}'. If `max_scan` is given
+    and the scan exceeds that many characters without finding the matching
+    '}', returns min(len(text), start + max_scan).
+    """
     n = len(text)
+    if max_scan is None:
+        limit = n
+    else:
+        limit = min(n, start + max_scan)
+
     depth = 1
     i = start
     in_string = False
     in_char = False
-    while i < n and depth > 0:
+    while i < limit and depth > 0:
         c = text[i]
         if in_string:
             if c == '\\':
@@ -259,6 +329,43 @@ def _scan_balanced_braces(text, start):
     return i
 
 
+def _count_brace_balance(text):
+    """
+    Return the net brace balance of `text` (opens minus closes), ignoring
+    strings and char literals. Used as a sanity check after insertions.
+    """
+    depth = 0
+    i = 0
+    n = len(text)
+    in_string = False
+    in_char = False
+    while i < n:
+        c = text[i]
+        if in_string:
+            if c == '\\':
+                i += 2
+                continue
+            if c == '"':
+                in_string = False
+        elif in_char:
+            if c == '\\':
+                i += 2
+                continue
+            if c == '\'':
+                in_char = False
+        else:
+            if c == '"':
+                in_string = True
+            elif c == '\'':
+                in_char = True
+            elif c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+        i += 1
+    return depth
+
+
 def remove_nested_classes(body):
     result = []
     i = 0
@@ -276,6 +383,7 @@ def remove_nested_classes(body):
         j = _scan_balanced_braces(body, j)
         i = j
     return ''.join(result)
+
 
 # field region
 def _field_region(content, class_name):
@@ -300,6 +408,7 @@ def _field_region(content, class_name):
         return body[:method_decl.start()]
     return body
 
+
 # parsers
 def parse_package(content):
     m = RE_PACKAGE.search(content)
@@ -315,6 +424,11 @@ def parse_class_name(content):
 def need_to_parse(content):
     clean = strip_comments(content)
     return RE_CLASS.search(clean) is not None
+
+
+def is_abstract_class(content):
+    clean = strip_comments(content)
+    return RE_ABSTRACT_CLASS.search(clean) is not None
 
 
 def _infer_field_type(content, name, class_name):
@@ -380,7 +494,7 @@ def parse_lock_fields(content):
 
 
 def _get_class_body(content, class_name):
-    clean = strip_comments(content)
+    clean, _ = strip_comments_with_map(content)
     class_pattern = re.compile(
         r'\bclass\s+' + re.escape(class_name) + r'\b[^{]*\{',
         re.MULTILINE
@@ -391,6 +505,32 @@ def _get_class_body(content, class_name):
     start = m.end()
     end = _scan_balanced_braces(clean, start)
     return clean[start:end - 1]
+
+
+def _get_class_body_range(content, class_name):
+    """
+    Return (body_start, body_end) in the ORIGINAL content:
+      - body_start: index right after the class's opening '{'
+      - body_end:   index of the class's closing '}'
+    Returns (None, None) if the class cannot be located.
+    """
+    clean, index_map = strip_comments_with_map(content)
+    class_pattern = re.compile(
+        r'\bclass\s+' + re.escape(class_name) + r'\b[^{]*\{',
+        re.MULTILINE
+    )
+    m = class_pattern.search(clean)
+    if not m:
+        return None, None
+    start_clean = m.end()
+    end_clean = _scan_balanced_braces(clean, start_clean) - 1
+    if end_clean <= start_clean:
+        return None, None
+    if start_clean >= len(index_map) or end_clean >= len(index_map):
+        return None, None
+    body_start = index_map[start_clean]
+    body_end = index_map[end_clean]
+    return body_start, body_end
 
 
 def _ctor_region(content, class_name):
@@ -600,7 +740,27 @@ def simple_args_for(params):
             args.append(f"({typ}) null")
     return args
 
-def _locate_method_body(content, method_name):
+
+def _locate_method_body(content, method_name, class_name=None):
+    """
+    Locate a top-level method body inside the given class.
+
+    Returns (open_brace, close_brace, match_start) in the ORIGINAL content,
+    or None if the method cannot be located safely.
+
+    This version searches directly in the original content slice, without
+    going through strip_comments, so positions are always exact.
+    """
+    if class_name:
+        body_start, body_end = _get_class_body_range(content, class_name)
+    else:
+        body_start, body_end = 0, len(content)
+
+    if body_start is None or body_end is None:
+        return None
+
+    class_body = content[body_start:body_end]
+
     pat = re.compile(
         r'([ \t]*(?:public|protected|private)?[ \t]*(?:static[ \t]+)?'
         r'(?:final[ \t]+)?(?:synchronized[ \t]+)?'
@@ -609,18 +769,37 @@ def _locate_method_body(content, method_name):
         r'[ \t]*\([^)]*\)[ \t\n]*(?:throws[ \t]+[^\n{};]+)?[ \t\n]*\{)',
         re.MULTILINE
     )
-    m = pat.search(content)
-    if not m:
-        return None
-    open_brace = m.end() - 1
-    close_brace = _scan_balanced_braces(content, open_brace + 1) - 1
-    if close_brace <= open_brace:
-        return None
-    return (open_brace, close_brace, m.start())
+
+    # To compute brace depth safely, work on the comment-stripped version of
+    # class_body. We only use it for depth checks; positions come from the
+    # original class_body.
+    clean_class_body, _ = strip_comments_with_map(class_body)
+
+    for m in pat.finditer(class_body):
+        # Compute depth at this position using the clean body.
+        # Map the position approximately: count how many non-comment chars
+        # precede m.start() in class_body.
+        prefix = class_body[:m.start()]
+        clean_prefix, _ = strip_comments_with_map(prefix)
+        depth = _brace_depth_at(clean_prefix, len(clean_prefix))
+        if depth != 0:
+            continue
+
+        open_brace_in_body = m.end() - 1
+        open_brace = body_start + open_brace_in_body
+        close_brace = _scan_balanced_braces(content, open_brace + 1) - 1
+        if close_brace <= open_brace:
+            continue
+        if not (body_start <= open_brace < close_brace <= body_end):
+            continue
+        match_start = body_start + m.start()
+        return (open_brace, close_brace, match_start)
+
+    return None
 
 
-def _method_body_has_lock(content, method_name):
-    loc = _locate_method_body(content, method_name)
+def _method_body_has_lock(content, method_name, class_name=None):
+    loc = _locate_method_body(content, method_name, class_name=class_name)
     if loc is None:
         return False
     open_brace, close_brace, _ = loc
@@ -632,6 +811,7 @@ def _method_body_has_lock(content, method_name):
     if RE_TRY_FINALLY_LOCK.search(body):
         return True
     return False
+
 
 # Lock field declaration tool
 def _collect_usable_locks(lock_fields):
@@ -671,34 +851,11 @@ def _field_exists(content, name, class_name):
 
 def _class_end_pos(content, class_name):
     """
-    Return the position of the last '}' of the class body in the original content.
-    Key: use `strip_comments` to find the position of '}', then locate the corresponding character in the original content.
-    For alignment, use the "count backward from the end" strategy:
-    find the position where the last `\n}` appears in the file (and that `}` is the class's closing brace).
+    Return the position of the class body's closing '}' in the ORIGINAL
+    content, or None.
     """
-    clean = strip_comments(content)
-    class_pattern = re.compile(
-        r'\bclass\s+' + re.escape(class_name) + r'\b[^{]*\{',
-        re.MULTILINE
-    )
-    m = class_pattern.search(clean)
-    if not m:
-        return None
-    # Find the class's closing '}' in the clean (comment-stripped) content
-    start = m.end()
-    end_in_clean = _scan_balanced_braces(clean, start) - 1
-    # Because strip_comments removes comment characters, the position of end_in_clean cannot be directly applied to the original content.
-    # Simple strategy: find the final '}' of the class body in the original content—the last non-empty line ends with '}'.
-    # More precise: search the original content near the content corresponding to end_in_clean (±2000 characters) for the same '}' position.
-    # Conservative approach: search backward from the end of the content for the last standalone '}'.
-    idx = content.rfind('}')
-    while idx >= 0:
-        # Check whether it is preceded by whitespace + newline (i.e., a standalone '}')
-        j = idx - 1
-        while j >= 0 and content[j] in ' \t\r\n':
-            j -= 1
-        return idx  # Directly return the last '}', which is the end of the class.
-    return None
+    _, body_end = _get_class_body_range(content, class_name)
+    return body_end
 
 
 def _ensure_locks(content, usable, k, class_name):
@@ -750,9 +907,9 @@ def _insert_decls_at_class_end(content, decl, class_name):
     pos = _class_end_pos(content, class_name)
     if pos is None:
         return content
-    # Leave 2 newlines in front to avoid merging with existing comments.
     decl_padded = "\n\n" + decl.strip("\n") + "\n"
     return content[:pos] + decl_padded + content[pos:]
+
 
 # Basic mutation
 def mutate_replace_lock(content, lock_fields):
@@ -791,8 +948,8 @@ def mutate_reassign_lock(content, lock_fields, class_name):
         this.{target['name']} = new {target['type']}();
     }}
 """
-    idx = content.rfind("}")
-    if idx == -1:
+    idx = _class_end_pos(content, class_name)
+    if idx is None:
         return content, []
     new_content = content[:idx] + method_code + content[idx:]
     return new_content, [{
@@ -822,7 +979,7 @@ def mutate_insert_sleep(content):
     return RE_SYNC_BLOCK.sub(repl, content), records
 
 
-def mutate_add_sync_block(content, lock_fields):
+def mutate_add_sync_block(content, lock_fields, class_name):
     candidates = [f for f in lock_fields if f["type"] == "Object"]
     if not candidates:
         return content, []
@@ -835,8 +992,8 @@ def mutate_add_sync_block(content, lock_fields):
         }}
     }}
 """
-    idx = content.rfind("}")
-    if idx == -1:
+    idx = _class_end_pos(content, class_name)
+    if idx is None:
         return content, []
     new_content = content[:idx] + method_code + content[idx:]
     return new_content, [{
@@ -845,14 +1002,22 @@ def mutate_add_sync_block(content, lock_fields):
         "name": method_name,
     }]
 
+
 # Method body nesting
 def mutate_wrap_method_with_sync(content, class_name, method, lock_name,
                                  sleep_ms=None, use_new_lock=True):
-    loc = _locate_method_body(content, method["name"])
+    loc = _locate_method_body(content, method["name"], class_name=class_name)
     if loc is None:
         return content, [], ""
 
     open_brace, close_brace, mstart = loc
+
+    body_start, body_end = _get_class_body_range(content, class_name)
+    if body_start is None or body_end is None:
+        return content, [], ""
+    if not (body_start <= open_brace < close_brace <= body_end):
+        return content, [], ""
+
     body_text = content[open_brace + 1:close_brace]
     inner_locks = set(
         m.group(1).strip() for m in RE_SYNC_BLOCK.finditer(body_text)
@@ -889,6 +1054,14 @@ def mutate_wrap_method_with_sync(content, class_name, method, lock_name,
     )
     new_content = content[:open_brace + 1] + wrapped + content[close_brace:]
 
+    # Growth guard
+    if len(new_content) > len(content) * 3:
+        return content, [], ""
+
+    # Balance guard: the wrapped fragment itself must be balanced.
+    if _count_brace_balance(wrapped) != 0:
+        return content, [], ""
+
     return new_content, [{
         "op": "wrap_method_with_sync",
         "method": method["name"],
@@ -897,65 +1070,81 @@ def mutate_wrap_method_with_sync(content, class_name, method, lock_name,
     }], extra_decl
 
 
-def mutate_nest_inside_sync_block(content, class_name, base_lock_name, sleep_ms=None):
+def mutate_nest_inside_sync_block(content, class_name, base_lock_name,
+                                  sleep_ms=None):
+    """
+    Nest ONE additional synchronized block inside ONE existing synchronized
+    block.
+
+    Processes at most one block per call; the caller re-invokes this function
+    after each successful mutation, re-scanning the content from scratch.
+    """
     records = []
     extra_decls = []
+
     matches = list(RE_SYNC_BLOCK.finditer(content))
     if not matches:
         return content, [], []
 
-    for m in reversed(matches):
-        if len(records) >= MAX_NEST_SYNC_PER_CLASS:
-            break
-        old_lock = m.group(1).strip()
+    m = matches[0]
+    open_brace = m.end() - 1
 
-        open_brace = m.end() - 1
-        close_brace = _scan_balanced_braces(content, open_brace + 1) - 1
-        if close_brace <= open_brace:
-            continue
+    close_brace = _scan_balanced_braces(
+        content, open_brace + 1, max_scan=200000
+    ) - 1
+    if close_brace <= open_brace:
+        return content, [], []
 
-        all_lock_names = set(m2.group(1).strip()
-                             for m2 in RE_SYNC_BLOCK.finditer(content))
-        all_lock_names.add(old_lock)
+    old_lock = m.group(1).strip()
 
-        new_lock = base_lock_name
-        extra_decl = ""
-        if new_lock in all_lock_names:
-            new_lock = f"__crossLock_{random.randint(1000, 9999)}"
-            extra_decl = f"\n    private final Object {new_lock} = new Object();\n"
+    all_lock_names = set(
+        m2.group(1).strip() for m2 in RE_SYNC_BLOCK.finditer(content)
+    )
+    all_lock_names.add(old_lock)
 
-        line_start = content.rfind('\n', 0, m.start()) + 1
-        indent = re.match(r'[ \t]*', content[line_start:m.start()]).group(0)
-        inner_indent = indent + "    "
+    new_lock = base_lock_name
+    extra_decl = ""
+    if new_lock in all_lock_names:
+        new_lock = f"__crossLock_{random.randint(1000, 9999)}"
+        extra_decl = f"\n    private final Object {new_lock} = new Object();\n"
+    all_lock_names.add(new_lock)
 
-        sleep_line = ""
-        if sleep_ms is not None:
-            sleep_line = (
-                f"\n{inner_indent}    try {{ Thread.sleep({sleep_ms}); }} "
-                f"catch (InterruptedException e) {{ }}"
-            )
+    line_start = content.rfind('\n', 0, m.start()) + 1
+    indent = re.match(r'[ \t]*', content[line_start:m.start()]).group(0)
+    inner_indent = indent + "    "
 
-        body = content[open_brace + 1:close_brace]
-        indented_body = "\n".join(
-            (inner_indent + ln) if ln.strip() else ln
-            for ln in body.split("\n")
+    sleep_line = ""
+    if sleep_ms is not None:
+        sleep_line = (
+            f"\n{inner_indent}    try {{ Thread.sleep({sleep_ms}); }} "
+            f"catch (InterruptedException e) {{ }}"
         )
-        injected = (
-            f"\n{inner_indent}synchronized ({new_lock}) {{{sleep_line}\n"
-            f"{indented_body}\n{inner_indent}}}"
-        )
-        content = content[:open_brace + 1] + injected + content[close_brace:]
 
-        records.append({
-            "op": "nest_inside_sync",
-            "outer_lock": old_lock,
-            "inner_lock": new_lock,
-            "sleep": sleep_ms,
-        })
-        if extra_decl:
-            extra_decls.append(extra_decl)
+    body = content[open_brace + 1:close_brace]
+    indented_body = "\n".join(
+        (inner_indent + ln) if ln.strip() else ln
+        for ln in body.split("\n")
+    )
+    injected = (
+        f"\n{inner_indent}synchronized ({new_lock}) {{{sleep_line}\n"
+        f"{indented_body}\n{inner_indent}}}"
+    )
 
-    return content, records, extra_decls
+    if _count_brace_balance(injected) != 0:
+        return content, [], []
+
+    new_content = content[:open_brace + 1] + injected + content[close_brace:]
+
+    records.append({
+        "op": "nest_inside_sync",
+        "outer_lock": old_lock,
+        "inner_lock": new_lock,
+        "sleep": sleep_ms,
+    })
+    if extra_decl:
+        extra_decls.append(extra_decl)
+
+    return new_content, records, extra_decls
 
 
 def mutate_add_deep_nesting(content, class_name, lock_fields, methods,
@@ -983,10 +1172,16 @@ def mutate_add_deep_nesting(content, class_name, lock_fields, methods,
     if not candidates:
         return content, [], "", None
     host = random.choice(candidates)
-    loc = _locate_method_body(content, host["name"])
+    loc = _locate_method_body(content, host["name"], class_name=class_name)
     if loc is None:
         return content, [], "", None
     open_brace, close_brace, mstart = loc
+
+    body_start, body_end = _get_class_body_range(content, class_name)
+    if body_start is None or body_end is None:
+        return content, [], "", None
+    if not (body_start <= open_brace < close_brace <= body_end):
+        return content, [], "", None
 
     line_start = content.rfind('\n', 0, mstart) + 1
     indent = re.match(r'[ \t]*', content[line_start:mstart]).group(0)
@@ -1015,7 +1210,13 @@ def mutate_add_deep_nesting(content, class_name, lock_fields, methods,
         nest_lines.append(f"{cur_indent}}}")
 
     nested = "\n" + "\n".join(nest_lines)
+    if _count_brace_balance(nested) != 0:
+        return content, [], "", None
+
     new_content = content[:open_brace + 1] + nested + content[close_brace:]
+
+    if len(new_content) > len(content) * 3:
+        return content, [], "", None
 
     return new_content, [{
         "op": "add_deep_nesting",
@@ -1026,21 +1227,17 @@ def mutate_add_deep_nesting(content, class_name, lock_fields, methods,
     }], decl, host["name"]
 
 
-def _insert_call_into_method(content, method, call_line):
+def _insert_call_into_method(content, method, call_line, class_name=None):
     method_name = method["name"]
-    pattern = re.compile(
-        r'([ \t]*(?:public|protected|private)?[ \t]*(?:static[ \t]+)?'
-        r'(?:final[ \t]+)?(?:synchronized[ \t]+)?'
-        r'[\w<>\[\],\s\?\.]+?[ \t]+' + re.escape(method_name) + r'[ \t]*\([^)]*\)[ \t\n]*'
-        r'(?:throws[ \t]+[^\n{};]+)?[ \t\n]*\{)',
-        re.MULTILINE
-    )
-    m = pattern.search(content)
-    if not m:
+    if class_name is None:
+        class_name = parse_class_name(content)
+    loc = _locate_method_body(content, method_name, class_name=class_name)
+    if loc is None:
         return content
-    insert_pos = m.end()
-    line_start = content.rfind('\n', 0, m.start()) + 1
-    indent_match = re.match(r'[ \t]*', content[line_start:m.start()])
+    open_brace, close_brace, mstart = loc
+    insert_pos = open_brace + 1
+    line_start = content.rfind('\n', 0, mstart) + 1
+    indent_match = re.match(r'[ \t]*', content[line_start:mstart])
     indent = indent_match.group(0) if indent_match else ""
     inner_indent = indent + "    "
     indented = "\n".join(
@@ -1050,7 +1247,7 @@ def _insert_call_into_method(content, method, call_line):
     return content[:insert_pos] + f"\n{indented}" + content[insert_pos:]
 
 
-def mutate_insert_call_chain(content, method, methods, target_method,
+def mutate_insert_call_chain(content, class_name, method, methods, target_method,
                              depth=None):
     if depth is None:
         depth = sample_call_distance()
@@ -1073,8 +1270,8 @@ def mutate_insert_call_chain(content, method, methods, target_method,
 
     chain.reverse()
 
-    idx = content.rfind("}")
-    if idx == -1:
+    idx = _class_end_pos(content, class_name)
+    if idx is None:
         return content, []
     chain_code = "\n".join(c["code"] for c in chain)
     content = content[:idx] + chain_code + content[idx:]
@@ -1087,7 +1284,7 @@ def mutate_insert_call_chain(content, method, methods, target_method,
         f"    throw new RuntimeException(e);\n"
         f"}}"
     )
-    content = _insert_call_into_method(content, method, call_line)
+    content = _insert_call_into_method(content, method, call_line, class_name=class_name)
 
     return content, [{
         "op": "insert_call_chain",
@@ -1096,6 +1293,7 @@ def mutate_insert_call_chain(content, method, methods, target_method,
         "chain": [c["name"] for c in chain],
         "target": target_method["name"] if target_method else None,
     }]
+
 
 # Cross-lock mutation
 def _fake_guard_code():
@@ -1124,10 +1322,10 @@ def _mode_for_group():
 
 def _gen_nested_method_entry(entry_name, lock_seq, sleep_ms, fake, next_entry):
     lines = []
+    indent = "        "
     if fake:
         outer = lock_seq[:-1]
         inner = lock_seq[-1]
-        indent = "        "
         for lk in outer:
             lines.append(f"{indent}synchronized ({lk}) {{")
             lines.append(
@@ -1148,7 +1346,6 @@ def _gen_nested_method_entry(entry_name, lock_seq, sleep_ms, fake, next_entry):
             indent = indent[:-4]
             lines.append(f"{indent}}}")
     else:
-        indent = "        "
         for lk in lock_seq:
             lines.append(f"{indent}synchronized ({lk}) {{")
             lines.append(
@@ -1162,6 +1359,8 @@ def _gen_nested_method_entry(entry_name, lock_seq, sleep_ms, fake, next_entry):
             lines.append(f"{indent}}}")
 
     body = "\n".join(lines)
+    if _count_brace_balance(body) != 0:
+        return ""
     return f"\n    public void {entry_name}() throws Exception {{\n{body}\n    }}\n"
 
 
@@ -1176,36 +1375,47 @@ def _gen_chain_method_entry(entry_name, lock_seq, sleep_ms, fake, next_entry, ch
         mname = chain_names[i]
         if i == hold_idx:
             if fake:
-                body = (
-                    f"        if (__crossLockGuard()) {{\n"
-                    f"            synchronized ({lock_seq[0]}) {{\n"
-                    f"                try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}\n"
-                    f"                {prev_call}\n"
-                    f"            }}\n"
-                    f"        }} else {{\n"
-                    f"            {prev_call}\n"
-                    f"        }}\n"
-                )
+                body_lines = []
+                body_lines.append("if (__crossLockGuard()) {")
+                body_lines.append(f"    synchronized ({lock_seq[0]}) {{")
+                body_lines.append(f"        try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}")
+                body_lines.append(f"        {prev_call}")
+                body_lines.append("    }")
+                body_lines.append("} else {")
+                body_lines.append(f"    {prev_call}")
+                body_lines.append("}")
             else:
-                body = (
-                    f"        synchronized ({lock_seq[0]}) {{\n"
-                    f"            try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }} \n"
-                    f"            {prev_call}\n"
-                    f"        }}\n"
-                )
+                body_lines = []
+                body_lines.append(f"synchronized ({lock_seq[0]}) {{")
+                body_lines.append(f"    try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}")
+                body_lines.append(f"    {prev_call}")
+                body_lines.append("}")
         else:
-            body = (
-                f"        try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}\n"
-                f"        {prev_call}\n"
-            )
-        lines.append(f"\n    private void {mname}() throws Exception {{\n{body}    }}\n")
+            body_lines = []
+            body_lines.append(f"try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}")
+            body_lines.append(prev_call)
+
+        body = "\n".join(body_lines)
+        if _count_brace_balance(body) != 0:
+            return ""
+        indented = "\n".join(
+            ("        " + ln) if ln.strip() else ln
+            for ln in body.split("\n")
+        )
+        lines.append(f"\n    private void {mname}() throws Exception {{\n{indented}\n    }}\n")
         prev_call = f"{mname}();"
 
-    entry_body = (
-        f"        try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}\n"
-        f"        {prev_call}\n"
+    entry_body_lines = []
+    entry_body_lines.append(f"try {{ Thread.sleep({sleep_ms}); }} catch (InterruptedException e) {{ }}")
+    entry_body_lines.append(prev_call)
+    entry_body = "\n".join(entry_body_lines)
+    if _count_brace_balance(entry_body) != 0:
+        return ""
+    indented_entry = "\n".join(
+        ("        " + ln) if ln.strip() else ln
+        for ln in entry_body.split("\n")
     )
-    lines.append(f"\n    public void {entry_name}() throws Exception {{\n{entry_body}    }}\n")
+    lines.append(f"\n    public void {entry_name}() throws Exception {{\n{indented_entry}\n    }}\n")
 
     return "".join(lines)
 
@@ -1310,12 +1520,20 @@ def mutate_add_cross_lock(content, lock_fields, class_name,
 
         group_code = "".join(reversed(ring_codes))
 
-        idx = content.rfind("}")
-        if idx == -1:
+        if _count_brace_balance(group_code) != 0:
+            continue
+
+        idx = _class_end_pos(content, class_name)
+        if idx is None:
             break
 
         guard_code = _fake_guard_code() if fake else ""
-        content = content[:idx] + guard_code + group_code + content[idx:]
+        new_content = content[:idx] + guard_code + group_code + content[idx:]
+
+        if _count_brace_balance(new_content) != 0:
+            continue
+
+        content = new_content
 
         all_recs.append({
             "op": "add_cross_lock",
@@ -1361,30 +1579,33 @@ def mutate_add_cross_lock(content, lock_fields, class_name,
     }
     return content, all_recs, info, merged_decl
 
+
 # mock chain
+def _indent_block(text, indent):
+    lines = text.split("\n")
+    out = []
+    for ln in lines:
+        if ln.strip():
+            out.append(indent + ln)
+        else:
+            out.append(ln)
+    return "\n".join(out)
+
+
 def _build_mock_chain(content, class_name, methods, depth_limit,
                       lock_name=None, sync_block_name=None,
                       exclude_method=None,
                       must_call_method=None,
                       mutated_methods=None):
-    """
-    - `must_call_method` takes priority.
-    - Otherwise, pick one from `mutated_methods` (the set of method names that the mutator added `synchronized` to).
-    - Otherwise, pick a method that has a `synchronized` block in the original source code.
-    - Otherwise, pick an `is_synchronized` method.
-    - If none of these exist: the tail of the chain does not call any source method.
-    """
     mutated_methods = mutated_methods or set()
     tail_target = None
 
-    # 1. must_call_method
     if must_call_method is not None:
         for m in methods:
             if m["name"] == must_call_method:
                 tail_target = m
                 break
 
-    # 2. choose from mutated_methods
     if tail_target is None and mutated_methods:
         candidates = [m for m in methods
                       if m["name"] in mutated_methods
@@ -1395,7 +1616,6 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
         if candidates:
             tail_target = random.choice(candidates)
 
-    # 3. The original source code already has a `synchronized` block
     if tail_target is None:
         locked = [m for m in methods
                   if m["name"] not in ALWAYS_EXCLUDE_METHODS
@@ -1404,12 +1624,11 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
                   and not m["name"].startswith("__")
                   and not m["name"].startswith("syncBlock_")
                   and not m.get("is_static")
-                  and _method_body_has_lock(content, m["name"])
+                  and _method_body_has_lock(content, m["name"], class_name=class_name)
                   and (exclude_method is None or m["name"] != exclude_method["name"])]
         if locked:
             tail_target = random.choice(locked)
 
-    # 4. is_synchronized method
     if tail_target is None:
         locked = [m for m in methods
                   if m["name"] not in ALWAYS_EXCLUDE_METHODS
@@ -1422,21 +1641,18 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
         if locked:
             tail_target = random.choice(locked)
 
-    # construct tail_call
-    tail_call = ""
+    tail_lines = []
     if tail_target is not None:
         args = ", ".join(simple_args_for(tail_target["params"]))
         if lock_name:
-            tail_call = (
-                f"synchronized ({lock_name}) {{\n"
-                f"    {tail_target['name']}({args});\n"
-                f"}}"
-            )
+            tail_lines.append(f"synchronized ({lock_name}) {{")
+            tail_lines.append(f"    {tail_target['name']}({args});")
+            tail_lines.append("}")
         else:
-            tail_call = f"{tail_target['name']}({args});"
+            tail_lines.append(f"{tail_target['name']}({args});")
 
     chain = []
-    next_call = tail_call
+    next_lines = tail_lines
 
     if lock_name and depth_limit >= 2:
         hold_idx = random.randint(1, depth_limit - 1)
@@ -1447,31 +1663,40 @@ def _build_mock_chain(content, class_name, methods, depth_limit,
         method_name = f"mockMethod_{depth}_{random.randint(0, 9999)}"
         sync_line = f"{sync_block_name}();" if (sync_block_name and depth == hold_idx) else ""
 
+        body_lines = []
         if lock_name and depth == hold_idx:
             sleep_here = random.randint(SLEEP_MIN, SLEEP_MAX)
-            body_lines = []
-            body_lines.append(f"        try {{ Thread.sleep({sleep_here}); }} catch (InterruptedException e) {{ }}")
-            body_lines.append(f"        synchronized ({lock_name}) {{")
-            if next_call:
-                for ln in next_call.split("\n"):
-                    body_lines.append(f"            {ln}" if ln.strip() else ln)
+            body_lines.append(f"try {{ Thread.sleep({sleep_here}); }} catch (InterruptedException e) {{ }}")
+            body_lines.append(f"synchronized ({lock_name}) {{")
+            for ln in next_lines:
+                body_lines.append(f"    {ln}" if ln.strip() else ln)
             if sync_line:
-                body_lines.append(f"            {sync_line}")
-            body_lines.append("        }")
-            body = "\n".join(body_lines)
-            method_code = f"\n    public void {method_name}() throws Exception {{\n{body}\n    }}\n"
+                body_lines.append(f"    {sync_line}")
+            body_lines.append("}")
         else:
-            body_lines = []
-            if next_call:
-                for ln in next_call.split("\n"):
-                    body_lines.append(f"        {ln}" if ln.strip() else ln)
+            for ln in next_lines:
+                body_lines.append(ln)
             if sync_line:
-                body_lines.append(f"        {sync_line}")
-            body = "\n".join(body_lines) if body_lines else ""
-            method_code = f"\n    public void {method_name}() throws Exception {{\n{body}\n    }}\n"
+                body_lines.append(sync_line)
+
+        body = "\n".join(body_lines)
+        if _count_brace_balance(body) != 0:
+            return [], None, None
+
+        if body:
+            method_code = (
+                f"\n    public void {method_name}() throws Exception {{\n"
+                f"{_indent_block(body, '        ')}\n"
+                f"    }}\n"
+            )
+        else:
+            method_code = (
+                f"\n    public void {method_name}() throws Exception {{\n"
+                f"    }}\n"
+            )
 
         chain.append({"name": method_name, "code": method_code})
-        next_call = f"{method_name}();"
+        next_lines = [f"{method_name}();"]
 
     chain.reverse()
     return chain, chain[0]["name"], tail_target
@@ -1493,10 +1718,12 @@ def mutate_add_mock_chain(content, class_name, methods,
     )
     if not chain:
         return content, []
-    idx = content.rfind("}")
-    if idx == -1:
+    idx = _class_end_pos(content, class_name)
+    if idx is None:
         return content, []
     chain_code = "\n".join(c["code"] for c in chain)
+    if _count_brace_balance(chain_code) != 0:
+        return content, []
     new_content = content[:idx] + chain_code + content[idx:]
 
     if insert_into_method is not None:
@@ -1508,7 +1735,7 @@ def mutate_add_mock_chain(content, class_name, methods,
             f"}}"
         )
         new_content = _insert_call_into_method(
-            new_content, insert_into_method, call_line
+            new_content, insert_into_method, call_line, class_name=class_name
         )
 
     return new_content, [{
@@ -1521,23 +1748,32 @@ def mutate_add_mock_chain(content, class_name, methods,
         "chain": [c["name"] for c in chain],
     }]
 
+
 # Combination mutation
 def mutate_class(content, class_name, lock_fields, methods):
     records = []
     new_content = content
     sync_block_name = None
     pending_decls = []
-    # Record the names of methods that the mutator added `synchronized` to
     mutated_methods_with_lock = set()
+
+    MAX_CONTENT_GROWTH = 5
+    original_len = len(content)
+    max_len = original_len * MAX_CONTENT_GROWTH
+
+    def _overgrown(s):
+        return len(s) > max_len
 
     new_content, existing_lock = _ensure_class_has_a_lock(new_content, class_name)
     if existing_lock:
         records.append({"op": "ensure_class_lock", "lock": existing_lock})
         lock_fields = parse_lock_fields(new_content)
+    if _overgrown(new_content):
+        return new_content, records, None
 
     lock_unlock_methods = parse_lock_unlock_methods(new_content, class_name)
 
-    # 1.1 Wrap methods that contain locks with an extra layer of `synchronized`.
+    # 1.1 Wrap methods that contain locks with an extra layer of synchronized.
     if lock_unlock_methods and lock_fields and random.random() < P_WRAP_METHOD_WITH_SYNC:
         k = min(MAX_WRAP_METHODS_PER_CLASS, len(lock_unlock_methods))
         for m in random.sample(lock_unlock_methods, k):
@@ -1552,16 +1788,24 @@ def mutate_class(content, class_name, lock_fields, methods):
                 pending_decls.append(extra_decl)
             if r:
                 mutated_methods_with_lock.add(m["name"])
+            if _overgrown(new_content):
+                return new_content, records, None
 
-    # 1.2 Nest another layer inside an existing `synchronized` block
+    # 1.2 Nest another layer inside an existing synchronized block.
     if lock_fields and random.random() < P_NEST_SYNC_BLOCK:
         base = random.choice(lock_fields)["name"]
-        new_content, r, extra_decls = mutate_nest_inside_sync_block(
-            new_content, class_name, base,
-            sleep_ms=random.randint(SLEEP_MIN, SLEEP_MAX),
-        )
-        records.extend(r)
-        pending_decls.extend(extra_decls)
+        for _ in range(MAX_NEST_SYNC_PER_CLASS):
+            new_content, r, extra_decls = mutate_nest_inside_sync_block(
+                new_content, class_name, base,
+                sleep_ms=random.randint(SLEEP_MIN, SLEEP_MAX),
+            )
+            if not r:
+                break
+            records.extend(r)
+            pending_decls.extend(extra_decls)
+            lock_fields = parse_lock_fields(new_content)
+            if _overgrown(new_content):
+                return new_content, records, None
 
     # 1.3 2/3/4 levels of nesting inside the method.
     deep_nested_hosts = []
@@ -1579,16 +1823,20 @@ def mutate_class(content, class_name, lock_fields, methods):
                 deep_nested_hosts.append(host_name)
                 mutated_methods_with_lock.add(host_name)
             lock_fields = parse_lock_fields(new_content)
+        if _overgrown(new_content):
+            return new_content, records, None
 
-    # 2. Insert a call-distance chain for methods that genuinely contain locks
+    # 2. Insert a call-distance chain for methods that genuinely contain locks.
     if lock_unlock_methods and random.random() < P_INSERT_CALL_CHAIN:
         k = min(MAX_CALL_CHAIN_PER_CLASS, len(lock_unlock_methods))
         for m in random.sample(lock_unlock_methods, k):
             target = random.choice(methods) if methods else None
             new_content, r = mutate_insert_call_chain(
-                new_content, m, methods, target
+                new_content, class_name, m, methods, target
             )
             records.extend(r)
+            if _overgrown(new_content):
+                return new_content, records, None
 
     # 3. cross lock cycle
     new_content, cross_recs, cross_info, cross_decl = mutate_add_cross_lock(
@@ -1600,6 +1848,8 @@ def mutate_class(content, class_name, lock_fields, methods):
 
     if cross_decl:
         pending_decls.append(cross_decl)
+    if _overgrown(new_content):
+        return new_content, records, cross_info
 
     # 4. standard mutation
     do_replace = random.random() < P_REPLACE_LOCK
@@ -1610,20 +1860,28 @@ def mutate_class(content, class_name, lock_fields, methods):
     if do_replace:
         new_content, r = mutate_replace_lock(new_content, lock_fields)
         records.extend(r)
+        if _overgrown(new_content):
+            return new_content, records, cross_info
 
     if random.random() < P_REASSIGN_LOCK:
         new_content, r = mutate_reassign_lock(new_content, lock_fields, class_name)
         records.extend(r)
+        if _overgrown(new_content):
+            return new_content, records, cross_info
 
     if random.random() < P_INSERT_SLEEP:
         new_content, r = mutate_insert_sleep(new_content)
         records.extend(r)
+        if _overgrown(new_content):
+            return new_content, records, cross_info
 
     if random.random() < P_ADD_SYNC_BLOCK:
-        new_content, r = mutate_add_sync_block(new_content, lock_fields)
+        new_content, r = mutate_add_sync_block(new_content, lock_fields, class_name)
         records.extend(r)
         if r and r[0].get("op") == "add_sync_block":
             sync_block_name = r[0].get("name")
+        if _overgrown(new_content):
+            return new_content, records, cross_info
 
     # 5. mock chain
     if random.random() < P_ADD_MOCK_METHOD:
@@ -1643,7 +1901,6 @@ def mutate_class(content, class_name, lock_fields, methods):
         if lock_fields:
             mock_lock = random.choice(lock_fields)["name"]
 
-        # The tail of the mock chain should preferentially call the method that was mutated by adding `synchronized`
         must_call = None
         if mutated_methods_with_lock:
             must_call = random.choice(list(mutated_methods_with_lock))
@@ -1659,8 +1916,10 @@ def mutate_class(content, class_name, lock_fields, methods):
             mutated_methods=mutated_methods_with_lock,
         )
         records.extend(r)
+        if _overgrown(new_content):
+            return new_content, records, cross_info
 
-    # 6. Uniformly insert `pending_decls` at the end of the class body.
+    # 6. Uniformly insert pending_decls at the end of the class body.
     if pending_decls:
         merged_lines = []
         seen_names = set()
@@ -1684,6 +1943,7 @@ def mutate_class(content, class_name, lock_fields, methods):
             )
 
     return new_content, records, cross_info
+
 
 # Harness
 def _emit_call(lines, class_name, m, indent="        "):
@@ -1790,7 +2050,7 @@ def gen_harness(pkg, class_name, methods, project_out_dir,
     if threads:
         thread_vars = []
         for i, m in enumerate(threads):
-            var = f"t{i+1}"
+            var = f"t{i + 1}"
             thread_vars.append(var)
             args = ", ".join(simple_args_for(m["params"]))
             if m.get("is_static"):
@@ -1814,6 +2074,7 @@ def gen_harness(pkg, class_name, methods, project_out_dir,
     write_file(path, content)
     return path
 
+
 def _decide_instance(content, class_name):
     if has_no_arg_constructor(content, class_name):
         return None, False, False
@@ -1824,6 +2085,35 @@ def _decide_instance(content, class_name):
         return None, True, False
     return ctor_args, False, False
 
+def _fix_class_brace_balance(content, class_name):
+    """
+    Ensure the class body of `class_name` has balanced braces and ends
+    with a single closing '}' at the very end of the file.
+    """
+    body_start, _ = _get_class_body_range(content, class_name)
+    if body_start is None:
+        return content
+
+    body_text = content[body_start:]
+    balance = _count_brace_balance(body_text)
+
+    if balance == 0:
+        return content
+
+    if balance > 0:
+        # Missing closing braces: append them at the end.
+        return content.rstrip() + "\n" + ("}" * balance) + "\n"
+
+    # balance < 0: extra closing braces. Remove the last |balance| '}'
+    # and re-append one at the very end.
+    fixed = content
+    for _ in range(-balance):
+        idx = fixed.rfind("}")
+        if idx == -1:
+            break
+        fixed = fixed[:idx] + fixed[idx + 1:]
+    fixed = fixed.rstrip() + "\n}\n"
+    return fixed
 
 def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
     src_root = resolve_source_root(project_dir)
@@ -1844,6 +2134,9 @@ def process_one_project(project_dir, project_name, OUTPUT_DIR, report):
             rel = os.path.relpath(jf, src_root)
             out_path = os.path.normpath(os.path.join(project_out_dir, rel))
             write_file(out_path, content)
+            continue
+
+        if is_abstract_class(content):
             continue
 
         if not has_lock(content):
@@ -1924,6 +2217,12 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
             write_file(out_path, content)
             continue
 
+        if is_abstract_class(content):
+            rel = os.path.relpath(jf, src_root)
+            out_path = os.path.normpath(os.path.join(project_out_dir, rel))
+            write_file(out_path, content)
+            continue
+
         lock_present = has_lock(content)
         class_name = parse_class_name(content)
 
@@ -1946,6 +2245,7 @@ def process_one_project_retain_all(project_dir, project_name, OUTPUT_DIR, report
             new_content, mutations, cross_info = mutate_class(
                 content, class_name, lock_fields, methods
             )
+            # new_content = _fix_class_brace_balance(new_content, class_name)
         else:
             new_content = content
             mutations = []
@@ -2027,7 +2327,7 @@ def main():
     parser.add_argument("--output-dir", dest="output_dir", default=None)
     parser.add_argument("--seed", dest="seed", type=int, default=SEED)
     parser.add_argument("--retain-all-classes", dest="retain_all_classes",
-                        action="store_true", default=None)
+                        action="store_true", default=False)
     args = parser.parse_args()
 
     random.seed(args.seed)
