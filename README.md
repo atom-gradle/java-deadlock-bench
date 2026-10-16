@@ -1,11 +1,18 @@
 # java-deadlock-bench
 
-This repository provides the whole framework and tools for deadlock bench, including components like MutationGenerator, Parser and other scripts used in the paper.
+[![Dataset](https://img.shields.io/badge/Dataset-Request_Access-4285F4?logo=googledrive&logoColor=white)](https://forms.gle/U73oakGxk3YrmNyu9)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+Artifact for the paper *"Nocturne: A Reproducible Mutation Pipeline for Deadlock Warning Triage in Java"*. It contains the training/evaluation
+code for all model families evaluated in the paper (classical ML, HeteroGNN), together with the dataset
+construction pipeline and scripts for every configuration.
 
 ## Pipeline
 Generate Mutation -> Java Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
+
+## 🚀 Getting started
 
 ### mutation_generator.py
 Perform lock-related mutations on Java projects to generate reproducible samples.
@@ -50,7 +57,7 @@ jar uf tai-e-0.5.4.jar Parser.class Parser$HeldLock.class Parser$LockAcquisition
 ```
 
 3. extract tai-e-analyses.yml from tai-e-0.5.4.jar and modify tai-e-analyses.yml to enable features for our analysis
-```sh
+```bash
 jar xf tai-e-0.5.4.jar tai-e-analyses.yml
 ```
 
@@ -101,6 +108,15 @@ python evaluate.py --label_mode binary_weak
 python evaluate.py --label_mode three_way --do_gnn_ablation
 python evaluate.py --label_mode three_way --seed 2026 --do_gnn_ablation
 ```
+
+> [!NOTE]
+> Exact values vary by GPU and run.
+
+---
+
+## 📦 Dataset
+
+`dataset/` contains the eight benchmark artifacts consumed by the code.
 
 ---
 
