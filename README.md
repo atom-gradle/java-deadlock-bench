@@ -19,8 +19,9 @@ dataset/                    Nocturne benchmark (.txt files)
 Parser.java                 Static Parser which parses and exports candidate cycles
 evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM) vs. GNN
 Pipeliner.py                dataset loading, splits, resampling
-docker/                     Docker run scripts, one per model family (see docker/README.md)
-Dockerfile                  container image definition
+run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
+docker/                     (todo) Docker run scripts, one per model family (see docker/README.md)
+Dockerfile                  (todo) container image definition
 ```
 
 ## 🚀 Getting started
@@ -124,11 +125,17 @@ L0(negative): 1155
 
 All experiments run 5 seeds (42-46) over the same fixed split.
 ```bash
+./run_all.sh
+```
+
+If you want to run one single evaluation, please use the following command:
+
+```bash
 python evaluate.py --label_mode three_way
 python evaluate.py --label_mode binary_strong
 python evaluate.py --label_mode binary_weak
 python evaluate.py --label_mode three_way --do_gnn_ablation
-python evaluate.py --label_mode three_way --seed 2026 --do_gnn_ablation
+python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
 ```
 
 > [!NOTE]
