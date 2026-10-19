@@ -3,14 +3,25 @@
 [![Dataset](https://img.shields.io/badge/Dataset-Request_Access-4285F4?logo=googledrive&logoColor=white)](https://forms.gle/U73oakGxk3YrmNyu9)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Artifact for the paper *"Nocturne: A Reproducible Mutation Pipeline for Deadlock Warning Triage in Java"*. It contains the training/evaluation
-code for all model families evaluated in the paper (classical ML, HeteroGNN), together with the dataset
-construction pipeline and scripts for every configuration.
+Artifact for the paper *"Nocturne: A Reproducible Mutation Pipeline and Empirical Comparison of Statistical Models versus GNNs for Java Deadlock Triage"*.
+It contains the training/evaluation code for all model families evaluated in the paper (classical ML, HeteroGNN),
+together with the dataset construction pipeline and scripts for every configuration.
 
 ## Pipeline
-Generate Mutation -> Java Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
+Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
+
+## 🗂️ Repository layout
+
+```
+dataset/                    Nocturne benchmark (.txt files)
+Parser.java                 Static Parser which parses and exports candidate cycles
+evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM) vs. GNN
+Pipeliner.py                dataset loading, splits, resampling
+docker/                     Docker run scripts, one per model family (see docker/README.md)
+Dockerfile                  container image definition
+```
 
 ## 🚀 Getting started
 
@@ -97,10 +108,21 @@ python Pipeliner.py --input-dir "YOUR_INPUT_DIR"
 
 ---
 
-### evaluate.py
-Uniformly evaluate the performance of three models on the "mutation ground truth (LABEL_REAL)":
+## 📦 Dataset
 
-**How to use?**
+`dataset/` contains the eight benchmark artifacts consumed by the code.
+
+The dataset consists of 4,096 labeled cycles (1,749 unique structures after merging), using fixed seed 42.
+Total: 4096
+L2(Strong): 1939
+L1(weak): 1002
+L0(negative): 1155
+
+---
+
+## 📊 Running the paper's experiment configurations
+
+All experiments run 5 seeds (42-46) over the same fixed split.
 ```bash
 python evaluate.py --label_mode three_way
 python evaluate.py --label_mode binary_strong
@@ -111,12 +133,6 @@ python evaluate.py --label_mode three_way --seed 2026 --do_gnn_ablation
 
 > [!NOTE]
 > Exact values vary by GPU and run.
-
----
-
-## 📦 Dataset
-
-`dataset/` contains the eight benchmark artifacts consumed by the code.
 
 ---
 
