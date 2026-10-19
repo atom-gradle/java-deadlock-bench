@@ -44,8 +44,8 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 |-commons-collections-master
 ```
 
-Note: mutation_generator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory called "src",
-or "src" is not directly settled in project root folder.
+Note: mutation_generator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory named "src",
+or "src" is not directly settled in project root folder, please manually add the path to the script.
 
 If you want to retain all original classes in Java project for convinient replacement and compile, then add this param `--retain-all-classes`
 ```bash
@@ -114,6 +114,7 @@ python Pipeliner.py --input-dir "YOUR_INPUT_DIR"
 `dataset/` contains the eight benchmark artifacts consumed by the code.
 
 The dataset consists of 4,096 labeled cycles (1,749 unique structures after merging), using fixed seed 42.
+
 Total: 4096
 L2(Strong): 1939
 L1(weak): 1002
