@@ -17,11 +17,9 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 ```
 dataset/                    Nocturne benchmark (.txt files)
 Parser.java                 Static Parser which parses and exports candidate cycles
-evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM) vs. GNN
 Pipeliner.py                dataset loading, splits, resampling
+evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM) vs. GNN
 run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
-docker/                     (todo) Docker run scripts, one per model family (see docker/README.md)
-Dockerfile                  (todo) container image definition
 ```
 
 ## 🚀 Getting started
