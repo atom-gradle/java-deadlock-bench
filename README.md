@@ -49,7 +49,7 @@ python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
 > [!NOTE]
 > Exact values may vary by GPU and run.
 
-## 🚀 Detailed usage instructions
+## 🚀 Detailed usage instructions for Mutation Engine and Static Parser
 
 ### mutation_generator.py
 Perform lock-related mutations on Java projects to generate reproducible samples.
