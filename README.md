@@ -16,9 +16,10 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 
 ```
 dataset/                    Nocturne benchmark (.txt files)
-Parser.java                 Static Parser which parses and exports candidate cycles
-Pipeliner.py                dataset loading, splits, resampling
-evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM) vs. GNN
+mutation_generator.py       Performs lock-related mutations on Java projects to generate reproducible samples.
+Parser.java                 Uses Static Analysis to analyze Java programs and export CYCLEs.
+Pipeliner.py                Automatically runs `Parser.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
+evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM, Random Forest) vs. GNN
 run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
 ```
 
@@ -53,7 +54,6 @@ python mutation_generator.py --working-dir "YOUR_WORKING_DIR" --retain-all-class
 ---
 
 ### Parser.java
-Using Static Analysis to analyze Java programs and export CYCLEs.
 
 **How to use?**
 1. compile
@@ -98,7 +98,6 @@ plugins: [ MyPlugin ] # | [ pluginClass, ... ]
 ---
 
 ### Pipeliner.py
-This script automatically runs `Parser.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence.
 
 **How to use?**
 ```bash
@@ -132,7 +131,7 @@ If you want to run one single evaluation, please use the following command:
 ```bash
 python evaluate.py --label_mode three_way
 python evaluate.py --label_mode binary_strong
-python evaluate.py --label_mode binary_weak
+python evaluate.py --label_mode binary_loose
 python evaluate.py --label_mode three_way --do_gnn_ablation
 python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
 ```
