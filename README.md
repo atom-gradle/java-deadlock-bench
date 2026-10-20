@@ -47,7 +47,7 @@ python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
 ```
 
 > [!NOTE]
-> Exact values vary by GPU and run.
+> Exact values may vary by GPU and run.
 
 ## 🚀 Detailed usage instructions
 
