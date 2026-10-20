@@ -18,12 +18,13 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 dataset/                    Nocturne benchmark (.txt files)
 mutation_generator.py       Performs lock-related mutations on Java projects to generate reproducible samples.
 Parser.java                 Uses Static Analysis to analyze Java programs and export CYCLEs.
-Pipeliner.py                Automatically runs `Parser.java` and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
-evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM, Random Forest) vs. GNN
+Pipeliner.py                Automatically runs Parser.java and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
+evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM, Random Forest) vs. GNN, ablation study
 run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
 ```
 
 ---
+
 
 ## 📊 Running the paper's experiment configurations
 
