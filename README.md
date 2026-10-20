@@ -28,9 +28,11 @@ run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluation
 
 ## 📊 Running the paper's experiment configurations
 
-All experiments run 5 seeds (42-46) over the same fixed split.
+All experiments run 5 seeds (42-46) over the same fixed split. Please ensure that `evaluate.py`, `train/`(directory), and `test`(directory) are placed in the same directory.
 
 ```bash
+cp -r dataset/train .
+cp -r dataset/test .
 ./run_all.sh
 ```
 
