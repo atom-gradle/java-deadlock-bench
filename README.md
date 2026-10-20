@@ -7,7 +7,7 @@ Artifact for the paper *"Nocturne: A Reproducible Mutation Pipeline and Empirica
 It contains the training/evaluation code for all model families evaluated in the paper (classical ML, HeteroGNN),
 together with the dataset construction pipeline and scripts for every configuration.
 
-## Pipeline
+## Pipeline & Overview
 Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
@@ -23,7 +23,29 @@ evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM, Random Fores
 run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
 ```
 
-## 🚀 Getting started
+---
+
+## 📊 Running the paper's experiment configurations
+
+All experiments run 5 seeds (42-46) over the same fixed split.
+```bash
+./run_all.sh
+```
+
+If you want to run one single evaluation, please use the following command:
+
+```bash
+python evaluate.py --label_mode three_way
+python evaluate.py --label_mode binary_strong
+python evaluate.py --label_mode binary_loose
+python evaluate.py --label_mode three_way --do_gnn_ablation
+python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
+```
+
+> [!NOTE]
+> Exact values vary by GPU and run.
+
+## 🚀 Detailed usage instructions
 
 ### mutation_generator.py
 Perform lock-related mutations on Java projects to generate reproducible samples.
@@ -116,28 +138,6 @@ Total: 4096
 L2(Strong): 1939
 L1(weak): 1002
 L0(negative): 1155
-
----
-
-## 📊 Running the paper's experiment configurations
-
-All experiments run 5 seeds (42-46) over the same fixed split.
-```bash
-./run_all.sh
-```
-
-If you want to run one single evaluation, please use the following command:
-
-```bash
-python evaluate.py --label_mode three_way
-python evaluate.py --label_mode binary_strong
-python evaluate.py --label_mode binary_loose
-python evaluate.py --label_mode three_way --do_gnn_ablation
-python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
-```
-
-> [!NOTE]
-> Exact values vary by GPU and run.
 
 ---
 
