@@ -67,7 +67,7 @@ Note: `YOUR_WORKING_DIR` is a directory containing all Java projects you want to
 |-commons-collections-master
 ```
 
-Note: mutation_generator.py only detects "src" directory in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory named "src",
+Note: `mutation_generator.py` only detects "standard src directory structure" in Java projects. If you want to mutate projects like Agrona, JCTools, which doesn't directly owns a directory named "src",
 or "src" is not directly settled in project root folder, please manually add the path to the script.
 
 If you want to retain all original classes in Java project for convenience in replacement and compile, then add this param `--retain-all-classes`
@@ -112,7 +112,7 @@ plugins: # | [ pluginClass, ... ]
 cs: 1-call # | k-[obj|type|call][-k'h]
 only-app: true # only analyze application code
 handle-invokedynamic: true
-plugins: [ MyPlugin ] # | [ pluginClass, ... ]
+plugins: [ Parser ] # | [ pluginClass, ... ]
 ```
 
 4. run
