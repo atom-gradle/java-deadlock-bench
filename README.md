@@ -39,11 +39,11 @@ cp -r dataset/test .
 If you want to run one single evaluation, please use the following command:
 
 ```bash
-python evaluate.py --label_mode three_way
 python evaluate.py --label_mode binary_strong
 python evaluate.py --label_mode binary_loose
-python evaluate.py --label_mode three_way --do_gnn_ablation
-python evaluate.py --label_mode three_way --seed YOUR_SEED --do_gnn_ablation
+python evaluate.py --label_mode three_way
+python evaluate.py --label_mode binary_strong --do_gnn_ablation
+python evaluate.py --label_mode binary_strong --seed YOUR_SEED --do_gnn_ablation
 ```
 
 > [!NOTE]
