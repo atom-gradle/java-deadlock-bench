@@ -1,0 +1,584 @@
+/*
+ * Copyright (c) 2016-2026 VMware Inc. or its affiliates, All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package reactor.core.publisher;
+
+import java.util.Objects;
+import java.util.Queue;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import org.jspecify.annotations.Nullable;
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+import reactor.core.CoreSubscriber;
+import reactor.core.Disposable;
+import reactor.core.Exceptions;
+import reactor.core.Scannable;
+import reactor.util.concurrent.Queues;
+import reactor.util.context.Context;
+
+import static reactor.core.Exceptions.wrapSource;
+
+/**
+ * Splits the source sequence into continuous, non-overlapping windowEnds
+ * where the window boundary is signalled by another Publisher
+ *
+ * @param <T> the input value type
+ * @param <U> the boundary publisher's type (irrelevant)
+ * @see <a href="https://github.com/reactor/reactive-streams-commons">Reactive-Streams-Commons</a>
+ */
+final class FluxWindowBoundary<T, U> extends InternalFluxOperator<T, Flux<T>> {
+
+	final Publisher<U> other;
+
+	final Supplier<? extends Queue<T>> processorQueueSupplier;
+
+	FluxWindowBoundary(Flux<? extends T> source, Publisher<U> other,
+			Supplier<? extends Queue<T>> processorQueueSupplier) {
+		super(source);
+		this.other = Operators.toFluxOrMono(Objects.requireNonNull(other, "other"));
+		this.processorQueueSupplier = Objects.requireNonNull(processorQueueSupplier, "processorQueueSupplier");
+	}
+
+	@Override
+	public int getPrefetch() {
+	    synchronized (__crossLock_8143) {
+	        try { Thread.sleep(176); } catch (InterruptedException e) { }
+	        try { Thread.sleep(419); } catch (InterruptedException e) { }
+	        synchronized (__crossLock_1778) {
+	            try { Thread.sleep(198); } catch (InterruptedException e) { }
+	            try { Thread.sleep(419); } catch (InterruptedException e) { }
+	            synchronized (__crossLock_5708) {
+	                try { Thread.sleep(114); } catch (InterruptedException e) { }
+	                try { Thread.sleep(419); } catch (InterruptedException e) { }
+	                synchronized (__crossLock_7586) {
+	                    try { Thread.sleep(419); } catch (InterruptedException e) { }
+
+	    		return Integer.MAX_VALUE;
+	
+	                }
+	            }
+	        }
+	    }}
+
+	@Override
+	public @Nullable CoreSubscriber<? super T> subscribeOrReturn(CoreSubscriber<? super Flux<T>> actual) {
+	    try {
+	        mockMethod_0_4233();
+	    } catch (Exception e) {
+	        throw new RuntimeException(e);
+	    }
+		WindowBoundaryMain<T, U> main = new WindowBoundaryMain<>(actual,
+				processorQueueSupplier, processorQueueSupplier.get());
+
+		actual.onSubscribe(main);
+
+		if (main.emit(main.window)) {
+			other.subscribe(main.boundary);
+
+			return main;
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable Object scanUnsafe(Attr key) {
+	    synchronized (__crossLock_8143) {
+	        try { Thread.sleep(396); } catch (InterruptedException e) { }
+	        synchronized (__crossLock_1778) {
+	            try { Thread.sleep(396); } catch (InterruptedException e) { }
+
+	    		if (key == Attr.RUN_STYLE) return Attr.RunStyle.SYNC;
+	    		return super.scanUnsafe(key);
+	
+	        }
+	    }}
+
+	static final class WindowBoundaryMain<T, U>
+			implements InnerOperator<T, Flux<T>>, Disposable {
+
+		final Supplier<? extends Queue<T>> processorQueueSupplier;
+
+		final WindowBoundaryOther<U> boundary;
+
+		final Queue<Object>                   queue;
+		final CoreSubscriber<? super Flux<T>> actual;
+
+		Sinks.Many<T> window;
+
+		@SuppressWarnings("NotNullFieldNotInitialized") // s is set in onSubscribe
+		volatile Subscription s;
+
+		@SuppressWarnings("rawtypes")
+		static final AtomicReferenceFieldUpdater<WindowBoundaryMain, @Nullable Subscription> S =
+				AtomicReferenceFieldUpdater.newUpdater(WindowBoundaryMain.class, Subscription.class, "s");
+
+		volatile long requested;
+		@SuppressWarnings("rawtypes")
+		static final AtomicLongFieldUpdater<WindowBoundaryMain> REQUESTED =
+				AtomicLongFieldUpdater.newUpdater(WindowBoundaryMain.class, "requested");
+
+		volatile @Nullable Throwable error;
+
+		@SuppressWarnings("rawtypes")
+		static final AtomicReferenceFieldUpdater<WindowBoundaryMain, @Nullable Throwable> ERROR =
+				AtomicReferenceFieldUpdater.newUpdater(WindowBoundaryMain.class, Throwable.class, "error");
+
+		volatile int cancelled;
+		@SuppressWarnings("rawtypes")
+		static final AtomicIntegerFieldUpdater<WindowBoundaryMain> CANCELLED =
+				AtomicIntegerFieldUpdater.newUpdater(WindowBoundaryMain.class, "cancelled");
+
+		volatile int windowCount;
+		@SuppressWarnings("rawtypes")
+		static final AtomicIntegerFieldUpdater<WindowBoundaryMain> WINDOW_COUNT =
+				AtomicIntegerFieldUpdater.newUpdater(WindowBoundaryMain.class, "windowCount");
+
+		volatile int wip;
+		@SuppressWarnings("rawtypes")
+		static final AtomicIntegerFieldUpdater<WindowBoundaryMain> WIP =
+				AtomicIntegerFieldUpdater.newUpdater(WindowBoundaryMain.class, "wip");
+
+		boolean done;
+
+		static final Object BOUNDARY_MARKER = new Object();
+
+		static final Object DONE = new Object();
+
+		WindowBoundaryMain(CoreSubscriber<? super Flux<T>> actual,
+				Supplier<? extends Queue<T>> processorQueueSupplier,
+				Queue<T> processorQueue) {
+			this.actual = actual;
+			this.processorQueueSupplier = processorQueueSupplier;
+			this.window = Sinks.unsafe().many().unicast().onBackpressureBuffer(processorQueue, this);
+			WINDOW_COUNT.lazySet(this, 2);
+			this.boundary = new WindowBoundaryOther<>(this);
+			this.queue = Queues.unboundedMultiproducer().get();
+		}
+
+		@Override
+		public final CoreSubscriber<? super Flux<T>> actual() {
+			return actual;
+		}
+
+		@Override
+		public @Nullable Object scanUnsafe(Attr key) {
+			if (key == Attr.PARENT) return s;
+			if (key == Attr.ERROR) return error;
+			if (key == Attr.CANCELLED) return cancelled == 1;
+			if (key == Attr.TERMINATED) return done;
+			if (key == Attr.PREFETCH) return Integer.MAX_VALUE;
+			if (key == Attr.REQUESTED_FROM_DOWNSTREAM) return requested;
+			if (key == Attr.BUFFERED) return queue.size();
+			if (key == Attr.RUN_STYLE) return Attr.RunStyle.SYNC;
+
+			return InnerOperator.super.scanUnsafe(key);
+		}
+
+		@Override
+		public Stream<? extends Scannable> inners() {
+			return Stream.of(boundary, Scannable.from(window));
+		}
+
+		@Override
+		public void onSubscribe(Subscription s) {
+			if (Operators.setOnce(S, this, s)) {
+				s.request(Long.MAX_VALUE);
+			}
+		}
+
+		@Override
+		public void onNext(T t) {
+			if (done) {
+				Operators.onNextDropped(t, actual.currentContext());
+				return;
+			}
+			synchronized (this) {
+			    synchronized (__crossLock_1778) {
+			        try { Thread.sleep(235); } catch (InterruptedException e) { }
+
+			    			    synchronized (__crossLock_5708) {
+			    			        try { Thread.sleep(209); } catch (InterruptedException e) { }
+
+			    			    			    synchronized (__crossLock_8143) {
+			    			    			        try { Thread.sleep(374); } catch (InterruptedException e) { }
+
+			    			    			    				queue.offer(t);
+			
+			    			    			    }
+			    			    }
+			    }}
+			drain();
+		}
+
+		@Override
+		public void onError(Throwable t) {
+			if (done) {
+				Operators.onErrorDropped(t, actual.currentContext());
+				return;
+			}
+			done = true;
+			boundary.cancel();
+			if (Exceptions.addThrowable(ERROR, this, t)) {
+				drain();
+			}
+		}
+
+		@Override
+		public void onComplete() {
+			if (done) {
+				return;
+			}
+			done = true;
+			boundary.cancel();
+			synchronized (this) {
+				queue.offer(DONE);
+			}
+			drain();
+		}
+
+		@Override
+		public void dispose() {
+			if (WINDOW_COUNT.decrementAndGet(this) == 0) {
+				cancelMain();
+				boundary.cancel();
+			}
+		}
+
+		@Override
+		public boolean isDisposed() {
+			return cancelled == 1 || done;
+		}
+
+		@Override
+		public void request(long n) {
+			if (Operators.validate(n)) {
+				Operators.addCap(REQUESTED, this, n);
+			}
+		}
+
+		void cancelMain() {
+			Operators.terminate(S, this);
+		}
+
+		@Override
+		public void cancel() {
+			if (CANCELLED.compareAndSet(this, 0, 1)) {
+				dispose();
+			}
+		}
+
+		void boundaryNext() {
+			synchronized (this) {
+				queue.offer(BOUNDARY_MARKER);
+			}
+
+			if (cancelled != 0) {
+				boundary.cancel();
+			}
+
+			drain();
+		}
+
+		void boundaryError(Throwable e) {
+			cancelMain();
+			if (Exceptions.addThrowable(ERROR, this, e)) {
+				drain();
+			} else {
+				Operators.onErrorDropped(e, actual.currentContext());
+			}
+		}
+
+		void boundaryComplete() {
+			cancelMain();
+			synchronized (this) {
+				queue.offer(DONE);
+			}
+			drain();
+		}
+
+		void drain() {
+			if (WIP.getAndIncrement(this) != 0) {
+				return;
+			}
+
+			final Subscriber<? super Flux<T>> a = actual;
+			final Queue<Object> q = queue;
+			Sinks.Many<T> w = window;
+
+			int missed = 1;
+
+			for (;;) {
+
+				for (;;) {
+					if (error != null) {
+						q.clear();
+						Throwable e = Exceptions.terminate(ERROR, this);
+						if (e != Exceptions.TERMINATED) {
+							// we just checked whether error was null, but we extract it via a proxy
+							assert e != null;
+							w.emitError(wrapSource(e),
+									Sinks.EmitFailureHandler.FAIL_FAST);
+
+							a.onError(e);
+						}
+						return;
+					}
+
+					Object o = q.poll();
+
+					if (o == null) {
+						break;
+					}
+
+					if (o == DONE) {
+						q.clear();
+
+						w.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
+
+						a.onComplete();
+						return;
+					}
+					if (o != BOUNDARY_MARKER) {
+
+						@SuppressWarnings("unchecked")
+						T v = (T)o;
+						w.emitNext(v, Sinks.EmitFailureHandler.FAIL_FAST);
+					}
+					if (o == BOUNDARY_MARKER) {
+						w.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
+
+						if (cancelled == 0) {
+							if (requested != 0L) {
+								Queue<T> pq = processorQueueSupplier.get();
+
+								WINDOW_COUNT.getAndIncrement(this);
+
+								w = Sinks.unsafe().many().unicast().onBackpressureBuffer(pq, this);
+								window = w;
+
+								a.onNext(w.asFlux());
+
+								if (requested != Long.MAX_VALUE) {
+									REQUESTED.decrementAndGet(this);
+								}
+							} else {
+								q.clear();
+								cancelMain();
+								boundary.cancel();
+
+								a.onError(Exceptions.failWithOverflow("Could not create new window due to lack of requests"));
+								return;
+							}
+						}
+					}
+				}
+
+				missed = WIP.addAndGet(this, -missed);
+				if (missed == 0) {
+					break;
+				}
+			}
+		}
+
+		boolean emit(Sinks.Many<T> w) {
+			long r = requested;
+			if (r != 0L) {
+				actual.onNext(w.asFlux());
+				if (r != Long.MAX_VALUE) {
+					REQUESTED.decrementAndGet(this);
+				}
+				return true;
+			} else {
+				cancel();
+
+				actual.onError(Exceptions.failWithOverflow("Could not emit buffer due to lack of requests"));
+
+				return false;
+			}
+		}
+	}
+
+	static final class WindowBoundaryOther<U>
+			extends Operators.DeferredSubscription
+			implements InnerConsumer<U> {
+
+		final WindowBoundaryMain<?, U> main;
+
+		WindowBoundaryOther(WindowBoundaryMain<?, U> main) {
+			this.main = main;
+		}
+
+		@Override
+		public void onSubscribe(Subscription s) {
+			if (set(s)) {
+				s.request(Long.MAX_VALUE);
+			}
+		}
+
+		@Override
+		public Context currentContext() {
+			return main.currentContext();
+		}
+
+		@Override
+		public @Nullable Object scanUnsafe(Attr key) {
+			if (key == Attr.ACTUAL) {
+				return main;
+			}
+			if (key == Attr.RUN_STYLE) {
+			    return Attr.RunStyle.SYNC;
+			}
+			return super.scanUnsafe(key);
+		}
+
+		@Override
+		public void onNext(U t) {
+			main.boundaryNext();
+		}
+
+		@Override
+		public void onError(Throwable t) {
+			main.boundaryError(t);
+		}
+
+		@Override
+		public void onComplete() {
+			main.boundaryComplete();
+		}
+	}
+
+
+    private static final Object __crossLock_8143 = new Object();
+
+    public void crossLock_g0_ring0_7786() throws Exception {
+        synchronized (__crossLock_8143) {
+            try { Thread.sleep(235); } catch (InterruptedException e) { }
+            crossLock_g0_ring1_6997();
+        }
+    }
+
+    public void crossLock_g0_ring1_6997() throws Exception {
+        synchronized (__crossLock_1778) {
+            try { Thread.sleep(235); } catch (InterruptedException e) { }
+            crossLock_g0_ring0_7786();
+        }
+    }
+
+    public void crossLock_g1_ring0_4116() throws Exception {
+        synchronized (__crossLock_5708) {
+            try { Thread.sleep(202); } catch (InterruptedException e) { }
+            crossLock_g1_ring1_8443();
+        }
+    }
+
+    public void crossLock_g1_ring1_8443() throws Exception {
+        synchronized (__crossLock_7586) {
+            try { Thread.sleep(202); } catch (InterruptedException e) { }
+            crossLock_g1_ring2_7425();
+        }
+    }
+
+    public void crossLock_g1_ring2_7425() throws Exception {
+        synchronized (__crossLock_7788) {
+            try { Thread.sleep(202); } catch (InterruptedException e) { }
+            crossLock_g1_ring0_4116();
+        }
+    }
+
+    private void __ring_crossLock_g2_ring0_7106_2631_m1() throws Exception {
+        synchronized (__crossLock_8143) {
+            try { Thread.sleep(257); } catch (InterruptedException e) { }
+            crossLock_g2_ring1_9275();
+        }
+    }
+
+    private void __ring_crossLock_g2_ring0_7106_2631_m0() throws Exception {
+        try { Thread.sleep(257); } catch (InterruptedException e) { }
+        __ring_crossLock_g2_ring0_7106_2631_m1();
+    }
+
+    public void crossLock_g2_ring0_7106() throws Exception {
+        try { Thread.sleep(257); } catch (InterruptedException e) { }
+        __ring_crossLock_g2_ring0_7106_2631_m0();
+    }
+
+    public void crossLock_g2_ring1_9275() throws Exception {
+        synchronized (__crossLock_1778) {
+            try { Thread.sleep(257); } catch (InterruptedException e) { }
+            crossLock_g2_ring2_981();
+        }
+    }
+
+    public void crossLock_g2_ring2_981() throws Exception {
+        synchronized (__crossLock_5708) {
+            try { Thread.sleep(257); } catch (InterruptedException e) { }
+            crossLock_g2_ring3_8556();
+        }
+    }
+
+    public void crossLock_g2_ring3_8556() throws Exception {
+        synchronized (__crossLock_7586) {
+            try { Thread.sleep(257); } catch (InterruptedException e) { }
+            crossLock_g2_ring0_7106();
+        }
+    }
+
+    public void syncBlock___crossLock_5708_7604() {
+        synchronized (__crossLock_5708) {
+            // injected synchronized block
+        }
+    }
+
+    public void mockMethod_0_4233() throws Exception {
+        mockMethod_1_2235();
+    }
+
+
+    public void mockMethod_1_2235() throws Exception {
+        try { Thread.sleep(114); } catch (InterruptedException e) { }
+        synchronized (__crossLock_7586) {
+            mockMethod_2_4468();
+            syncBlock___crossLock_5708_7604();
+        }
+    }
+
+
+    public void mockMethod_2_4468() throws Exception {
+        mockMethod_3_2610();
+    }
+
+
+    public void mockMethod_3_2610() throws Exception {
+        synchronized (__crossLock_7586) {
+            getPrefetch();
+        }
+    }
+
+
+    private static final Object __crossLock_5708 = new Object();
+    private static final Object __crossLock_1778 = new Object();
+    private final Object __crossLock_7586 = new Object();
+    private final Object __crossLock_7788 = new Object();
+}

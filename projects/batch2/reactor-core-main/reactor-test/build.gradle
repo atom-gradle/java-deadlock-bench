@@ -1,0 +1,143 @@
+/*
+ * Copyright (c) 2011-2026 VMware Inc. or its affiliates, All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import de.undercouch.gradle.tasks.download.Download
+import me.champeau.gradle.japicmp.JapicmpTask
+
+apply plugin: 'biz.aQute.bnd.builder'
+apply plugin: 'java-library'
+
+description = 'Reactor Test support'
+
+ext {
+	bndOptions = [
+		"Export-Package": [
+			"!*internal*",
+			"reactor.test*;version=${rootProject.osgiVersion};-noimport:=true"
+		].join(","),
+		"Import-Package": [
+			"!javax.annotation",
+			"*"
+		].join(","),
+		"Bundle-Name" : "reactor-test",
+		"Bundle-SymbolicName" : "io.projectreactor.reactor-test",
+		"Bundle-Version" : "${rootProject.osgiVersion}",
+		"-noextraheaders" : "true"
+	]
+}
+
+dependencies {
+	api project(":reactor-core")
+	api libs.jspecify
+	compileOnly libs.jsr305
+
+	testImplementation platform(libs.junit.bom)
+	testImplementation libs.junit.jupiterApi
+	testImplementation libs.junit.jupiterParams
+	testImplementation libs.junit.jupiterLauncher
+	testRuntimeOnly libs.junit.jupiterEngine
+
+	testRuntimeOnly libs.logback
+	testImplementation libs.assertJ
+	testImplementation libs.mockito
+}
+
+task downloadBaseline(type: Download) {
+	onlyIfNewer true
+	compress true
+
+	src "${repositories.mavenCentral().url}io/projectreactor/reactor-test/${libs.versions.baseline.core.api.get()}/reactor-test-${libs.versions.baseline.core.api.get()}.jar"
+	dest layout.buildDirectory.file("baselineLibs/reactor-test-${libs.versions.baseline.core.api.get()}.jar").get().asFile
+
+	finalizedBy { japicmp }
+}
+
+def japicmpReport = tasks.register('japicmpReport') {
+	onlyIf {
+		japicmp.state.failure != null
+	}
+	doLast {
+		def reportFile = project.layout.buildDirectory.file("reports/japi.txt").get().asFile
+		if (reportFile.exists()) {
+			println "\n *********************************"
+			println " * /!\\ API compatibility failures *"
+			println " **********************************"
+			println "Japicmp report was filtered and interpreted to find the following incompatibilities:"
+			reportFile.eachLine {
+				if (it.contains("*") && (!it.contains("***") || it.contains("****")))
+					println "source incompatible change: $it"
+				else if (it.contains("!"))
+					println "binary incompatible change: $it"
+			}
+		}
+		else println "No incompatible change to report"
+	}
+}
+
+task japicmp(type: JapicmpTask) {
+	if (project.gradle.startParameter.isOffline()) {
+		println "Offline: skipping downloading of baseline and JAPICMP"
+		enabled = false
+	}
+	else if ("${libs.versions.baseline.core.api.get()}" == "SKIP") {
+		println "SKIP: Instructed to skip the baseline comparison"
+		enabled = false
+	}
+	else {
+		println "Will download and perform baseline comparison with ${libs.versions.baseline.core.api.get()}"
+		dependsOn(downloadBaseline)
+		finalizedBy(japicmpReport)
+	}
+
+	oldClasspath.from(files(layout.buildDirectory.file("baselineLibs/reactor-test-${libs.versions.baseline.core.api.get()}.jar").get().asFile))
+	newClasspath.from(files(jar.archiveFile))
+	// these onlyXxx parameters result in a report that is slightly too noisy, but better than
+	// onlyBinaryIncompatibleModified = true which masks source-incompatible-only changes
+	onlyBinaryIncompatibleModified = false
+	onlyModified = true
+	failOnModification = true
+	failOnSourceIncompatibility = true
+	txtOutputFile = project.layout.buildDirectory.file("reports/japi.txt").get().asFile
+	ignoreMissingClasses = true
+	includeSynthetic = true
+	compatibilityChangeExcludes = [ "METHOD_NEW_DEFAULT" ]
+
+	// TODO after a .0 release, remove the reactor-test exclusions below if any
+	classExcludes = [ ]
+	methodExcludes = [ ]
+}
+
+tasks.withType(Test).all {
+  useJUnitPlatform()
+}
+
+// javadoc is configured in gradle/javadoc.gradle
+
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'reactor-test',
+			'Implementation-Version': project.version,
+			'Automatic-Module-Name': 'reactor.test'
+	}
+	bundle {
+		bnd(bndOptions)
+	}
+}
+
+tasks.withType(Test).all {
+	useJUnitPlatform()
+}
+
+check.dependsOn japicmp

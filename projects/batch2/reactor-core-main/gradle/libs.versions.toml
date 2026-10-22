@@ -1,0 +1,89 @@
+[versions]
+# Baselines, should be updated on every release
+baseline-core-api = "3.8.7"
+baselinePerfCore = "3.8.7"
+baselinePerfExtra = "3.6.1"
+
+# Other shared versions
+#note that some micrometer artifacts like context-propagation has a different version directly set in libraries below
+micrometer = "1.18.0-M2"
+micrometerDocsGenerator = "1.0.4"
+micrometerTracingTest="1.8.0-M2"
+contextPropagation="1.2.0"
+reactiveStreams = "1.0.4"
+antora = "1.0.0"
+antora-yml = "0.0.1"
+archUnit = "0.23.1"
+assertJ = "3.27.7"
+awaitility = "4.3.0"
+blockhound = "1.0.17.RELEASE"
+byteBuddy = "1.18.11"
+cglib = "3.3.0"
+errorprone = "2.50.0"
+errorpronePlugin = "5.1.0"
+javaObjectLayout = "0.17"
+jmh = "1.37"
+jspecify = "1.0.0"
+junit = "5.14.4"
+logback = "1.2.13"
+mockito = "4.11.0"
+nullaway = "0.13.7"
+slf4j = "1.7.36"
+testng = "7.5.1" # since 7.6 JDK8 is unsupported, don't bump
+throwingFunction = "1.6.1"
+
+[libraries]
+jsr166backport = "io.projectreactor:jsr166:1.0.0.RELEASE"
+jsr305 = "com.google.code.findbugs:jsr305:3.0.1"
+micrometer-bom = { module = "io.micrometer:micrometer-bom", version.ref = "micrometer" }
+micrometer102Compatible-bom = { module = "io.micrometer:micrometer-bom", version = "1.10.7" }
+micrometer-commons = { module = "io.micrometer:micrometer-commons" }
+micrometer-core = { module = "io.micrometer:micrometer-core" }
+micrometer-contextPropagation102 = "io.micrometer:context-propagation:1.0.2"
+micrometer-contextPropagation = { module = "io.micrometer:context-propagation", version.ref = "contextPropagation" }
+micrometer-docsGenerator = { module = "io.micrometer:micrometer-docs-generator", version.ref = "micrometerDocsGenerator"}
+micrometer-observation-test = { module = "io.micrometer:micrometer-observation-test" }
+micrometer-tracing-test = { module = "io.micrometer:micrometer-tracing-integration-test", version.ref = "micrometerTracingTest" }
+micrometer-test = { module = "io.micrometer:micrometer-test" }
+reactiveStreams = { module = "org.reactivestreams:reactive-streams", version.ref = "reactiveStreams" }
+reactiveStreams-tck = { module = "org.reactivestreams:reactive-streams-tck", version.ref = "reactiveStreams" }
+reactor-perfBaseline-core = { module = "io.projectreactor:reactor-core", version.ref = "baselinePerfCore" }
+reactor-perfBaseline-coreMicrometer = { module = "io.projectreactor:reactor-core-micrometer", version.ref = "baselinePerfCore" }
+reactor-perfBaseline-extra = { module = "io.projectreactor.addons:reactor-extra", version.ref = "baselinePerfExtra" }
+archUnit = { module = "com.tngtech.archunit:archunit", version.ref = "archUnit" }
+assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
+awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
+blockhound = { module = "io.projectreactor.tools:blockhound", version.ref = "blockhound" }
+byteBuddy-core = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
+byteBuddy-agent = { module = "net.bytebuddy:byte-buddy-agent", version.ref = "byteBuddy" }
+cglib = { module = "cglib:cglib", version.ref = "cglib" }
+javaObjectLayout = { module = "org.openjdk.jol:jol-core", version.ref = "javaObjectLayout" }
+jmh-core = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh" }
+jmh-generatorAnnprocess = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh" }
+jspecify = { module = "org.jspecify:jspecify", version.ref="jspecify" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiterApi = { module = "org.junit.jupiter:junit-jupiter-api" }
+junit-jupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junit-jupiterLauncher = { module = "org.junit.platform:junit-platform-launcher" }
+junit-jupiterParams = { module = "org.junit.jupiter:junit-jupiter-params" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+testng = { module = "org.testng:testng", version.ref = "testng" }
+throwingFunction = { module = "com.pivovarit:throwing-function", version.ref = "throwingFunction" }
+errorprone = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+
+[plugins]
+artifactory = { id = "com.jfrog.artifactory", version = "6.0.4" }
+bnd = { id = "biz.aQute.bnd.builder", version = "7.4.0" }
+download = { id = "de.undercouch.download", version = "5.7.0" }
+japicmp = { id = "me.champeau.gradle.japicmp", version = "0.4.6" }
+jcstress = { id = "io.github.reyerizo.gradle.jcstress", version = "1.0.0" }
+nohttp = { id = "io.spring.nohttp", version = "0.0.11" }
+shadow = { id = "com.gradleup.shadow", version = "9.6.1" }
+spotless = { id = "com.diffplug.spotless", version = "8.10.3" }
+mrjar = { id = "me.champeau.mrjar",  version = "0.1.1" }
+antora = { id = "org.antora", version.ref = "antora" }
+antora-yml = { id = "io.spring.antora.generate-antora-yml", version.ref = "antora-yml" }
+errorprone = { id = "net.ltgt.errorprone", version.ref = "errorpronePlugin"}

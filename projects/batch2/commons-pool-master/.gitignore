@@ -1,0 +1,13 @@
+target
+site-content
+/.classpath
+/.project
+/.settings/
+/bin/
+.idea/
+.vscode/
+*.iml
+
+# NetBeans files
+nb-configuration.xml
+nbactions.xml

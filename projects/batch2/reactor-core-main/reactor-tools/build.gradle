@@ -1,0 +1,253 @@
+/*
+ * Copyright (c) 2019-2026 VMware Inc. or its affiliates, All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'com.gradleup.shadow'
+apply plugin: 'jvm-test-suite'
+apply plugin: 'java-library'
+
+description = 'Reactor Tools'
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+        jarFileTest(JvmTestSuite) {
+            useJUnitJupiter()
+            sources.java.srcDirs = ['src/jarFileTest/java']
+            dependencies {
+                implementation project()
+            }
+        }
+        javaAgentTest(JvmTestSuite) {
+            useJUnitJupiter()
+            sources.java.srcDirs = ['src/javaAgentTest/java']
+            dependencies {
+                implementation project()
+            }
+        }
+        buildPluginTest(JvmTestSuite) {
+            useJUnitJupiter()
+            sources.java.srcDirs = ['src/buildPluginTest/java']
+            dependencies {
+                implementation project()
+            }
+        }
+    }
+}
+
+configurations {
+    shaded
+    jarFileTestApi.extendsFrom testApi
+    jarFileTestImplementation.extendsFrom testImplementation
+    javaAgentTestApi.extendsFrom testApi
+    javaAgentTestImplementation.extendsFrom testImplementation
+    buildPluginTestApi.extendsFrom testApi
+    buildPluginTestImplementation.extendsFrom testImplementation
+}
+
+dependencies {
+    api project(":reactor-core")
+
+    compileOnly libs.jsr305
+    compileOnly libs.jsr305
+
+    shaded libs.byteBuddy.core
+    shaded libs.byteBuddy.agent
+    for (dependency in project.configurations.shaded.dependencies) {
+        compileOnly(dependency)
+        testRuntimeOnly(dependency)
+        javaAgentTestRuntimeOnly(dependency)
+    }
+
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiterApi
+    testRuntimeOnly libs.junit.jupiterEngine
+
+    testImplementation libs.assertJ
+    testImplementation libs.cglib
+
+    jarFileTestImplementation libs.assertJ
+
+    buildPluginTestImplementation gradleTestKit()
+    buildPluginTestImplementation platform(libs.junit.bom)
+    buildPluginTestImplementation libs.junit.jupiterApi
+    buildPluginTestRuntimeOnly libs.junit.jupiterEngine
+}
+
+test {
+    // Creates a JVM per test because the agent can be installed only once
+    forkEvery = 1
+    maxParallelForks = 1
+    jvmArgs = [
+            "-Xverify:all",
+            javaLauncher.get().metadata.languageVersion.canCompileOrRun(9)
+                    ? "-Xlog:redefine+class*=warning"
+                    : "-XX:TraceRedefineClasses=2"
+    ]
+
+}
+
+jar {
+    archiveClassifier.set('original')
+
+    manifest {
+        attributes(
+                'Can-Retransform-Classes': 'true',
+                'Can-Redefine-Classes': 'true',
+                'Premain-Class': 'reactor.tools.agent.ReactorDebugAgent',
+        )
+    }
+}
+
+shadow {
+    addShadowVariantIntoJavaComponent = false
+    addTargetJvmVersionAttribute = false
+}
+
+shadowJar {
+    enableAutoRelocation = true
+    relocationPrefix = "reactor.tools.shaded"
+    // META-INF/** of the dependencies is excluded below, so there are no versioned entries
+    addMultiReleaseAttribute = false
+    archiveClassifier.set('')
+
+    dependsOn(project.tasks.jar)
+
+    from("${rootDir}/docs/src/docs/dist") {
+        include "LICENSE"
+        into "META-INF"
+    }
+
+    configurations = [project.configurations.shaded]
+
+    project.afterEvaluate {
+        dependencies {
+            def shadedDependencies = project.configurations
+                    .shaded
+                    .dependencies
+                    .collect { "${it.group}:${it.name}".toString() }
+                    .toSet()
+
+            // Exclude every compile-scoped dependency (including the transitive ones)
+            for (id in project.configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts*.moduleVersion*.id) {
+                def module = "${id.group}:${id.name}".toString()
+                if (!shadedDependencies.contains(module)) {
+                    project.configurations.shaded.exclude(group: id.group, module: id.name)
+                    exclude(dependency(module))
+                }
+            }
+        }
+    }
+    exclude 'META-INF/**'
+    // TODO discuss with ByteBuddy folks how to shade it
+    exclude 'win32-x86*/**'
+}
+
+project.tasks.build.dependsOn(shadowJar)
+
+project.tasks.jarFileTest.configure {
+    systemProperty("jarFile", shadowJar.outputs.files.singleFile)
+    dependsOn(shadowJar)
+}
+project.tasks.check.dependsOn(jarFileTest)
+
+task shadedJarTest(type: Test) {
+    testClassesDirs = sourceSets.test.output.classesDirs
+
+    Set<? super File> mainOutputs = [
+            project.sourceSets.main.output.resourcesDir,
+            project.sourceSets.main.java.classesDirectory,
+    ]
+
+    classpath = shadowJar.outputs.files
+    // Exclude main outputs since we have the shaded JAR on the classpath already
+    classpath += sourceSets.test.runtimeClasspath.filter { !(it in mainOutputs) }
+
+    dependsOn(shadowJar)
+}
+project.tasks.check.dependsOn(shadedJarTest)
+
+javaAgentTest {
+    dependsOn(tasks.shadowJar)
+
+    jvmArgs = [
+            "-javaagent:${shadowJar.outputs.files.singleFile}",
+            "-Xverify:all",
+            javaLauncher.get().metadata.languageVersion.canCompileOrRun(9)
+                    ? "-Xlog:redefine+class*=warning"
+                    : "-XX:TraceRedefineClasses=2"
+    ]
+}
+project.tasks.check.dependsOn(javaAgentTest)
+
+// This is required when org.gradle.parallel=true as tests in this module conflict with
+// concurrently running BlockHound tests.
+project.tasks.each {it.mustRunAfter(":reactor-core:blockHoundTest")}
+project.tasks.buildPluginTest.mustRunAfter(shadowJar)
+project.tasks.buildPluginTest.dependsOn(shadowJar)
+
+task generateMockGradle(type: Copy) {
+    def coreJar = rootProject.findProject("reactor-core").layout.buildDirectory.get().asFile.toString() + "/libs/reactor-core-" + version + ".jar"
+    def agentJar = layout.buildDirectory.get().asFile.toString() + "/libs/reactor-tools-" + version + "-original.jar"
+    def mockGradleDir = layout.buildDirectory.get().asFile.toString() + "/mock-gradle"
+
+    inputs.property("version", project.version)
+
+    from "$projectDir/src/buildPluginTest/resources/mock-gradle"
+    into "$mockGradleDir"
+    filter(ReplaceTokens, tokens: [
+      CORE: coreJar,
+      AGENT: agentJar,
+      REACTIVE_STREAMS_VERSION: libs.versions.reactiveStreams.get(),
+      JUNIT_BOM_VERSION: libs.versions.junit.get(),
+      BYTE_BUDDY_VERSION: libs.versions.byteBuddy.get()
+    ])
+}
+
+buildPluginTest {
+    def mockGradleDir = layout.buildDirectory.dir("mock-gradle").get().asFile.toString()
+    println "will run mock gradle build from $mockGradleDir"
+    systemProperty "mock-gradle-dir", mockGradleDir
+    // Gradle 9 Tooling API requires JVM 17+ to start the daemon, so this test
+    // must run on Java 17 regardless of the default test toolchain.
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+project.tasks.buildPluginTest.dependsOn(generateMockGradle)
+project.tasks.buildPluginTest.dependsOn(rootProject.findProject("reactor-core").tasks.jar)
+project.tasks.check.dependsOn(buildPluginTest)
+
+tasks.withType(Test).matching { !(it.name in testing.suites.names) }.configureEach {
+    useJUnitPlatform()
+}
+
+// make the shadow jar the default artifact
+['apiElements', 'runtimeElements'].each {
+    configurations.getByName(it).outgoing {
+        artifacts.clear()
+        artifact(shadowJar)
+    }
+}
+configurations.runtimeOnly.outgoing.artifacts.clear()
+
+// add original jar to the publication
+publishing.publications.mavenJava.artifact(jar)

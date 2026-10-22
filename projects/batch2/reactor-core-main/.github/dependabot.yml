@@ -1,0 +1,72 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "type/dependency-upgrade"
+      - "status/need-triage"
+    # Updates in the oldest maintenance branch. We'll forward-merge up to main
+    target-branch: "3.8.x"
+    open-pull-requests-limit: 10
+    ignore:
+      # JSR166 backport is fixed
+      - dependency-name: "io.projectreactor:jsr166"
+      # JSR305 backport is fixed to last version with annotations (3.0.1)
+      - dependency-name: "com.google.code.findbugs:jsr305"
+      # Micrometer is updated manually
+      - dependency-name: "io.micrometer:*"
+      # Benchmark baselines (reactor-core, reactor-core-micrometer) are updated manually on release
+      - dependency-name: "io.projectreactor:reactor-core"
+      - dependency-name: "io.projectreactor:reactor-core-micrometer"
+      # SLF4J: don't upgrade to v2
+      - dependency-name: "org.slf4j:slf4j-api"
+        versions:
+        - ">= 2.a"
+      # logback: don't upgrade to v1.3 or later (require slf4j v2, 1.4.x also requires JDK11+)
+      - dependency-name: "ch.qos.logback:logback-classic"
+        versions:
+        - ">= 1.3.a"
+      # JUnit: don't upgrade to v6 (requires JDK17+)
+      - dependency-name: "org.junit:*"
+        versions:
+          - "[6.0.0,)"
+      # JUnit Jupiter: don't upgrade to v6 (requires JDK17+)
+      - dependency-name: "org.junit.jupiter:*"
+        versions:
+          - "[6.0.0,)"
+      # TestNG: 7.6+ doesn't support JDK8 anymore
+      - dependency-name: "org.testng:testng"
+        versions:
+        - ">= 7.6.a"
+      # Mockito: don't upgrade to v5 (requires JDK11+)
+      - dependency-name: "org.mockito:mockito-core"
+        versions:
+        - ">= 5.0.a"
+      # ArchUnit: don't upgrade to v1 (requires slf4j v2)
+      - dependency-name: "com.tngtech.archunit:archunit"
+        versions:
+        - ">= 1.0.a"
+  - package-ecosystem: "github-actions"
+    directory: ".github/workflows"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "type/dependency-upgrade"
+    # Updates in the oldest maintenance branch. We'll forward-merge up to main
+    target-branch: "3.8.x"
+    open-pull-requests-limit: 10
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "daily"
+    labels:
+      - "type/dependency-upgrade"
+    # Updates in the oldest maintenance branch. We'll forward-merge up to main
+    target-branch: "3.8.x"
+    open-pull-requests-limit: 10
+    groups:
+      docs:
+        patterns:
+          - "*"

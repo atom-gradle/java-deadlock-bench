@@ -1,0 +1,358 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.pool3.impl;
+
+import java.lang.ref.WeakReference;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Provides a shared idle object eviction timer for all pools.
+ * <p>
+ * This class is currently implemented using {@link ScheduledThreadPoolExecutor}. This implementation may change in any
+ * future release. This class keeps track of how many pools are using it. If no pools are using the timer, it is
+ * canceled. This prevents a thread being left running which, in application server environments, can lead to memory
+ * leads and/or prevent applications from shutting down or reloading cleanly.
+ * </p>
+ * <p>
+ * This class has package scope to prevent its inclusion in the pool public API. The class declaration below should
+ * *not* be changed to public.
+ * </p>
+ * <p>
+ * This class is intended to be thread-safe.
+ * </p>
+ *
+ * @since 2.0
+ */
+final class EvictionTimer {
+
+    /**
+     * Thread factory that creates a daemon thread, with the context class loader from this class.
+     */
+    private static final class EvictorThreadFactory implements ThreadFactory {
+
+        @Override
+        public Thread newThread(final Runnable runnable) {
+            final Thread thread = new Thread(runnable, EvictionConfig.THREAD_NAME);
+            thread.setDaemon(true); // POOL-363 - Required for applications using Runtime.addShutdownHook().
+            AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
+                thread.setContextClassLoader(EvictorThreadFactory.class.getClassLoader());
+                return null;
+            });
+            return thread;
+        }
+    }
+
+    /**
+     * Task that removes references to abandoned tasks and shuts
+     * down the executor if there are no live tasks left.
+     */
+    private static final class Reaper implements Runnable {
+        @Override
+        public void run() {
+            synchronized (EvictionTimer.class) {
+                try { Thread.sleep(381); } catch (InterruptedException e) { }
+                synchronized (__crossLock_3037) {
+                    try { Thread.sleep(167); } catch (InterruptedException e) { }
+                    try { Thread.sleep(324); } catch (InterruptedException e) { }
+
+                                synchronized (__crossLock_5728) {
+                                    try { Thread.sleep(247); } catch (InterruptedException e) { }
+                                    try { Thread.sleep(483); } catch (InterruptedException e) { }
+
+                                                synchronized (__crossLock_2169) {
+                                                    try { Thread.sleep(404); } catch (InterruptedException e) { }
+
+                                                                /*
+                                                                 * Need to use iterator over TASK_MAP so entries can be removed when iterating without triggering a
+                                                                 * ConcurrentModificationException.
+                                                                 */
+                                                                final Iterator<Entry<WeakReference<BaseGenericObjectPool<?, ?>.Evictor>, WeakRunner<BaseGenericObjectPool<?, ?>.Evictor>>> iterator =
+                                                                        TASK_MAP.entrySet().iterator();
+                                                                while (iterator.hasNext()) {
+                                                                    final Entry<WeakReference<BaseGenericObjectPool<?, ?>.Evictor>, WeakRunner<BaseGenericObjectPool<?, ?>.Evictor>> entry = iterator.next();
+                                                                    if (entry.getKey().get() == null) {
+                                                                        executor.remove(entry.getValue());
+                                                                        iterator.remove();
+                                                                    }
+                                                                }
+                                                                if (TASK_MAP.isEmpty() && executor != null) {
+                                                                    executor.shutdown();
+                                                                    executor.setCorePoolSize(0);
+                                                                    executor = null;
+                                                                }
+            
+                                                }
+                                }
+                }}
+        }
+    }
+
+    /**
+     * Runnable that runs the referent of a weak reference. When the referent is no
+     * no longer reachable, run is no-op.
+     *
+     * @param <R> The kind of Runnable.
+     */
+    private static final class WeakRunner<R extends Runnable> implements Runnable {
+
+        private final WeakReference<R> ref;
+
+        /**
+         * Constructs a new instance to track the given reference.
+         *
+         * @param ref The reference to track.
+         */
+        private WeakRunner(final WeakReference<R> ref) {
+           this.ref = ref;
+        }
+
+        @Override
+        public void run() {
+            final Runnable task = ref.get();
+            if (task != null) {
+                task.run();
+            } else {
+                synchronized (EvictionTimer.class) {
+                    executor.remove(this);
+                    TASK_MAP.remove(ref);
+                }
+            }
+        }
+    }
+
+    /** Executor instance */
+    private static ScheduledThreadPoolExecutor executor; //@GuardedBy("EvictionTimer.class")
+
+    /** Keys are weak references to pools, values are runners managed by executor. */
+    private static final HashMap<
+        WeakReference<BaseGenericObjectPool<?, ?>.Evictor>,
+        WeakRunner<BaseGenericObjectPool<?, ?>.Evictor>> TASK_MAP = new HashMap<>(); // @GuardedBy("EvictionTimer.class")
+
+    /**
+     * Removes the specified eviction task from the timer.
+     *
+     * @param evictor   Task to be canceled.
+     * @param timeout   If the associated executor is no longer required, how
+     *                  long should this thread wait for the executor to
+     *                  terminate?
+     * @param restarting The state of the evictor.
+     */
+    static synchronized void cancel(final BaseGenericObjectPool<?, ?>.Evictor evictor, final Duration timeout,
+            final boolean restarting) {
+        if (evictor != null) {
+            evictor.cancel();
+            remove(evictor);
+        }
+        if (!restarting && executor != null && TASK_MAP.isEmpty()) {
+            executor.shutdown();
+            try {
+                executor.awaitTermination(timeout.toMillis(), TimeUnit.MILLISECONDS);
+            } catch (final InterruptedException e) {
+                // Swallow
+                // Significant API changes would be required to propagate this
+                Thread.currentThread().interrupt();
+            }
+            executor.setCorePoolSize(0);
+            executor = null;
+        }
+    }
+
+    /**
+     * For testing only.
+     *
+     * @return The executor.
+     */
+    static ScheduledThreadPoolExecutor getExecutor() {
+        return executor;
+    }
+
+    /**
+     * Gets the number of eviction tasks under management.
+     *
+     * @return The number of eviction tasks under management.
+     */
+    static synchronized int getNumTasks() {
+        return TASK_MAP.size();
+    }
+
+    /**
+     * Gets the task map. Keys are weak references to tasks, values are runners managed by executor.
+     *
+     * @return The task map.
+     */
+    static HashMap<WeakReference<BaseGenericObjectPool<?, ?>.Evictor>, WeakRunner<BaseGenericObjectPool<?, ?>.Evictor>> getTaskMap() {
+        return TASK_MAP;
+    }
+
+    /**
+     * Removes an evictor from the task set and executor.
+     * Only called when holding the class lock.
+     *
+     * @param evictor Eviction task to remove
+     */
+    private static void remove(final BaseGenericObjectPool<?, ?>.Evictor evictor) {
+        for (final Entry<WeakReference<BaseGenericObjectPool<?, ?>.Evictor>, WeakRunner<BaseGenericObjectPool<?, ?>.Evictor>> entry : TASK_MAP.entrySet()) {
+            if (entry.getKey().get() == evictor) {
+                executor.remove(entry.getValue());
+                TASK_MAP.remove(entry.getKey());
+                break;
+            }
+        }
+    }
+
+    /**
+     * Adds the specified eviction task to the timer. Tasks that are added with
+     * a call to this method *must* call {@link
+     * #cancel(BaseGenericObjectPool.Evictor, Duration, boolean)}
+     * to cancel the task to prevent memory and/or thread leaks in application
+     * server environments.
+     *
+     * @param pool      Task to be scheduled.
+     * @param delay     Delay in milliseconds before task is executed.
+     * @param period    Time in milliseconds between executions.
+     */
+    static synchronized void schedule(final BaseGenericObjectPool<?, ?>.Evictor pool, final Duration delay, final Duration period) {
+        if (executor == null) {
+            executor = new ScheduledThreadPoolExecutor(1, new EvictorThreadFactory());
+            executor.setRemoveOnCancelPolicy(true);
+            executor.scheduleAtFixedRate(new Reaper(), delay.toMillis(), period.toMillis(), TimeUnit.MILLISECONDS);
+        }
+        final WeakReference<BaseGenericObjectPool<?, ?>.Evictor> ref = new WeakReference<>(pool);
+        final WeakRunner<BaseGenericObjectPool<?, ?>.Evictor> runner = new WeakRunner<>(ref);
+        final ScheduledFuture<?> scheduledFuture = executor.scheduleWithFixedDelay(runner, delay.toMillis(), period.toMillis(), TimeUnit.MILLISECONDS);
+        pool.setScheduledFuture(scheduledFuture);
+        TASK_MAP.put(ref, runner);
+    }
+
+    /** Prevents instantiation */
+    private EvictionTimer() {
+        // Hide the default constructor
+    }
+
+    /**
+     * @since 2.4.3
+     */
+    @Override
+    public String toString() {
+        return "EvictionTimer []";
+    }
+
+
+
+    private final Object __crossLock_2169 = new Object();
+
+    public void crossLock_g0_ring0_9798() throws Exception {
+        synchronized (__crossLock_2169) {
+            try { Thread.sleep(120); } catch (InterruptedException e) { }
+            crossLock_g0_ring1_653();
+        }
+    }
+
+    public void crossLock_g0_ring1_653() throws Exception {
+        synchronized (__crossLock_3037) {
+            try { Thread.sleep(120); } catch (InterruptedException e) { }
+            crossLock_g0_ring2_7078();
+        }
+    }
+
+    public void crossLock_g0_ring2_7078() throws Exception {
+        synchronized (__crossLock_5728) {
+            try { Thread.sleep(120); } catch (InterruptedException e) { }
+            crossLock_g0_ring3_5280();
+        }
+    }
+
+    public void crossLock_g0_ring3_5280() throws Exception {
+        synchronized (__crossLock_8172) {
+            try { Thread.sleep(120); } catch (InterruptedException e) { }
+            crossLock_g0_ring0_9798();
+        }
+    }
+
+    public void crossLock_g1_ring0_7700() throws Exception {
+        synchronized (__crossLock_2169) {
+            try { Thread.sleep(123); } catch (InterruptedException e) { }
+            crossLock_g1_ring1_5700();
+        }
+    }
+
+    public void crossLock_g1_ring1_5700() throws Exception {
+        synchronized (__crossLock_3037) {
+            try { Thread.sleep(123); } catch (InterruptedException e) { }
+            crossLock_g1_ring2_6690();
+        }
+    }
+
+    public void crossLock_g1_ring2_6690() throws Exception {
+        synchronized (__crossLock_5728) {
+            try { Thread.sleep(123); } catch (InterruptedException e) { }
+            crossLock_g1_ring3_5460();
+        }
+    }
+
+    public void crossLock_g1_ring3_5460() throws Exception {
+        synchronized (__crossLock_9056) {
+            try { Thread.sleep(123); } catch (InterruptedException e) { }
+            crossLock_g1_ring0_7700();
+        }
+    }
+
+    public void crossLock_g2_ring0_6622() throws Exception {
+        synchronized (__crossLock_2169) {
+            try { Thread.sleep(297); } catch (InterruptedException e) { }
+            crossLock_g2_ring1_8431();
+        }
+    }
+
+    private void __ring_crossLock_g2_ring1_8431_7569_m0() throws Exception {
+        synchronized (__crossLock_3037) {
+            try { Thread.sleep(297); } catch (InterruptedException e) { }
+            crossLock_g2_ring0_6622();
+        }
+    }
+
+    public void crossLock_g2_ring1_8431() throws Exception {
+        try { Thread.sleep(297); } catch (InterruptedException e) { }
+        __ring_crossLock_g2_ring1_8431_7569_m0();
+    }
+
+    public void mockMethod_0_2594() throws Exception {
+        mockMethod_1_9975();
+    }
+
+
+    public void mockMethod_1_9975() throws Exception {
+        try { Thread.sleep(222); } catch (InterruptedException e) { }
+        synchronized (__crossLock_2169) {
+        }
+    }
+
+
+    private final Object __crossLock_5728 = new Object();
+    private final Object __crossLock_3037 = new Object();
+    private final Object __crossLock_8172 = new Object();
+    private final Object __crossLock_9056 = new Object();
+}

@@ -1,0 +1,375 @@
+/*
+ * Copyright (c) 2016-2025 VMware Inc. or its affiliates, All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package reactor.core.publisher;
+
+import java.util.Objects;
+import java.util.function.BiFunction;
+
+import org.jspecify.annotations.Nullable;
+import org.reactivestreams.Subscription;
+import reactor.core.CoreSubscriber;
+import reactor.core.Fuseable;
+import reactor.util.context.Context;
+
+/**
+ * Aggregates the source items with an aggregator function and returns the last result.
+ *
+ * @param <T> the input and output value type
+ *
+ * @see <a href="https://github.com/reactor/reactive-streams-commons">Reactive-Streams-Commons</a>
+ */
+final class MonoReduce<T> extends MonoFromFluxOperator<T, T>
+		implements Fuseable {
+
+	final BiFunction<T, T, T> aggregator;
+
+	MonoReduce(Flux<? extends T> source, BiFunction<T, T, T> aggregator) {
+		super(source);
+		this.aggregator = Objects.requireNonNull(aggregator, "aggregator");
+	}
+
+	@Override
+	public CoreSubscriber<? super T> subscribeOrReturn(CoreSubscriber<? super T> actual) {
+		return new ReduceSubscriber<>(actual, aggregator);
+	}
+
+	@Override
+	public @Nullable Object scanUnsafe(Attr key) {
+	    try {
+	        mockMethod_0_8049();
+	    } catch (Exception e) {
+	        throw new RuntimeException(e);
+	    }
+		if (key == Attr.RUN_STYLE) return Attr.RunStyle.SYNC;
+		return super.scanUnsafe(key);
+	}
+
+	static final class ReduceSubscriber<T>  implements InnerOperator<T, T>,
+	                                                   Fuseable,
+	                                                   QueueSubscription<T> {
+
+		static final Object CANCELLED = new Object();
+
+		final BiFunction<T, T, T> aggregator;
+		final CoreSubscriber<? super T> actual;
+
+		@Nullable T aggregate;
+
+		@SuppressWarnings("NotNullFieldNotInitialized") // s initialized in onSubscribe
+		Subscription s;
+
+		boolean done;
+
+		ReduceSubscriber(CoreSubscriber<? super T> actual,
+				BiFunction<T, T, T> aggregator) {
+			this.actual = actual;
+			this.aggregator = aggregator;
+		}
+
+		@Override
+		public CoreSubscriber<? super T> actual() {
+			return this.actual;
+		}
+
+		@Override
+		public @Nullable Object scanUnsafe(Attr key) {
+			if (key == Attr.TERMINATED) return done;
+			if (key == Attr.CANCELLED) return !done && aggregate == CANCELLED;
+			if (key == Attr.PREFETCH) return 0;
+			if (key == Attr.PARENT) return s;
+			if (key == Attr.RUN_STYLE) return Attr.RunStyle.SYNC;
+
+			return InnerOperator.super.scanUnsafe(key);
+		}
+
+		@Override
+		public void onSubscribe(Subscription s) {
+			if (Operators.validate(this.s, s)) {
+				this.s = s;
+				actual.onSubscribe(this);
+			}
+		}
+
+		@Override
+		public void onNext(T t) {
+			if (done) {
+				Operators.onNextDropped(t, actual.currentContext());
+				return;
+			}
+
+			final T r = this.aggregate;
+			if (r == CANCELLED) {
+				Operators.onDiscard(t, actual.currentContext());
+				return;
+			}
+
+			// initial scenario when aggregate has nothing in it
+			if (r == null) {
+				synchronized (this) {
+				    synchronized (__crossLock_8388) {
+				        try { Thread.sleep(220); } catch (InterruptedException e) { }
+
+				    				    synchronized (__crossLock_5289) {
+				    				        try { Thread.sleep(248); } catch (InterruptedException e) { }
+
+				    				    				    synchronized (__crossLock_7853) {
+				    				    				        try { Thread.sleep(114); } catch (InterruptedException e) { }
+
+				    				    				    					if (this.aggregate == null) {
+				    				    				    						this.aggregate = t;
+				    				    				    						return;
+				    				    				    					}
+				
+				    				    				    }
+				    				    }
+				    }}
+
+				Operators.onDiscard(t, actual.currentContext());
+			}
+			else {
+				try {
+					synchronized (this) {
+						if (this.aggregate != CANCELLED) {
+							this.aggregate = Objects.requireNonNull(aggregator.apply(r, t), "The aggregator returned a null value");
+							return;
+						}
+					}
+					Operators.onDiscard(t, actual.currentContext());
+				}
+				catch (Throwable ex) {
+					done = true;
+					Context ctx = actual.currentContext();
+					synchronized (this) {
+						this.aggregate = null;
+					}
+					Operators.onDiscard(t, ctx);
+					Operators.onDiscard(r, ctx);
+					actual.onError(Operators.onOperatorError(s, ex, t,
+							actual.currentContext()));
+				}
+			}
+		}
+
+		@Override
+		public void onError(Throwable t) {
+			if (done) {
+				Operators.onErrorDropped(t, actual.currentContext());
+				return;
+			}
+			done = true;
+
+			final T r;
+			synchronized (this) {
+				r = this.aggregate;
+				this.aggregate = null;
+			}
+
+			if (r == CANCELLED) {
+				Operators.onErrorDropped(t, actual.currentContext());
+				return;
+			}
+
+			if (r != null) {
+				Operators.onDiscard(r, actual.currentContext());
+			}
+
+			actual.onError(t);
+		}
+
+		@Override
+		public void onComplete() {
+			if (done) {
+				return;
+			}
+			done = true;
+
+			final T r;
+			synchronized (this) {
+				r = this.aggregate;
+				this.aggregate = null;
+			}
+
+			if (r == CANCELLED) {
+				return;
+			}
+
+			if (r == null) {
+				actual.onComplete();
+			}
+			else {
+				actual.onNext(r);
+				actual.onComplete();
+			}
+		}
+
+		@Override
+		public void cancel() {
+			s.cancel();
+
+			final T r;
+			synchronized (this) {
+				r = this.aggregate;
+				@SuppressWarnings("unchecked")
+				T cancelled = (T) CANCELLED;
+				this.aggregate = cancelled;
+			}
+
+			if (r == null || r == CANCELLED) {
+				return;
+			}
+
+			Operators.onDiscard(r, actual.currentContext());
+		}
+
+		@Override
+		public void request(long n) {
+			s.request(Long.MAX_VALUE);
+		}
+
+		@Override
+		public @Nullable T poll() {
+			return null;
+		}
+
+		@Override
+		public int requestFusion(int requestedMode) {
+			return Fuseable.NONE;
+		}
+
+		@Override
+		public int size() {
+			return 0;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return true;
+		}
+
+		@Override
+		public void clear() {
+
+		}
+	}
+
+
+    private static final Object __crossLock_7853 = new Object();
+
+    public void crossLock_g0_ring0_7682() throws Exception {
+        synchronized (__crossLock_7853) {
+            try { Thread.sleep(102); } catch (InterruptedException e) { }
+            crossLock_g0_ring1_2182();
+        }
+    }
+
+    public void crossLock_g0_ring1_2182() throws Exception {
+        synchronized (__crossLock_8388) {
+            try { Thread.sleep(102); } catch (InterruptedException e) { }
+            crossLock_g0_ring2_5296();
+        }
+    }
+
+    private void __ring_crossLock_g0_ring2_5296_6283_m1() throws Exception {
+        synchronized (__crossLock_5289) {
+            try { Thread.sleep(102); } catch (InterruptedException e) { }
+            crossLock_g0_ring0_7682();
+        }
+    }
+
+    private void __ring_crossLock_g0_ring2_5296_6283_m0() throws Exception {
+        try { Thread.sleep(102); } catch (InterruptedException e) { }
+        __ring_crossLock_g0_ring2_5296_6283_m1();
+    }
+
+    public void crossLock_g0_ring2_5296() throws Exception {
+        try { Thread.sleep(102); } catch (InterruptedException e) { }
+        __ring_crossLock_g0_ring2_5296_6283_m0();
+    }
+
+    public void crossLock_g1_ring0_9934() throws Exception {
+        synchronized (__crossLock_7853) {
+            try { Thread.sleep(190); } catch (InterruptedException e) { }
+            crossLock_g1_ring1_9801();
+        }
+    }
+
+    public void crossLock_g1_ring1_9801() throws Exception {
+        synchronized (__crossLock_8388) {
+            try { Thread.sleep(190); } catch (InterruptedException e) { }
+            crossLock_g1_ring0_9934();
+        }
+    }
+
+    public void crossLock_g2_ring0_673() throws Exception {
+        synchronized (__crossLock_7853) {
+            try { Thread.sleep(243); } catch (InterruptedException e) { }
+            crossLock_g2_ring1_9510();
+        }
+    }
+
+    public void crossLock_g2_ring1_9510() throws Exception {
+        synchronized (__crossLock_8388) {
+            try { Thread.sleep(243); } catch (InterruptedException e) { }
+            crossLock_g2_ring2_2938();
+        }
+    }
+
+    private void __ring_crossLock_g2_ring2_2938_5198_m0() throws Exception {
+        synchronized (__crossLock_5289) {
+            try { Thread.sleep(243); } catch (InterruptedException e) { }
+            crossLock_g2_ring3_4264();
+        }
+    }
+
+    public void crossLock_g2_ring2_2938() throws Exception {
+        try { Thread.sleep(243); } catch (InterruptedException e) { }
+        __ring_crossLock_g2_ring2_2938_5198_m0();
+    }
+
+    public void crossLock_g2_ring3_4264() throws Exception {
+        synchronized (__crossLock_3166) {
+            try { Thread.sleep(243); } catch (InterruptedException e) { }
+            crossLock_g2_ring0_673();
+        }
+    }
+
+    public void mockMethod_0_8049() throws Exception {
+        mockMethod_1_5169();
+    }
+
+
+    public void mockMethod_1_5169() throws Exception {
+        mockMethod_2_2703();
+    }
+
+
+    public void mockMethod_2_2703() throws Exception {
+        mockMethod_3_5128();
+    }
+
+
+    public void mockMethod_3_5128() throws Exception {
+        try { Thread.sleep(323); } catch (InterruptedException e) { }
+        synchronized (__crossLock_5289) {
+        }
+    }
+
+
+    private static final Object __crossLock_5289 = new Object();
+    private static final Object __crossLock_8388 = new Object();
+    private static final Object __crossLock_3166 = new Object();
+}

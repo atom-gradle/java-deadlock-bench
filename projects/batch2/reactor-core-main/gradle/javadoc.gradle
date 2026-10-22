@@ -1,0 +1,58 @@
+/*
+ * Copyright (c) 2011-2025 VMware Inc. or its affiliates, All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
+javadoc {
+	// Use a modern javadoc tool so TYPE_USE annotations (e.g. @Nullable) are
+	// rendered in method return type positions. Java 8's javadoc silently drops them
+	// due to https://bugs.openjdk.org/browse/JDK-8175390.
+	javadocTool = javaToolchains.javadocToolFor {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+	dependsOn jar
+	group = "documentation"
+	description = "Generates aggregated Javadoc API documentation."
+
+	title = "${project.name} $version"
+	options.source = "1.8"
+	options.addStringOption('charSet', 'UTF-8')
+	options.author = true
+	options.header = "$project.name"
+
+	options.memberLevel = JavadocMemberLevel.PROTECTED
+
+	if (project.name == "reactor-core") {
+		options.links([rootProject.jdkJavadoc,
+					   "https://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/",
+					   "https://jspecify.dev/docs/api/"] as String[])
+	}
+	else {
+		options.links([rootProject.jdkJavadoc,
+					   "https://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/",
+					   "https://projectreactor.io/docs/core/release/api/",
+					   "https://jspecify.dev/docs/api/"] as String[]);
+		//TODO add micrometer javadocs here
+		//tried to using javadoc.io but it is currently impossible to link to these from Javadoc JDK 8, no package-list
+	}
+	options.tags = [ "apiNote:a:API Note:", "implSpec:a:Implementation Requirements:",
+					 "implNote:a:Implementation Note:" ]
+
+	maxMemory = "1024m"
+	destinationDir = project.layout.buildDirectory.dir("docs/javadoc").get().asFile
+
+	options.addStringOption("Xdoclint:none", "-quiet")
+}

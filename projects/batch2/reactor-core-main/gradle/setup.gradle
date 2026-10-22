@@ -1,0 +1,230 @@
+/*
+ * Copyright (c) 2011-2026 VMware Inc. or its affiliates, All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// the docs project is not published on its own, its docsZip is attached to the reactor-core publication
+if (project.name == 'benchmarks' || project.name == 'docs')
+	return
+
+apply plugin: 'maven-publish'
+//we also conditionally apply artifactory and signing plugins below
+
+jar {
+	manifest.attributes["Build-Jdk-Spec"] = "${System.getProperty("java.specification.version")}"
+	manifest.attributes["Implementation-Title"] = project.name
+	manifest.attributes["Implementation-Version"] = project.version
+	from("${rootDir}/docs/src/docs/dist") {
+		include "LICENSE"
+		into "META-INF"
+	}
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+	preserveFileTimestamps = false
+	reproducibleFileOrder = true
+}
+
+task sourcesJar(type: Jar) {
+	archiveClassifier.set('sources')
+	from sourceSets.main.allSource
+	from("${rootDir}/docs/src/docs/dist") {
+		include "LICENSE"
+		into "META-INF"
+	}
+}
+
+task javadocJar(type: Jar) {
+	archiveClassifier.set('javadoc')
+	from javadoc
+	from("${rootDir}/docs/src/docs/dist") {
+		include "LICENSE"
+		into "META-INF"
+	}
+}
+
+static def qualifyVersion(String v) {
+	def m = v =~ /^(\d+)\.(\d+)\.(\d+)(?:\.(\d+))?(?:[.\-](.+))?$/
+	if (!m.matches()) return "BAD"
+	def qualifier = m[0][5] ?: ""
+
+	if (qualifier.size() == 0) return "RELEASE" //new scheme
+	if (qualifier == "RELEASE") return "RELEASE" //old scheme
+	if (qualifier.matches("(?:M|RC)\\d+")) return "MILESTONE"
+	if (qualifier == "SNAPSHOT" || qualifier == "BUILD-SNAPSHOT") return "SNAPSHOT"
+
+	return "BAD"
+}
+
+static def outputToGha(String versionType, String fullVersion) {
+	def ghaFilename = System.getenv("GITHUB_OUTPUT")
+	if (ghaFilename == null) {
+		println "::set-output name=versionType::$versionType"
+		println "::set-output name=fullVersion::$fullVersion"
+	}
+	else {
+		println "using GITHUB_OUTPUT file"
+		def ghaFile = new File(ghaFilename)
+		ghaFile.withWriterAppend {
+			it.newLine()
+			it.append("versionType=$versionType")
+			it.newLine()
+			it.append("fullVersion=$fullVersion")
+		}
+	}
+}
+
+task qualifyVersionGha() {
+	doLast {
+		def versionType = qualifyVersion("$version")
+		//we ensure that if at least _one_ submodule version is BAD, we only output versionType=BAD + job fails
+		if (versionType == "BAD") {
+			outputToGha(versionType, version)
+			println "::error ::Unable to parse $version with recognizable qualifier"
+			throw new TaskExecutionException(tasks.getByName("qualifyVersionGha"), new IllegalArgumentException("Unable to parse $version with recognizable qualifier"))
+		}
+		println "Recognized $version as $versionType"
+
+		//only output the versionType and fullVersion for the main artifact
+		if (project.name == 'reactor-core') {
+			outputToGha(versionType, version)
+		}
+	}
+}
+
+publishing {
+	repositories {
+		maven {
+			name = "mock"
+			url = rootProject.layout.buildDirectory.dir("mockRepo").get().asFile.toURI().toString()
+		}
+		if (qualifyVersion("$version") in ["RELEASE", "MILESTONE"]) {
+			maven {
+				name = "sonatype"
+				url = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+				credentials {
+					username = findProperty("sonatypeUsername")
+					password = findProperty("sonatypePassword")
+				}
+			}
+		}
+	}
+
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			artifact sourcesJar
+			artifact javadocJar
+			//consider adding extra artifacts here, conditionally on submodule's name and perhaps in an afterEvaluate block
+			afterEvaluate {
+				if (project.name == 'reactor-core') {
+					// Find the docs project; if found, include docsZip in published artifacts.
+					// The docs project isn't loaded if the current JDK version is below JDK17,
+					// as it requires a current JDK17+ compatibility for the Antora Gradle plugin (see settings.gradle)
+					def docsProject = project.findProject(':docs')
+					if (docsProject) {
+						artifact docsProject.tasks.docsZip
+					}
+					else {
+						// docs project not found, indicating a current JDK version below JDK17.
+						// Assuming the docs zip was built with JDK17+ previously, manually check for the docsZip in
+						// docs/build/distributions/, and include it in the published artifact if found
+						def docsZipFile = file("${rootDir}/docs/build/distributions/reactor-core-${project.version}-docs.zip")
+						if (docsZipFile.exists()) {
+							artifact(docsZipFile) {
+								classifier 'docs'
+							}
+						}
+						else {
+							logger.warn("Antora docs zip not found from docs/ project. Use JDK 17+ to include docs in published artifacts.")
+						}
+					}
+				}
+				// Note that reactor-tools has more involved stuff, so we kept it in the submodule's build:
+				// (it replaces the original jar with shadow jar and adds the former as -original.jar)
+			}
+
+
+			pom {
+				afterEvaluate {
+					name = project.description
+					description = project.description
+				}
+				packaging = 'jar' //if not explicitly set, end up as `pom` in output. omitted in output if set as `jar`...
+				url = 'https://github.com/reactor/reactor-core'
+				organization {
+					name = 'reactor'
+					url = 'https://github.com/reactor'
+				}
+				licenses {
+					license {
+						name = 'Apache License, Version 2.0'
+						url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+						distribution = 'repo'
+					}
+				}
+				scm {
+					url = 'https://github.com/reactor/reactor-core'
+					connection = 'scm:git:git://github.com/reactor/reactor-core'
+					developerConnection = 'scm:git:git://github.com/reactor/reactor-core'
+				}
+				developers {
+					developer {
+						id = 'simonbasle'
+						name = 'Simon Baslé'
+						email = 'sbasle@vmware.com'
+					}
+					developer {
+						id = 'odokuka'
+						name = 'Oleh Dokuka'
+						email = 'odokuka@vmware.com'
+					}
+				}
+				issueManagement {
+					system = "GitHub Issues"
+					url = "https://github.com/reactor/reactor-core/issues"
+				}
+				//NB: only the direct dependencies are published in the pom (ie. only reactive-streams)
+				//optional dependencies are not published anymore, see https://github.com/reactor/reactor-core/issues/2262
+			}
+		}
+	}
+}
+
+if (rootProject.hasProperty("artifactory_publish_password")) {
+	apply plugin: "com.jfrog.artifactory"
+
+	afterEvaluate {
+		artifactoryPublish {
+			publications(publishing.publications.mavenJava)
+		}
+	}
+}
+
+if (qualifyVersion("$version") in ["RELEASE", "MILESTONE"] || rootProject.hasProperty("forceSigning")) {
+	apply plugin: 'signing'
+
+	signing {
+		//requiring signature if there is a publish task that is not to MavenLocal
+		required {  gradle.taskGraph.allTasks.any { it.name.toLowerCase().contains("publish")	&& !it.name.contains("MavenLocal") && !it.name.contains("MockRepository") } }
+		def signingKey = findProperty("signingKey")
+		def signingPassword = findProperty("signingPassword")
+
+		useInMemoryPgpKeys(signingKey, signingPassword)
+
+		afterEvaluate {
+			sign publishing.publications.mavenJava
+		}
+	}
+}
