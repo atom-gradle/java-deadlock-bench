@@ -3,7 +3,7 @@
 [![Dataset](https://img.shields.io/badge/Dataset-Request_Access-4285F4?logo=googledrive&logoColor=white)](https://forms.gle/U73oakGxk3YrmNyu9)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Artifact for the paper *"Nocturne: A Reproducible Mutation Pipeline and Empirical Comparison of Statistical Models versus GNNs for Java Deadlock Triage"*.
+Artifact for the paper *"Nocturne: A Reproducible Mutation Pipeline and Empirical Study of Statistical Models versus GNNs for Java Deadlock Triage"*.
 It contains the training/evaluation code for all model families evaluated in the paper (classical ML, HeteroGNN),
 together with the dataset construction pipeline and scripts for every configuration.
 
@@ -16,10 +16,12 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 
 ```
 dataset/                    Nocturne benchmark (.txt files)
+output/                     Outputs of the 15 experiments
+projects/                   The eight mutated porjects
 mutation_generator.py       Performs lock-related mutations on Java projects to generate reproducible samples.
 Parser.java                 Uses Static Analysis to analyze Java programs and export CYCLEs.
-Pipeliner.py                Automatically runs Parser.java and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
-evaluate.py                 ML baselines (RF, XGBoost, LogReg, SVM, Random Forest) vs. GNN, ablation study
+pipeliner.py                Automatically runs Parser.java and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
+evaluate.py                 ML (RF, XGBoost, LogReg, SVM, Random Forest) vs. GNN, ablation study
 run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
 ```
 
@@ -31,8 +33,6 @@ run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluation
 All experiments run 5 seeds (42-46) over the same fixed split. Please ensure that `evaluate.py`, `train/`(directory), and `test`(directory) are placed in the same directory.
 
 ```bash
-cp -r dataset/train .
-cp -r dataset/test .
 ./run_all.sh
 ```
 
@@ -119,15 +119,15 @@ plugins: [ Parser ] # | [ pluginClass, ... ]
 
 4. run
 
- See **Pipeliner.py**
+ See **pipeliner.py**
 
 ---
 
-### Pipeliner.py
+### pipeliner.py
 
 **How to use?**
 ```bash
-python Pipeliner.py --input-dir "YOUR_INPUT_DIR"
+python pipeliner.py --input-dir "YOUR_INPUT_DIR"
 ```
 
 ---
@@ -136,12 +136,12 @@ python Pipeliner.py --input-dir "YOUR_INPUT_DIR"
 
 `dataset/` contains the eight benchmark artifacts consumed by the code.
 
-The dataset consists of 4,096 labeled cycles (1,749 unique structures after merging), using fixed seed 42.
+The dataset consists of 4170 labeled cycles, using fixed seed 42.
 
-Total: 4096
-L2(Strong): 1939
-L1(weak): 1002
-L0(negative): 1155
+Total: 4170
+L2(Strong): 2590
+L1(weak): 1243
+L0(negative): 337
 
 ---
 
