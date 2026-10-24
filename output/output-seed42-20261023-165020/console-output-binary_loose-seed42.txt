@@ -1,0 +1,197 @@
+Unified comparison of rule-based / random forest / heterogeneous GNN
+  data_dir   = dataset/train
+  test_dir   = dataset/test
+  out_dir    = ./output\output-seed42-20261023-165020
+  label_mode = binary_loose
+  n_splits   = 5
+  gnn        = hidden=32, layers=1, lr=0.001, dropout=0.3, epochs=100
+  loss       = cross-entropy (no class weights)
+  coral      = False
+  gnn_ablation = False  kinds=['node', 'edge', 'arch']
+
+[data] Total samples=4170  Unique structure=1759
+[data] y Distribution = {1: 3833, 0: 337}
+
+
+
+Data quality assessment
+
+[label_real raw distribution]
+label_real
+0     337
+1    1243
+2    2590
+Name: count, dtype: int64
+
+[y Distribution (after label_mode)]
+y
+0     337
+1    3833
+Name: count, dtype: int64
+
+[Duplicate structures] unique struct_hash = 1759 / total samples: 4170
+
+[Missing values]
+  No missing values
+
+[Single-feature discriminative power (Mann-Whitney U)]
+  feature                           p-value      AUC
+  n_lock                           7.17e-17    0.634 ***
+  n_lock_edge                      7.17e-17    0.634 ***
+  edge_count                       7.17e-17    0.634 ***
+  n_call_edge                     2.103e-15    0.630 ***
+  n_acq                           6.182e-14    0.622 ***
+  n_cross                         6.182e-14    0.622 ***
+  n_cross_atl                     6.182e-14    0.622 ***
+  n_cross_lta                     6.182e-14    0.622 ***
+  acq_static_ratio                  1.4e-18    0.618 ***
+  static_ratio                    2.715e-18    0.617 ***
+  thread_count                    7.649e-13    0.616 ***
+  has_non_adjacent_edge           0.0002548    0.546 ***
+  max_thread_occurrence            0.001176    0.540 **
+  alias_ratio                      0.008626    0.525 **
+  same_obj_ratio                   0.008626    0.525 **
+  avg_call_dist                      0.1452    0.524 
+  avg_lock_dist                      0.1555    0.523 
+  avg_nesting                        0.3284    0.513 
+  sync_ratio                         0.1822    0.507 
+  nested_ratio                       0.8895    0.502 
+  all_edges_same_thread              0.9575    0.501 
+  nonnull_ratio                         nan    0.500 
+  avg_pts                               nan    0.500 
+  all_edges_reachable                   nan    0.500 
+
+[Leakage detection]
+No obvious leakage found.
+
+[save] ./output\output-seed42-20261023-165020/features.csv
+
+[fold] GroupKFold n_splits=5  (After merging train+test, group by `struct_hash`)
+
+
+
+1. Rule Baseline (reference: hard-coded isReal)
+  Acc=0.0808  AUC=0.5000  F1=0.0000  P=0.0000  R=0.0000
+  Predicted positive class ratio=0.0000  True positive class ratio=0.9192
+  [NOTE] This is the analyzer's hard-coded isReal heuristic; it is reported as a reference, not as a competitive baseline.
+
+
+
+1b. Rule-LR (learned on CYCLE_FEATS only)
+  [Rule-LR GroupCV] {'auc': 0.6648855098795751, 'auc_ci95': 0.033109795620803406, 'f1': 0.7204316147113303, 'f1_ci95': 0.1444715120329373, 'p': 0.9495870591197619, 'p_ci95': 0.02720047687296623, 'r': 0.5980717656932578, 'r_ci95': 0.225152746762721, 'acc': 0.5971223021582734, 'acc_ci95': 0.1778079159088145}
+
+
+
+2. Statistical Models
+2a. Logistic Regression
+  [LR GroupCV] {'auc': 0.6714438652484105, 'auc_ci95': 0.04551418959232412, 'f1': 0.7109058270121724, 'f1_ci95': 0.13584161501026593, 'p': 0.95802991301966, 'p_ci95': 0.01600277147038842, 'r': 0.5759492552426081, 'r_ci95': 0.1661775099124051, 'acc': 0.5865707434052758, 'acc_ci95': 0.13346792753107972}
+
+
+
+2b. SVM (RBF)
+  [SVM GroupCV] {'auc': 0.709509903610152, 'auc_ci95': 0.04074905803612194, 'f1': 0.9578763046721142, 'f1_ci95': 0.005406957663536827, 'p': 0.9191846522781775, 'p_ci95': 0.009909229833355404, 'r': 1.0, 'r_ci95': nan, 'acc': 0.9191846522781775, 'acc_ci95': 0.009909229833355404}
+
+
+
+2c. Random Forest
+  fold 0: {'auc': 0.6926397853969317, 'f1': 0.9430582213691618, 'p': 0.9121287128712872, 'r': 0.976158940397351, 'acc': 0.8932853717026379}
+  fold 1: {'auc': 0.758187456236871, 'f1': 0.8048411497730711, 'p': 0.9620253164556962, 'r': 0.6918075422626788, 'acc': 0.6906474820143885}
+  fold 2: {'auc': 0.7630602904040404, 'f1': 0.8081570996978852, 'p': 0.9622302158273381, 'r': 0.6966145833333334, 'acc': 0.6954436450839329}
+  fold 3: {'auc': 0.7440432129638892, 'f1': 0.8207407407407408, 'p': 0.9535283993115319, 'r': 0.7204161248374512, 'acc': 0.709832134292566}
+  fold 4: {'auc': 0.742259318067859, 'f1': 0.9433719433719434, 'p': 0.9373401534526854, 'r': 0.9494818652849741, 'acc': 0.894484412470024}
+
+  [Top15 importance @rf]
+    avg_call_dist                0.1954
+    avg_lock_dist                0.1287
+    avg_nesting                  0.1137
+    n_call_edge                  0.0933
+    nested_ratio                 0.0834
+    acq_static_ratio             0.0716
+    static_ratio                 0.0710
+    n_lock                       0.0539
+    n_lock_edge                  0.0507
+    sync_ratio                   0.0345
+    n_cross_lta                  0.0261
+    n_cross                      0.0255
+    n_acq                        0.0254
+    n_cross_atl                  0.0230
+    same_obj_ratio               0.0021
+  [RF GroupCV average] {'auc': 0.7400380126139182, 'auc_ci95': 0.034716642003817855, 'f1': 0.8640338309905603, 'f1_ci95': 0.0900520284244758, 'precision': 0.9454505595837077, 'precision_ci95': 0.02632250861478691, 'recall': 0.8068958112231577, 'recall_ci95': 0.17763476281249613, 'acc': 0.7767386091127099, 'acc_ci95': 0.13307291951153866, 'oof_auc': 0.7350712731309625}
+
+
+
+2d. XGBoost
+  [XGB GroupCV] {'auc': 0.7568383328539523, 'auc_ci95': 0.05872454741509825, 'f1': 0.9573384936979084, 'f1_ci95': 0.006838323953873626, 'p': 0.9217394228995005, 'p_ci95': 0.00928722485153366, 'r': 0.9958091332420157, 'r_ci95': 0.004231595538884414, 'acc': 0.918465227817746, 'acc_ci95': 0.012500650032997496}
+
+
+
+3. Heterogeneous GNN
+  fold 0: {'auc': 0.7228099589236315, 'f1': 0.9493029150823827, 'acc': 0.9040767386091128}
+  fold 1: {'auc': 0.8321296388916676, 'f1': 0.9679043423536816, 'acc': 0.9388489208633094}
+  fold 2: {'auc': 0.7659603851010102, 'f1': 0.9568480300187617, 'acc': 0.9172661870503597}
+  fold 3: {'auc': 0.7477843353005902, 'f1': 0.9611528822055138, 'acc': 0.9256594724220624}
+  fold 4: {'auc': 0.767027410997827, 'f1': 0.9444444444444444, 'acc': 0.8968824940047961}
+  [GNN GroupCV average] {'auc': 0.7671423458429453, 'auc_ci95': 0.0503021502383707, 'f1': 0.9559305228209569, 'f1_ci95': 0.011570522967388142, 'acc': 0.9165467625899281, 'acc_ci95': 0.0208060271098085}
+
+
+
+5. Cross-project generalization (train on train_dir, test on test_dir)
+
+[cross-project] train samples = 3942, test samples = 228
+[cross-project] train y = {1: 3621, 0: 321}
+[cross-project] test  y = {1: 212, 0: 16}
+  [rule] {'auc': 0.5, 'f1': 0.0, 'acc': 0.07017543859649122}
+  [rf] {'auc': 0.5546875, 'f1': 0.7002967359050445, 'acc': 0.5570175438596491}
+  [lr] {'auc': 0.6440153301886793, 'f1': 0.6349206349206349, 'acc': 0.4956140350877193}
+  [xgb] {'auc': 0.6015625, 'f1': 0.9636363636363636, 'acc': 0.9298245614035088}
+  [svm] {'auc': 0.6006780660377359, 'f1': 0.9636363636363636, 'acc': 0.9298245614035088}
+  [gnn] {'auc': 0.5182783018867925, 'f1': 0.9636363636363636, 'acc': 0.9298245614035088}
+
+[cross-project summary]
+  rule     {'auc': 0.5, 'f1': 0.0, 'acc': 0.07017543859649122}
+  rf       {'auc': 0.5546875, 'f1': 0.7002967359050445, 'acc': 0.5570175438596491}
+  lr       {'auc': 0.6440153301886793, 'f1': 0.6349206349206349, 'acc': 0.4956140350877193}
+  xgb      {'auc': 0.6015625, 'f1': 0.9636363636363636, 'acc': 0.9298245614035088}
+  svm      {'auc': 0.6006780660377359, 'f1': 0.9636363636363636, 'acc': 0.9298245614035088}
+  gnn      {'auc': 0.5182783018867925, 'f1': 0.9636363636363636, 'acc': 0.9298245614035088}
+  [cross-lr    ] inspect  207/228  for R=0.90 (reduce  9.2%) | R@P=0.80 = 1.000
+  [cross-svm   ] inspect  206/228  for R=0.90 (reduce  9.6%) | R@P=0.80 = 1.000
+  [cross-rf    ] inspect  206/228  for R=0.90 (reduce  9.6%) | R@P=0.80 = 1.000
+  [cross-xgb   ] inspect  206/228  for R=0.90 (reduce  9.6%) | R@P=0.80 = 1.000
+  [cross-gnn   ] inspect  203/228  for R=0.90 (reduce 11.0%) | R@P=0.80 = 1.000
+
+
+
+Final comparison (GroupKFold by struct_hash)
+  Model                      AUC (95% CI)       F1      Acc
+  Rule baseline    0.5000 ± 0.0000         0.0000   0.0808
+  Rule-LR          0.6649 ± 0.0331         0.7204   0.5971
+  Random Forest    0.7400 ± 0.0347         0.8640   0.7767
+  LogisticReg      0.6714 ± 0.0455         0.7109   0.5866
+  XGBoost          0.7568 ± 0.0587         0.9573   0.9185
+  SVM-RBF          0.7095 ± 0.0407         0.9579   0.9192
+  HeteroGNN        0.7671 ± 0.0503         0.9559   0.9165
+
+
+
+Triage analysis (binary only; needs oof_prob)
+  [Rule-LR] no oof_prob, skipped
+  [Random Forest ] inspect 3708/4170 for R=0.90 (reduce 11.1%) | R=0.95 reduce  5.7% | R@P=0.80 = 1.000
+  [LogisticReg   ] inspect 3736/4170 for R=0.90 (reduce 10.4%) | R=0.95 reduce  5.1% | R@P=0.80 = 1.000
+  [XGBoost       ] inspect 3687/4170 for R=0.90 (reduce 11.6%) | R=0.95 reduce  6.1% | R@P=0.80 = 1.000
+  [SVM-RBF       ] inspect 3717/4170 for R=0.90 (reduce 10.9%) | R=0.95 reduce  5.6% | R@P=0.80 = 1.000
+  [HeteroGNN     ] inspect 3662/4170 for R=0.90 (reduce 12.2%) | R=0.95 reduce  6.5% | R@P=0.80 = 1.000
+
+[save] ./output\output-seed42-20261023-165020/triage_summary-binary_loose-seed42.csv
+
+
+
+GNN vs baselines: paired significance tests
+  metric = auc   (paired by fold, n=5)
+  Baseline          mean(GNN)    mean(B)     diff        t-p        w-p        c-p   sig
+  Random Forest        0.7671     0.7400   0.0271      0.104     0.0625     0.2346      
+  LogisticReg          0.7671     0.6714   0.0957    0.01822     0.0625    0.06196     *
+  XGBoost              0.7671     0.7568   0.0103     0.2579     0.4375     0.4292      
+  SVM-RBF              0.7671     0.7095   0.0576    0.01875     0.0625    0.06344     *
+
+[save] ./output\output-seed42-20261023-165020/summary-binary_loose-seed42.json

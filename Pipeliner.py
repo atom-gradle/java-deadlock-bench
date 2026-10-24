@@ -312,7 +312,12 @@ def classify_cycle(methods_by_class,
         mock_hits = methods & mock_set
         ring_hits = methods & ring_set
 
-        # If fake cycles are mixed in -> classify as 0 (fake cycles interfere with real cycle detection).
+        # mixed real + fake -> unknown, not negative
+        if fake_hits and (real_hits or any(g and g.issubset(methods) for g in groups)):
+            scores.append(-1)
+            continue
+
+        # pure fake -> 0
         if fake_hits:
             scores.append(0)
             continue
@@ -334,10 +339,10 @@ def classify_cycle(methods_by_class,
             continue
 
         # Has been mutated by the mutator but none are related to real cycles -> 0.
-        scores.append(0)
+        scores.append(-1)
 
     if not scores:
-        return 0
+        return -1
     return max(scores)
 
 def process_one_graph_fine(path, index, dry_run=False):
