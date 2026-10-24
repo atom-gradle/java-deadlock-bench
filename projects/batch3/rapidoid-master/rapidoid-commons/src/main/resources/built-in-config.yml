@@ -1,0 +1,51 @@
+app:
+  port: 8080
+  address: 0.0.0.0
+  contextPath: ''
+  home: /
+
+jobs:
+  executor:
+    threads: 256
+  scheduler:
+    threads: 64
+
+net:
+  address: 0.0.0.0
+  port: 8080
+  # workers: ${system.cpus}
+  bufSizeKB: 256
+  noDelay: false
+  maxPipeline: 0
+  syncBufs: true
+  blockingAccept: false
+
+http:
+  timeout: 30000
+  timeoutResolution: 5000
+  maxPipeline: 10
+  serverName: Rapidoid
+
+  mandatoryHeaders:
+    connection: true
+    date: true
+    server: true
+    contentType: true
+
+token:
+  ttl: 0 # unlimited
+
+log:
+  level: info
+# fancy: auto
+
+tls:
+  selfSigned: true
+  needClientAuth: false
+  wantClientAuth: false
+  enabled: false
+  keystore: ''
+  keystorePassword: ''
+  keyManagerPassword: ''
+  truststore: ''
+  truststorePassword: ''

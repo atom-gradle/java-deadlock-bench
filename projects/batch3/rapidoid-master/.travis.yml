@@ -1,0 +1,22 @@
+language: java
+sudo: false
+dist: trusty
+script: mvn clean install -e -DRAPIDOID_CI=true && bin/build-examples.sh
+
+jdk:
+  - oraclejdk8
+
+before_install:
+  - export MAVEN_OPTS="-Xmx2g $MAVEN_OPTS"
+  - echo "MAVEN_OPTS='-Xmx2g'" > ~/.mavenrc
+
+install: true
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+env:
+  global:
+    - JAVA_OPTS="-Xmx2g"

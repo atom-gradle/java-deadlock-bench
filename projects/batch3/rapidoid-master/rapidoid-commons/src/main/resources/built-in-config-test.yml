@@ -1,0 +1,5 @@
+app:
+  address: 127.0.0.1
+
+http:
+  maxPipeline: 1000000

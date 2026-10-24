@@ -1,0 +1,10 @@
+app:
+  home: /
+  contextPath: /
+
+users:
+  root:
+    roles:
+      - administrator
+      - owner
+    password: root # PLEASE change this

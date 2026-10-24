@@ -1,0 +1,5835 @@
+{
+  "working_dir": "D:\\Projects3",
+  "classes": [
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Client.java",
+      "package": "com.esotericsoftware.kryonet",
+      "class": "Client",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "tcpRegistrationLock",
+          "is_static": false,
+          "is_final": false,
+          "inferred": false
+        },
+        {
+          "type": "Object",
+          "name": "udpRegistrationLock",
+          "is_static": false,
+          "is_final": false,
+          "inferred": false
+        },
+        {
+          "type": "Object",
+          "name": "updateLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        },
+        {
+          "type": "Object",
+          "name": "keys",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "setDiscoveryHandler",
+        "getSerialization",
+        "getKryo",
+        "connect",
+        "connect",
+        "connect",
+        "connect",
+        "reconnect",
+        "reconnect",
+        "update",
+        "run",
+        "start",
+        "stop",
+        "close",
+        "dispose",
+        "addListener",
+        "removeListener",
+        "setKeepAliveUDP",
+        "getUpdateThread",
+        "discoverHost",
+        "discoverHosts"
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Connection.java",
+      "package": "com.esotericsoftware.kryonet",
+      "class": "Connection",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "listenerLock",
+          "is_static": false,
+          "is_final": false,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "getID",
+        "isConnected",
+        "getLastProtocolError",
+        "sendTCP",
+        "sendUDP",
+        "close",
+        "updateReturnTripTime",
+        "getReturnTripTime",
+        "setKeepAliveTCP",
+        "setTimeout",
+        "addListener",
+        "removeListener",
+        "getEndPoint",
+        "getRemoteAddressTCP",
+        "getRemoteAddressUDP",
+        "setBufferPositionFix",
+        "setName",
+        "getTcpWriteBufferSize",
+        "isIdle",
+        "setIdleThreshold"
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Listener.java",
+      "package": "com.esotericsoftware.kryonet",
+      "class": "Listener",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "runnables",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "connected",
+        "disconnected",
+        "received",
+        "idle"
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Server.java",
+      "package": "com.esotericsoftware.kryonet",
+      "class": "Server",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "listenerLock",
+          "is_static": false,
+          "is_final": false,
+          "inferred": false
+        },
+        {
+          "type": "Object",
+          "name": "updateLock",
+          "is_static": false,
+          "is_final": false,
+          "inferred": false
+        },
+        {
+          "type": "Object",
+          "name": "keys",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "setDiscoveryHandler",
+        "getSerialization",
+        "getKryo",
+        "bind",
+        "bind",
+        "bind",
+        "update",
+        "run",
+        "start",
+        "stop",
+        "sendToAllTCP",
+        "sendToAllExceptTCP",
+        "sendToTCP",
+        "sendToAllUDP",
+        "sendToAllExceptUDP",
+        "sendToUDP",
+        "addListener",
+        "removeListener",
+        "close",
+        "dispose",
+        "getUpdateThread",
+        "getConnections"
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\TcpConnection.java",
+      "package": "com.esotericsoftware.kryonet",
+      "class": "TcpConnection",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "writeLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "accept",
+        "connect",
+        "readObject",
+        "writeOperation",
+        "send",
+        "close",
+        "needsKeepAlive",
+        "isTimedOut"
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\UdpConnection.java",
+      "package": "com.esotericsoftware.kryonet",
+      "class": "UdpConnection",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "writeLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "bind",
+        "connect",
+        "readFromAddress",
+        "readObject",
+        "send",
+        "close",
+        "needsKeepAlive"
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\rmi\\ObjectSpace.java",
+      "package": "com.esotericsoftware.kryonet.rmi",
+      "class": "ObjectSpace",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "instancesLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        },
+        {
+          "type": "Object",
+          "name": "connectionsLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        },
+        {
+          "type": "ReentrantLock",
+          "name": "lock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "setExecutor",
+        "register",
+        "remove",
+        "remove",
+        "close",
+        "addConnection",
+        "removeConnection"
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\customize\\defaults\\DefaultSessionManager.java",
+      "package": "org.rapidoid.http.customize.defaults",
+      "class": "DefaultSessionManager",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "holder",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "loadSession",
+        "saveSession"
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\HttpRoutesImpl.java",
+      "package": "org.rapidoid.http.impl",
+      "class": "HttpRoutesImpl",
+      "lock_fields": [],
+      "methods": [
+        "addGenericHandler",
+        "removeGenericHandler",
+        "findHandler",
+        "on",
+        "on",
+        "on",
+        "remove",
+        "reset",
+        "all",
+        "allInternal",
+        "allExceptInternal",
+        "custom",
+        "find",
+        "hasRouteOrResource",
+        "genericHandlers",
+        "staticResourcesHandler",
+        "builtInResourcesHandler",
+        "onInit",
+        "onInit",
+        "isEmpty",
+        "lastChangedAt",
+        "ready",
+        "waitToStabilize",
+        "setHttp"
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\ReqImpl.java",
+      "package": "org.rapidoid.http.impl",
+      "class": "ReqImpl",
+      "lock_fields": [
+        {
+          "type": "Map",
+          "name": "cookies",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "verb",
+        "verb",
+        "uri",
+        "uri",
+        "path",
+        "path",
+        "query",
+        "query",
+        "body",
+        "body",
+        "params",
+        "headers",
+        "cookies",
+        "posted",
+        "files",
+        "clientIpAddress",
+        "realIpAddress",
+        "host",
+        "host",
+        "connectionId",
+        "requestId",
+        "param",
+        "param",
+        "param",
+        "header",
+        "header",
+        "cookie",
+        "cookie",
+        "posted",
+        "posted",
+        "posted",
+        "files",
+        "file",
+        "data",
+        "data",
+        "data",
+        "data",
+        "attrs",
+        "attr",
+        "attr",
+        "response",
+        "responded",
+        "onHeadersCompleted",
+        "isRendering",
+        "completed",
+        "done",
+        "isDone",
+        "routes",
+        "route",
+        "custom",
+        "async",
+        "isAsync",
+        "sessionId",
+        "hasSession",
+        "session",
+        "session",
+        "session",
+        "hasToken",
+        "token",
+        "token",
+        "token",
+        "tokenStatus",
+        "tokenStatus",
+        "zone",
+        "zone",
+        "contextPath",
+        "contextPath",
+        "channel",
+        "http",
+        "stop",
+        "isStopped",
+        "revert",
+        "out",
+        "contentType",
+        "handle",
+        "isKeepAlive",
+        "doneProcessing",
+        "getReqOrNull",
+        "cacheKey",
+        "cached",
+        "cached",
+        "hasResponseAttached"
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\RespImpl.java",
+      "package": "org.rapidoid.http.impl",
+      "class": "RespImpl",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "chnk",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "result",
+        "result",
+        "body",
+        "body",
+        "body",
+        "raw",
+        "raw",
+        "raw",
+        "code",
+        "code",
+        "headers",
+        "header",
+        "cookies",
+        "cookie",
+        "session",
+        "session",
+        "token",
+        "token",
+        "contentType",
+        "contentType",
+        "redirect",
+        "redirect",
+        "filename",
+        "filename",
+        "file",
+        "file",
+        "done",
+        "html",
+        "plain",
+        "json",
+        "binary",
+        "request",
+        "login",
+        "authorize",
+        "logout",
+        "resume",
+        "out"
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\lowlevel\\LowLevelHttpIO.java",
+      "package": "org.rapidoid.http.impl.lowlevel",
+      "class": "LowLevelHttpIO",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "output",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        },
+        {
+          "type": "Object",
+          "name": "channel",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": []
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\setup\\My.java",
+      "package": "org.rapidoid.setup",
+      "class": "My",
+      "lock_fields": [],
+      "methods": [
+        "reset",
+        "custom",
+        "staticFilesPath",
+        "staticFilesPath",
+        "wrappers",
+        "wrappers",
+        "errorHandler",
+        "jsonResponseRenderer",
+        "xmlResponseRenderer",
+        "beanParameterFactory",
+        "validator",
+        "loginProvider",
+        "rolesProvider",
+        "pageDecorator",
+        "objectMapper",
+        "xmlMapper",
+        "errorHandler",
+        "jsonResponseRenderer",
+        "xmlResponseRenderer",
+        "beanParameterFactory",
+        "validator",
+        "loginProvider",
+        "rolesProvider",
+        "pageDecorator",
+        "objectMapper",
+        "jsonRequestBodyParser",
+        "jsonRequestBodyParser",
+        "sessionManager",
+        "sessionManager",
+        "staticFilesSecurity",
+        "staticFilesSecurity",
+        "error",
+        "templateLoader",
+        "templateLoader"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\conduits\\ReadTimeoutStreamSourceConduit.java",
+      "package": "io.undertow.conduits",
+      "class": "ReadTimeoutStreamSourceConduit",
+      "lock_fields": [],
+      "methods": [
+        "transferTo",
+        "transferTo",
+        "read",
+        "read",
+        "awaitReadable",
+        "awaitReadable",
+        "resumeReads",
+        "terminateReads",
+        "suspendReads"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\conduits\\WriteTimeoutStreamSinkConduit.java",
+      "package": "io.undertow.conduits",
+      "class": "WriteTimeoutStreamSinkConduit",
+      "lock_fields": [],
+      "methods": [
+        "write",
+        "write",
+        "writeFinal",
+        "writeFinal",
+        "transferFrom",
+        "transferFrom",
+        "awaitWritable",
+        "awaitWritable",
+        "terminateWrites",
+        "truncateWrites",
+        "resumeWrites",
+        "suspendWrites",
+        "wakeupWrites"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\ajp\\AjpClientChannel.java",
+      "package": "io.undertow.protocols.ajp",
+      "class": "AjpClientChannel",
+      "lock_fields": [
+        {
+          "type": "List",
+          "name": "pingListeners",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "sendRequest",
+        "isOpen",
+        "sendPing"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\alpn\\OpenSSLAlpnProvider.java",
+      "package": "io.undertow.protocols.alpn",
+      "class": "OpenSSLAlpnProvider",
+      "lock_fields": [],
+      "methods": [
+        "isEnabled",
+        "setProtocols",
+        "getSelectedProtocol",
+        "getPriority"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\http2\\Http2Channel.java",
+      "package": "io.undertow.protocols.http2",
+      "class": "Http2Channel",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "flowControlLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        },
+        {
+          "type": "Map",
+          "name": "attachments",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "getHttp2Version",
+        "getInitialSendWindowSize",
+        "getInitialReceiveWindowSize",
+        "getSendMaxConcurrentStreams",
+        "setSendMaxConcurrentStreams",
+        "getReceiveMaxConcurrentStreams",
+        "handleWindowUpdate",
+        "sendPing",
+        "sendPing",
+        "sendGoAway",
+        "sendGoAway",
+        "sendUpdateWindowSize",
+        "getSslSession",
+        "updateReceiveFlowControlWindow",
+        "createStream",
+        "getProtocolRequestId",
+        "addPushPromiseStream",
+        "sendPushPromise",
+        "isClient",
+        "getAttachment",
+        "getAttachmentList",
+        "putAttachment",
+        "removeAttachment",
+        "addToAttachmentList",
+        "sendRstStream",
+        "createInitialUpgradeResponseStream",
+        "isPushEnabled",
+        "isPeerGoneAway",
+        "isThisGoneAway",
+        "getReceiveMaxFrameSize",
+        "getSendMaxFrameSize",
+        "getProtocol"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\ssl\\SslConduit.java",
+      "package": "io.undertow.protocols.ssl",
+      "class": "SslConduit",
+      "lock_fields": [],
+      "methods": [
+        "terminateReads",
+        "isReadShutdown",
+        "resumeReads",
+        "suspendReads",
+        "wakeupReads",
+        "isReadResumed",
+        "awaitReadable",
+        "awaitReadable",
+        "getReadThread",
+        "setReadReadyHandler",
+        "transferFrom",
+        "transferFrom",
+        "write",
+        "write",
+        "writeFinal",
+        "writeFinal",
+        "terminateWrites",
+        "isWriteShutdown",
+        "resumeWrites",
+        "suspendWrites",
+        "wakeupWrites",
+        "isWriteResumed",
+        "awaitWritable",
+        "awaitWritable",
+        "getWriteThread",
+        "setWriteReadyHandler",
+        "truncateWrites",
+        "flush",
+        "transferTo",
+        "transferTo",
+        "read",
+        "read",
+        "getWorker",
+        "startHandshake",
+        "getSslSession",
+        "getSSLEngine",
+        "close",
+        "setSslEngine"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\security\\impl\\SimpleNonceManager.java",
+      "package": "io.undertow.security.impl",
+      "class": "SimpleNonceManager",
+      "lock_fields": [
+        {
+          "type": "Map",
+          "name": "forwardMapping",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        },
+        {
+          "type": "Map",
+          "name": "knownNonces",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "nextNonce",
+        "validateNonce",
+        "associateHash",
+        "lookupHash"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\DefaultByteBufferPool.java",
+      "package": "io.undertow.server",
+      "class": "DefaultByteBufferPool",
+      "lock_fields": [
+        {
+          "type": "List",
+          "name": "threadLocalDataList",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "getBufferSize",
+        "isDirect",
+        "allocate",
+        "getArrayBackedPool",
+        "close"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\RoutingHandler.java",
+      "package": "io.undertow.server",
+      "class": "RoutingHandler",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "routingHandler",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "handleRequest",
+        "add",
+        "add",
+        "get",
+        "post",
+        "put",
+        "delete",
+        "add",
+        "add",
+        "get",
+        "post",
+        "put",
+        "delete",
+        "addAll",
+        "remove",
+        "remove",
+        "getFallbackHandler",
+        "setFallbackHandler",
+        "getInvalidMethodHandler",
+        "setInvalidMethodHandler"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\GracefulShutdownHandler.java",
+      "package": "io.undertow.server.handlers",
+      "class": "GracefulShutdownHandler",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "lock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "handleRequest",
+        "shutdown",
+        "start",
+        "awaitShutdown",
+        "awaitShutdown",
+        "addShutdownListener"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\LearningPushHandler.java",
+      "package": "io.undertow.server.handlers",
+      "class": "LearningPushHandler",
+      "lock_fields": [
+        {
+          "type": "LRUCache",
+          "name": "cache",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "handleRequest"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\PathTemplateHandler.java",
+      "package": "io.undertow.server.handlers",
+      "class": "PathTemplateHandler",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "lock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "add",
+        "remove",
+        "handleRequest"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\RequestLimit.java",
+      "package": "io.undertow.server.handlers",
+      "class": "RequestLimit",
+      "lock_fields": [],
+      "methods": [
+        "handleRequest",
+        "getMaximumConcurrentRequests",
+        "setMaximumConcurrentRequests",
+        "getFailureHandler",
+        "setFailureHandler"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\StuckThreadDetectionHandler.java",
+      "package": "io.undertow.server.handlers",
+      "class": "StuckThreadDetectionHandler",
+      "lock_fields": [],
+      "methods": [
+        "getThreshold",
+        "handleRequest",
+        "getStuckThreadIds"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\accesslog\\DefaultAccessLogReceiver.java",
+      "package": "io.undertow.server.handlers.accesslog",
+      "class": "DefaultAccessLogReceiver",
+      "lock_fields": [],
+      "methods": [
+        "logMessage",
+        "run",
+        "rotate",
+        "close",
+        "builder"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\proxy\\mod_cluster\\MCMPAdvertiseTask.java",
+      "package": "io.undertow.server.handlers.proxy.mod_cluster",
+      "class": "MCMPAdvertiseTask",
+      "lock_fields": [
+        {
+          "type": "MessageDigest",
+          "name": "md",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "run"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\resource\\CachingResourceManager.java",
+      "package": "io.undertow.server.handlers.resource",
+      "class": "CachingResourceManager",
+      "lock_fields": [
+        {
+          "type": "ReentrantReadWriteLock",
+          "name": "cacheAccessLock",
+          "is_static": false,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "getResource",
+        "isResourceChangeListenerSupported",
+        "registerResourceChangeListener",
+        "removeResourceChangeListener",
+        "invalidate",
+        "invalidate",
+        "getMaxFileSize",
+        "getMaxAge",
+        "close"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\resource\\PathResourceManager.java",
+      "package": "io.undertow.server.handlers.resource",
+      "class": "PathResourceManager",
+      "lock_fields": [],
+      "methods": [
+        "getBasePath",
+        "setBase",
+        "setBase",
+        "getResource",
+        "isResourceChangeListenerSupported",
+        "registerResourceChangeListener"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\sse\\ServerSentEventConnection.java",
+      "package": "io.undertow.server.handlers.sse",
+      "class": "ServerSentEventConnection",
+      "lock_fields": [],
+      "methods": [
+        "addCloseTask",
+        "getPrincipal",
+        "getAccount",
+        "getRequestHeaders",
+        "getResponseHeaders",
+        "getRequestURI",
+        "getQueryParameters",
+        "getQueryString",
+        "send",
+        "send",
+        "sendRetry",
+        "sendRetry",
+        "send",
+        "getParameter",
+        "setParameter",
+        "getProperties",
+        "getKeepAliveTime",
+        "setKeepAliveTime",
+        "shutdown",
+        "isOpen",
+        "close",
+        "getAttachment",
+        "getAttachmentList",
+        "putAttachment",
+        "removeAttachment",
+        "addToAttachmentList"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\protocol\\framed\\ShutdownFallbackExecutor.java",
+      "package": "io.undertow.server.protocol.framed",
+      "class": "ShutdownFallbackExecutor",
+      "lock_fields": [],
+      "methods": []
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\protocol\\http\\AlpnOpenListener.java",
+      "package": "io.undertow.server.protocol.http",
+      "class": "AlpnOpenListener",
+      "lock_fields": [],
+      "methods": [
+        "getRootHandler",
+        "setRootHandler",
+        "getUndertowOptions",
+        "setUndertowOptions",
+        "getBufferPool",
+        "getConnectorStatistics",
+        "closeConnections",
+        "addProtocol",
+        "handleEvent",
+        "engineSupportsHTTP2"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\session\\InMemorySessionManager.java",
+      "package": "io.undertow.server.session",
+      "class": "InMemorySessionManager",
+      "lock_fields": [
+        {
+          "type": "Object",
+          "name": "sessionManager",
+          "is_static": false,
+          "is_final": true,
+          "inferred": true
+        }
+      ],
+      "methods": [
+        "getDeploymentName",
+        "start",
+        "stop",
+        "createSession",
+        "getSession",
+        "getSession",
+        "registerSessionListener",
+        "removeSessionListener",
+        "setDefaultSessionTimeout",
+        "getTransientSessions",
+        "getActiveSessions",
+        "getAllSessions",
+        "getStatistics",
+        "getCreatedSessionCount",
+        "getMaxActiveSessions",
+        "getHighestSessionCount",
+        "getActiveSessionCount",
+        "getExpiredSessionCount",
+        "getRejectedSessions",
+        "getMaxSessionAliveTime",
+        "getAverageSessionAliveTime",
+        "getStartTime"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\session\\SslSessionConfig.java",
+      "package": "io.undertow.server.session",
+      "class": "SslSessionConfig",
+      "lock_fields": [],
+      "methods": [
+        "setSessionId",
+        "clearSession",
+        "findSessionId",
+        "sessionCookieSource",
+        "rewriteUrl"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\util\\Methods.java",
+      "package": "io.undertow.util",
+      "class": "Methods",
+      "lock_fields": [
+        {
+          "type": "HttpString",
+          "name": "LOCK",
+          "is_static": true,
+          "is_final": true,
+          "inferred": false
+        },
+        {
+          "type": "HttpString",
+          "name": "UNLOCK",
+          "is_static": true,
+          "is_final": true,
+          "inferred": false
+        }
+      ],
+      "methods": [
+        "fromString"
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\util\\ReferenceCountedPooled.java",
+      "package": "io.undertow.util",
+      "class": "ReferenceCountedPooled",
+      "lock_fields": [],
+      "methods": [
+        "close",
+        "isOpen",
+        "isFreed",
+        "tryUnfree",
+        "getBuffer",
+        "createView",
+        "createView",
+        "increaseReferenceCount"
+      ]
+    }
+  ],
+  "mutations": [
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Client.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\Client.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "tcpRegistrationLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "updateLock",
+          "inner_lock": "__crossLock_5506",
+          "sleep": 479
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "updateLock",
+          "inner_lock": "__crossLock_4657",
+          "sleep": 225
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "updateLock",
+          "inner_lock": "__crossLock_2679",
+          "sleep": 171
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getKryo",
+          "depth": 4,
+          "locks": [
+            "tcpRegistrationLock",
+            "udpRegistrationLock",
+            "updateLock",
+            "__crossLock_2679"
+          ],
+          "sleep_ms": 402
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getKryo",
+          "depth": 2,
+          "locks": [
+            "tcpRegistrationLock",
+            "udpRegistrationLock"
+          ],
+          "sleep_ms": 211
+        },
+        {
+          "op": "replace_lock",
+          "old": "tcpRegistrationLock",
+          "new": "__crossLock_2679"
+        },
+        {
+          "op": "replace_lock",
+          "old": "udpRegistrationLock",
+          "new": "tcpRegistrationLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "tcpRegistrationLock",
+          "new": "updateLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "udpRegistrationLock",
+          "new": "tcpRegistrationLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "updateLock",
+          "new": "__crossLock_2679"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2679",
+          "new": "__crossLock_4657"
+        },
+        {
+          "op": "replace_lock",
+          "old": "updateLock",
+          "new": "__crossLock_2679"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2679",
+          "new": "tcpRegistrationLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4657",
+          "new": "udpRegistrationLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5506",
+          "new": "__crossLock_4657"
+        },
+        {
+          "op": "replace_lock",
+          "old": "tcpRegistrationLock",
+          "new": "keys"
+        },
+        {
+          "op": "replace_lock",
+          "old": "updateLock",
+          "new": "__crossLock_2679"
+        },
+        {
+          "op": "replace_lock",
+          "old": "udpRegistrationLock",
+          "new": "updateLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "updateLock",
+          "new": "keys"
+        },
+        {
+          "op": "replace_lock",
+          "old": "keys",
+          "new": "__crossLock_2679"
+        },
+        {
+          "op": "replace_lock",
+          "old": "tcpRegistrationLock",
+          "new": "__crossLock_4657"
+        },
+        {
+          "op": "replace_lock",
+          "old": "udpRegistrationLock",
+          "new": "keys"
+        },
+        {
+          "op": "replace_lock",
+          "old": "updateLock",
+          "new": "__crossLock_4657"
+        },
+        {
+          "op": "reassign_lock",
+          "field": "tcpRegistrationLock",
+          "type": "Object"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 387
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 375
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 234
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_1796",
+          "length": 3,
+          "tail_target": "getKryo",
+          "inserted_into": "getUpdateThread",
+          "lock_used": "__crossLock_2679",
+          "chain": [
+            "mockMethod_0_1796",
+            "mockMethod_1_771",
+            "mockMethod_2_1489"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Connection.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\Connection.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "listenerLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "listenerLock",
+          "inner_lock": "__crossLock_2040",
+          "sleep": 405
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "listenerLock",
+          "inner_lock": "__crossLock_7252",
+          "sleep": 297
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "listenerLock",
+          "inner_lock": "__crossLock_8668",
+          "sleep": 405
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getID",
+          "depth": 4,
+          "locks": [
+            "listenerLock",
+            "__crossLock_8668",
+            "__crossLock_7252",
+            "__crossLock_2040"
+          ],
+          "sleep_ms": 448
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getTcpWriteBufferSize",
+          "depth": 4,
+          "locks": [
+            "listenerLock",
+            "__crossLock_8668",
+            "__crossLock_7252",
+            "__crossLock_2040"
+          ],
+          "sleep_ms": 484
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "AB_BA",
+          "locks": [
+            "listenerLock",
+            "__crossLock_8668"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_2591",
+            "crossLock_g0_ring1_7433"
+          ],
+          "fake": false,
+          "sleep_ms": 211,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_7252",
+            "__crossLock_2040",
+            "__crossLock_9837",
+            "__crossLock_9689",
+            "__crossLock_1009",
+            "__crossLock_6310",
+            "__crossLock_9005"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_1832",
+            "crossLock_g1_ring1_5947",
+            "crossLock_g1_ring2_5038",
+            "crossLock_g1_ring3_3923",
+            "crossLock_g1_ring4_949",
+            "crossLock_g1_ring5_3946",
+            "crossLock_g1_ring6_9295"
+          ],
+          "fake": false,
+          "sleep_ms": 104,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "listenerLock",
+            "__crossLock_8668"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_964",
+            "crossLock_g2_ring1_3750"
+          ],
+          "fake": false,
+          "sleep_ms": 261,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "reassign_lock",
+          "field": "listenerLock",
+          "type": "Object"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_7651",
+          "length": 3,
+          "tail_target": "getID",
+          "inserted_into": "getReturnTripTime",
+          "lock_used": "__crossLock_2040",
+          "chain": [
+            "mockMethod_0_7651",
+            "mockMethod_1_6735",
+            "mockMethod_2_5804"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Listener.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\Listener.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "runnables"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "runnables",
+          "inner_lock": "__crossLock_7596",
+          "sleep": 131
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "runnables",
+          "inner_lock": "__crossLock_6559",
+          "sleep": 472
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "runnables",
+          "inner_lock": "__crossLock_5073",
+          "sleep": 155
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "idle",
+          "depth": 4,
+          "locks": [
+            "runnables",
+            "__crossLock_5073",
+            "__crossLock_6559",
+            "__crossLock_7596"
+          ],
+          "sleep_ms": 171
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "idle",
+          "depth": 3,
+          "locks": [
+            "runnables",
+            "__crossLock_5073",
+            "__crossLock_6559"
+          ],
+          "sleep_ms": 227
+        },
+        {
+          "op": "replace_lock",
+          "old": "runnables",
+          "new": "__crossLock_7596"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5073",
+          "new": "__crossLock_6559"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6559",
+          "new": "runnables"
+        },
+        {
+          "op": "replace_lock",
+          "old": "runnables",
+          "new": "__crossLock_6559"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5073",
+          "new": "__crossLock_6559"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6559",
+          "new": "runnables"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7596",
+          "new": "__crossLock_6559"
+        },
+        {
+          "op": "replace_lock",
+          "old": "runnables",
+          "new": "__crossLock_7596"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5073",
+          "new": "__crossLock_6559"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6559",
+          "new": "__crossLock_5073"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7596",
+          "new": "__crossLock_5073"
+        },
+        {
+          "op": "replace_lock",
+          "old": "runnables",
+          "new": "__crossLock_5073"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4669",
+          "length": 3,
+          "tail_target": "idle",
+          "inserted_into": "disconnected",
+          "lock_used": "__crossLock_6559",
+          "chain": [
+            "mockMethod_0_4669",
+            "mockMethod_1_6054",
+            "mockMethod_2_1127"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\Server.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\Server.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "listenerLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "updateLock",
+          "inner_lock": "__crossLock_9666",
+          "sleep": 254
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "updateLock",
+          "inner_lock": "__crossLock_5905",
+          "sleep": 104
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "updateLock",
+          "inner_lock": "__crossLock_2697",
+          "sleep": 439
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "AB_BA",
+          "locks": [
+            "listenerLock",
+            "updateLock"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_2546",
+            "crossLock_g0_ring1_4462"
+          ],
+          "fake": true,
+          "sleep_ms": 241,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_2697",
+            "__crossLock_5905",
+            "__crossLock_9666"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_4533",
+            "crossLock_g1_ring1_722",
+            "crossLock_g1_ring2_58"
+          ],
+          "fake": false,
+          "sleep_ms": 208,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "keys",
+            "__crossLock_3442",
+            "__crossLock_9938"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_6049",
+            "crossLock_g2_ring1_9543",
+            "crossLock_g2_ring2_9052"
+          ],
+          "fake": true,
+          "sleep_ms": 109,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_2608",
+          "length": 5,
+          "tail_target": "close",
+          "inserted_into": "run",
+          "lock_used": "updateLock",
+          "chain": [
+            "mockMethod_0_2608",
+            "mockMethod_1_4065",
+            "mockMethod_2_6745",
+            "mockMethod_3_5442",
+            "mockMethod_4_2938"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\TcpConnection.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\TcpConnection.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "writeLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "writeLock",
+          "inner_lock": "__crossLock_4644",
+          "sleep": 340
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "writeLock",
+          "inner_lock": "__crossLock_8541",
+          "sleep": 202
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "writeLock",
+          "inner_lock": "__crossLock_6000",
+          "sleep": 279
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "writeOperation",
+          "depth": 2,
+          "locks": [
+            "writeLock",
+            "__crossLock_6000"
+          ],
+          "sleep_ms": 112
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "close",
+          "depth": 3,
+          "locks": [
+            "writeLock",
+            "__crossLock_6000",
+            "__crossLock_8541"
+          ],
+          "sleep_ms": 242
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "writeLock",
+            "__crossLock_6000",
+            "__crossLock_8541"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_8346",
+            "crossLock_g0_ring1_6548",
+            "crossLock_g0_ring2_8785"
+          ],
+          "fake": false,
+          "sleep_ms": 264,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_4644",
+            "__crossLock_9379",
+            "__crossLock_2894"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_9446",
+            "crossLock_g1_ring1_3114",
+            "crossLock_g1_ring2_4173"
+          ],
+          "fake": false,
+          "sleep_ms": 198,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "writeLock",
+            "__crossLock_6000"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_8308",
+            "crossLock_g2_ring1_5067"
+          ],
+          "fake": false,
+          "sleep_ms": 176,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_7043",
+          "length": 2,
+          "tail_target": "close",
+          "inserted_into": "send",
+          "lock_used": "__crossLock_4644",
+          "chain": [
+            "mockMethod_0_7043",
+            "mockMethod_1_4700"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\UdpConnection.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\UdpConnection.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "writeLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "writeLock",
+          "inner_lock": "__crossLock_4501",
+          "sleep": 445
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "writeLock",
+          "inner_lock": "__crossLock_8752",
+          "sleep": 361
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "writeLock",
+          "inner_lock": "__crossLock_3780",
+          "sleep": 476
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "send",
+          "depth": 3,
+          "locks": [
+            "writeLock",
+            "__crossLock_3780",
+            "__crossLock_8752"
+          ],
+          "sleep_ms": 439
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "bind",
+          "depth": 3,
+          "locks": [
+            "writeLock",
+            "__crossLock_3780",
+            "__crossLock_8752"
+          ],
+          "sleep_ms": 484
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "writeLock",
+            "__crossLock_3780",
+            "__crossLock_8752"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_1193",
+            "crossLock_g0_ring1_7461",
+            "crossLock_g0_ring2_6790"
+          ],
+          "fake": false,
+          "sleep_ms": 221,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_4501",
+            "__crossLock_2988"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_2184",
+            "crossLock_g1_ring1_7612"
+          ],
+          "fake": true,
+          "sleep_ms": 216,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "writeLock",
+            "__crossLock_3780"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_7373",
+            "crossLock_g2_ring1_4246"
+          ],
+          "fake": false,
+          "sleep_ms": 221,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_3780",
+          "name": "syncBlock___crossLock_3780_3788"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_7633",
+          "length": 3,
+          "tail_target": "send",
+          "inserted_into": "connect",
+          "lock_used": "__crossLock_3780",
+          "chain": [
+            "mockMethod_0_7633",
+            "mockMethod_1_8890",
+            "mockMethod_2_6678"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "kryonet-master",
+      "file": "D:\\Projects3\\kryonet-master\\src\\com\\esotericsoftware\\kryonet\\rmi\\ObjectSpace.java",
+      "out": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\rmi\\ObjectSpace.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "instancesLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "instancesLock",
+          "inner_lock": "__crossLock_1320",
+          "sleep": 299
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "instancesLock",
+          "inner_lock": "__crossLock_7232",
+          "sleep": 491
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "instancesLock",
+          "inner_lock": "__crossLock_1096",
+          "sleep": 344
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 110
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 418
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 178
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_7232",
+          "name": "syncBlock___crossLock_7232_1874"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_1771",
+          "length": 2,
+          "tail_target": "close",
+          "inserted_into": "register",
+          "lock_used": "__crossLock_1096",
+          "chain": [
+            "mockMethod_0_1771",
+            "mockMethod_1_2683"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\customize\\defaults\\DefaultSessionManager.java",
+      "out": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\customize\\defaults\\DefaultSessionManager.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "holder"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "holder",
+          "inner_lock": "__crossLock_4249",
+          "sleep": 303
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "holder",
+          "inner_lock": "__crossLock_4978",
+          "sleep": 138
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "holder",
+          "inner_lock": "__crossLock_5941",
+          "sleep": 152
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "loadSession",
+          "depth": 4,
+          "locks": [
+            "holder",
+            "__crossLock_5941",
+            "__crossLock_4978",
+            "__crossLock_4249"
+          ],
+          "sleep_ms": 389
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "saveSession",
+          "depth": 3,
+          "locks": [
+            "holder",
+            "__crossLock_5941",
+            "__crossLock_4978"
+          ],
+          "sleep_ms": 438
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "holder",
+            "__crossLock_5941",
+            "__crossLock_4978"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_8031",
+            "crossLock_g0_ring1_1729",
+            "crossLock_g0_ring2_7102"
+          ],
+          "fake": false,
+          "sleep_ms": 207,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_4249",
+            "__crossLock_2419"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_7385",
+            "crossLock_g1_ring1_3995"
+          ],
+          "fake": false,
+          "sleep_ms": 171,
+          "topos": [
+            "chain_to_lock",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "holder",
+            "__crossLock_5941",
+            "__crossLock_4978"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_4526",
+            "crossLock_g2_ring1_9106",
+            "crossLock_g2_ring2_166"
+          ],
+          "fake": false,
+          "sleep_ms": 252,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_5941",
+          "name": "syncBlock___crossLock_5941_6625"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_9068",
+          "length": 1,
+          "tail_target": "saveSession",
+          "inserted_into": "saveSession",
+          "lock_used": "__crossLock_4978",
+          "chain": [
+            "mockMethod_0_9068"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\HttpRoutesImpl.java",
+      "out": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\HttpRoutesImpl.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_7971"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_7971",
+          "sleep": 280
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_8434",
+          "sleep": 459
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_6023",
+          "sleep": 238
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "remove",
+          "depth": 2,
+          "locks": [
+            "__crossLock_7971",
+            "__crossLock_6023"
+          ],
+          "sleep_ms": 261
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "remove",
+          "depth": 4,
+          "locks": [
+            "__crossLock_7971",
+            "__crossLock_6023",
+            "__crossLock_8434",
+            "__crossLock_4033"
+          ],
+          "sleep_ms": 210
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_7971",
+            "__crossLock_6023",
+            "__crossLock_8434",
+            "__crossLock_4033"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_8595",
+            "crossLock_g0_ring1_9777",
+            "crossLock_g0_ring2_4636",
+            "crossLock_g0_ring3_1647"
+          ],
+          "fake": false,
+          "sleep_ms": 294,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_7971",
+            "__crossLock_6023"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_7690",
+            "crossLock_g1_ring1_7843"
+          ],
+          "fake": true,
+          "sleep_ms": 172,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_7971",
+            "__crossLock_6023",
+            "__crossLock_8434"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_9453",
+            "crossLock_g2_ring1_878",
+            "crossLock_g2_ring2_2485"
+          ],
+          "fake": false,
+          "sleep_ms": 118,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 417
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 130
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 412
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_1229",
+          "length": 2,
+          "tail_target": "remove",
+          "inserted_into": "reset",
+          "lock_used": "__crossLock_6023",
+          "chain": [
+            "mockMethod_0_1229",
+            "mockMethod_1_2847"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\ReqImpl.java",
+      "out": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\ReqImpl.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "cookies"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_8699",
+          "sleep": 452
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_1534",
+          "sleep": 249
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_5720",
+          "sleep": 218
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "token",
+          "depth": 4,
+          "locks": [
+            "__crossLock_5720",
+            "__crossLock_1534",
+            "__crossLock_8699",
+            "cookies"
+          ],
+          "sleep_ms": 136
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "cached",
+          "depth": 3,
+          "locks": [
+            "__crossLock_5720",
+            "__crossLock_1534",
+            "__crossLock_8699"
+          ],
+          "sleep_ms": 401
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_5720",
+            "__crossLock_1534",
+            "__crossLock_8699"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_3683",
+            "crossLock_g0_ring1_2441",
+            "crossLock_g0_ring2_4352"
+          ],
+          "fake": false,
+          "sleep_ms": 239,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "cookies",
+            "__crossLock_9090",
+            "__crossLock_8172",
+            "__crossLock_2317"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_653",
+            "crossLock_g1_ring1_7078",
+            "crossLock_g1_ring2_5280",
+            "crossLock_g1_ring3_9891"
+          ],
+          "fake": false,
+          "sleep_ms": 253,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "chain_to_lock",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_5720",
+            "__crossLock_1534",
+            "__crossLock_8699"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_5460",
+            "crossLock_g2_ring1_5260",
+            "crossLock_g2_ring2_1713"
+          ],
+          "fake": false,
+          "sleep_ms": 204,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_8167",
+          "length": 3,
+          "tail_target": "token",
+          "inserted_into": "response",
+          "lock_used": "cookies",
+          "chain": [
+            "mockMethod_0_8167",
+            "mockMethod_1_8494",
+            "mockMethod_2_3073"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\RespImpl.java",
+      "out": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\RespImpl.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "chnk"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_9998",
+          "sleep": 236
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_5719",
+          "sleep": 167
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_8941",
+          "sleep": 324
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "session",
+          "depth": 4,
+          "locks": [
+            "__crossLock_8941",
+            "__crossLock_5719",
+            "__crossLock_9998",
+            "chnk"
+          ],
+          "sleep_ms": 463
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "result",
+          "depth": 4,
+          "locks": [
+            "__crossLock_8941",
+            "__crossLock_5719",
+            "__crossLock_9998",
+            "chnk"
+          ],
+          "sleep_ms": 382
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_8941",
+            "__crossLock_5719",
+            "__crossLock_9998",
+            "chnk",
+            "__crossLock_3522"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_4781",
+            "crossLock_g0_ring1_8337",
+            "crossLock_g0_ring2_4479",
+            "crossLock_g0_ring3_6807",
+            "crossLock_g0_ring4_7905"
+          ],
+          "fake": false,
+          "sleep_ms": 227,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested",
+            "chain_to_lock",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_8941",
+            "__crossLock_5719",
+            "__crossLock_9998",
+            "chnk"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_6180",
+            "crossLock_g1_ring1_7460",
+            "crossLock_g1_ring2_5272",
+            "crossLock_g1_ring3_3090"
+          ],
+          "fake": false,
+          "sleep_ms": 239,
+          "topos": [
+            "chain_to_lock",
+            "chain_to_lock",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_8941",
+            "__crossLock_5719",
+            "__crossLock_9998",
+            "chnk"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_7213",
+            "crossLock_g2_ring1_1633",
+            "crossLock_g2_ring2_8617",
+            "crossLock_g2_ring3_7486"
+          ],
+          "fake": false,
+          "sleep_ms": 125,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_5719",
+          "name": "syncBlock___crossLock_5719_1480"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4806",
+          "length": 5,
+          "tail_target": "session",
+          "inserted_into": "body",
+          "lock_used": "__crossLock_8941",
+          "chain": [
+            "mockMethod_0_4806",
+            "mockMethod_1_919",
+            "mockMethod_2_753",
+            "mockMethod_3_474",
+            "mockMethod_4_4906"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\http\\impl\\lowlevel\\LowLevelHttpIO.java",
+      "out": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\lowlevel\\LowLevelHttpIO.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "output"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "output",
+          "inner_lock": "__crossLock_5000",
+          "sleep": 174
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "output",
+          "inner_lock": "__crossLock_7751",
+          "sleep": 371
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "output",
+          "inner_lock": "__crossLock_3950",
+          "sleep": 389
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "AB_BA",
+          "locks": [
+            "output",
+            "__crossLock_3950"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_2344",
+            "crossLock_g0_ring1_3804"
+          ],
+          "fake": false,
+          "sleep_ms": 249,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_7751",
+            "__crossLock_5000",
+            "channel",
+            "__crossLock_3588"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_7237",
+            "crossLock_g1_ring1_5661",
+            "crossLock_g1_ring2_9626",
+            "crossLock_g1_ring3_4901"
+          ],
+          "fake": false,
+          "sleep_ms": 118,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "output",
+            "__crossLock_3950",
+            "__crossLock_7751"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_803",
+            "crossLock_g2_ring1_9935",
+            "crossLock_g2_ring2_8138"
+          ],
+          "fake": true,
+          "sleep_ms": 275,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 325
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 117
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 396
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_2165",
+          "length": 3,
+          "tail_target": null,
+          "inserted_into": null,
+          "lock_used": "__crossLock_7751",
+          "chain": [
+            "mockMethod_0_2165",
+            "mockMethod_1_3289",
+            "mockMethod_2_6807"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "rapidoid-master",
+      "file": "D:\\Projects3\\rapidoid-master\\rapidoid-http-server\\src\\main\\java\\org\\rapidoid\\setup\\My.java",
+      "out": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\setup\\My.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_9697"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "GLOBAL",
+          "inner_lock": "__crossLock_9697",
+          "sleep": 184
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "GLOBAL",
+          "inner_lock": "__crossLock_8894",
+          "sleep": 231
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "GLOBAL",
+          "inner_lock": "__crossLock_6549",
+          "sleep": 251
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_9697",
+            "__crossLock_6549",
+            "__crossLock_8894"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_5992",
+            "crossLock_g0_ring1_1479",
+            "crossLock_g0_ring2_6464"
+          ],
+          "fake": false,
+          "sleep_ms": 242,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_9697",
+            "__crossLock_6549",
+            "__crossLock_8894"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_9198",
+            "crossLock_g1_ring1_5374",
+            "crossLock_g1_ring2_9995"
+          ],
+          "fake": false,
+          "sleep_ms": 258,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_9697",
+            "__crossLock_6549"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_8807",
+            "crossLock_g2_ring1_2222"
+          ],
+          "fake": false,
+          "sleep_ms": 160,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_6070",
+          "length": 1,
+          "tail_target": null,
+          "inserted_into": null,
+          "lock_used": "__crossLock_8894",
+          "chain": [
+            "mockMethod_0_6070"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\conduits\\ReadTimeoutStreamSourceConduit.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\conduits\\ReadTimeoutStreamSourceConduit.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_8264"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ReadTimeoutStreamSourceConduit.this",
+          "inner_lock": "__crossLock_8264",
+          "sleep": 285
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ReadTimeoutStreamSourceConduit.this",
+          "inner_lock": "__crossLock_7018",
+          "sleep": 150
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ReadTimeoutStreamSourceConduit.this",
+          "inner_lock": "__crossLock_6876",
+          "sleep": 378
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "read",
+          "depth": 3,
+          "locks": [
+            "__crossLock_8264",
+            "__crossLock_6876",
+            "__crossLock_7018"
+          ],
+          "sleep_ms": 162
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_8264",
+            "__crossLock_6876"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_9783",
+            "crossLock_g0_ring1_349"
+          ],
+          "fake": true,
+          "sleep_ms": 263,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_7018",
+            "__crossLock_1046",
+            "__crossLock_5542"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_2129",
+            "crossLock_g1_ring1_8850",
+            "crossLock_g1_ring2_4106"
+          ],
+          "fake": false,
+          "sleep_ms": 137,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_8264",
+            "__crossLock_6876",
+            "__crossLock_7018",
+            "__crossLock_9619"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_1041",
+            "crossLock_g2_ring1_7802",
+            "crossLock_g2_ring2_7344",
+            "crossLock_g2_ring3_5931"
+          ],
+          "fake": true,
+          "sleep_ms": 129,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_9919",
+          "length": 5,
+          "tail_target": "read",
+          "inserted_into": "read",
+          "lock_used": "__crossLock_6876",
+          "chain": [
+            "mockMethod_0_9919",
+            "mockMethod_1_8282",
+            "mockMethod_2_7433",
+            "mockMethod_3_4831",
+            "mockMethod_4_9787"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\conduits\\WriteTimeoutStreamSinkConduit.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\conduits\\WriteTimeoutStreamSinkConduit.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_2624"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "WriteTimeoutStreamSinkConduit.this",
+          "inner_lock": "__crossLock_2624",
+          "sleep": 435
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "WriteTimeoutStreamSinkConduit.this",
+          "inner_lock": "__crossLock_4522",
+          "sleep": 433
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "WriteTimeoutStreamSinkConduit.this",
+          "inner_lock": "__crossLock_8398",
+          "sleep": 320
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "transferFrom",
+          "depth": 3,
+          "locks": [
+            "__crossLock_2624",
+            "__crossLock_8398",
+            "__crossLock_4522"
+          ],
+          "sleep_ms": 332
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "transferFrom",
+          "depth": 4,
+          "locks": [
+            "__crossLock_2624",
+            "__crossLock_8398",
+            "__crossLock_4522",
+            "__crossLock_2557"
+          ],
+          "sleep_ms": 318
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 486
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 416
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 125
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_9946",
+          "length": 1,
+          "tail_target": "transferFrom",
+          "inserted_into": "resumeWrites",
+          "lock_used": "__crossLock_2557",
+          "chain": [
+            "mockMethod_0_9946"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\ajp\\AjpClientChannel.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\ajp\\AjpClientChannel.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "pingListeners"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "pingListeners",
+          "inner_lock": "__crossLock_8043",
+          "sleep": 276
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "pingListeners",
+          "inner_lock": "__crossLock_5640",
+          "sleep": 156
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "pingListeners",
+          "inner_lock": "__crossLock_8972",
+          "sleep": 447
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "sendRequest",
+          "depth": 3,
+          "locks": [
+            "pingListeners",
+            "__crossLock_8972",
+            "__crossLock_5640"
+          ],
+          "sleep_ms": 212
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "sendRequest",
+          "depth": 4,
+          "locks": [
+            "pingListeners",
+            "__crossLock_8972",
+            "__crossLock_5640",
+            "__crossLock_8043"
+          ],
+          "sleep_ms": 103
+        },
+        {
+          "op": "replace_lock",
+          "old": "pingListeners",
+          "new": "__crossLock_5640"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8972",
+          "new": "pingListeners"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5640",
+          "new": "pingListeners"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8043",
+          "new": "__crossLock_5640"
+        },
+        {
+          "op": "replace_lock",
+          "old": "pingListeners",
+          "new": "__crossLock_8972"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8972",
+          "new": "__crossLock_8043"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5640",
+          "new": "pingListeners"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8043",
+          "new": "pingListeners"
+        },
+        {
+          "op": "replace_lock",
+          "old": "pingListeners",
+          "new": "__crossLock_8043"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8972",
+          "new": "__crossLock_5640"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5640",
+          "new": "__crossLock_8972"
+        },
+        {
+          "op": "replace_lock",
+          "old": "pingListeners",
+          "new": "__crossLock_8043"
+        },
+        {
+          "op": "replace_lock",
+          "old": "pingListeners",
+          "new": "__crossLock_8043"
+        },
+        {
+          "op": "replace_lock",
+          "old": "pingListeners",
+          "new": "__crossLock_5640"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4500",
+          "length": 4,
+          "tail_target": "sendRequest",
+          "inserted_into": "isOpen",
+          "lock_used": "__crossLock_5640",
+          "chain": [
+            "mockMethod_0_4500",
+            "mockMethod_1_4961",
+            "mockMethod_2_7682",
+            "mockMethod_3_1118"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\alpn\\OpenSSLAlpnProvider.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\alpn\\OpenSSLAlpnProvider.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_9312"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "OpenSSLAlpnProvider.class",
+          "inner_lock": "__crossLock_9312",
+          "sleep": 331
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "OpenSSLAlpnProvider.class",
+          "inner_lock": "__crossLock_1932",
+          "sleep": 119
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "OpenSSLAlpnProvider.class",
+          "inner_lock": "__crossLock_5703",
+          "sleep": 288
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getPriority",
+          "depth": 2,
+          "locks": [
+            "__crossLock_9312",
+            "__crossLock_5703"
+          ],
+          "sleep_ms": 336
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getPriority",
+          "depth": 4,
+          "locks": [
+            "__crossLock_9312",
+            "__crossLock_5703",
+            "__crossLock_1932",
+            "__crossLock_1672"
+          ],
+          "sleep_ms": 392
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_9312",
+            "__crossLock_5703",
+            "__crossLock_1932"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_1013",
+            "crossLock_g0_ring1_7381",
+            "crossLock_g0_ring2_1695"
+          ],
+          "fake": false,
+          "sleep_ms": 138,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_1672",
+            "__crossLock_7697",
+            "__crossLock_6543"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_9795",
+            "crossLock_g1_ring1_857",
+            "crossLock_g1_ring2_5482"
+          ],
+          "fake": false,
+          "sleep_ms": 273,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_9312",
+            "__crossLock_5703",
+            "__crossLock_1932",
+            "__crossLock_1672"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_5082",
+            "crossLock_g2_ring1_6421",
+            "crossLock_g2_ring2_2112",
+            "crossLock_g2_ring3_9749"
+          ],
+          "fake": true,
+          "sleep_ms": 189,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 492
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 348
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 198
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_5703",
+          "name": "syncBlock___crossLock_5703_2538"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_2712",
+          "length": 4,
+          "tail_target": "getPriority",
+          "inserted_into": "isEnabled",
+          "lock_used": "__crossLock_9312",
+          "chain": [
+            "mockMethod_0_2712",
+            "mockMethod_1_2962",
+            "mockMethod_2_2658",
+            "mockMethod_3_6172"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\http2\\Http2Channel.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\http2\\Http2Channel.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "flowControlLock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "flowControlLock",
+          "inner_lock": "__crossLock_4891",
+          "sleep": 446
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "flowControlLock",
+          "inner_lock": "__crossLock_5668",
+          "sleep": 327
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "flowControlLock",
+          "inner_lock": "__crossLock_8355",
+          "sleep": 485
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getAttachment",
+          "depth": 2,
+          "locks": [
+            "flowControlLock",
+            "__crossLock_8355"
+          ],
+          "sleep_ms": 340
+        },
+        {
+          "op": "replace_lock",
+          "old": "flowControlLock",
+          "new": "__crossLock_8355"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8355",
+          "new": "__crossLock_5668"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_5668",
+          "new": "attachments"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4891",
+          "new": "attachments"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "flowControlLock"
+        },
+        {
+          "op": "replace_lock",
+          "old": "flowControlLock",
+          "new": "__crossLock_8355"
+        },
+        {
+          "op": "replace_lock",
+          "old": "flowControlLock",
+          "new": "attachments"
+        },
+        {
+          "op": "replace_lock",
+          "old": "flowControlLock",
+          "new": "__crossLock_8355"
+        },
+        {
+          "op": "replace_lock",
+          "old": "flowControlLock",
+          "new": "__crossLock_5668"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8355",
+          "new": "__crossLock_5668"
+        },
+        {
+          "op": "replace_lock",
+          "old": "attachments",
+          "new": "__crossLock_5668"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_4891",
+          "name": "syncBlock___crossLock_4891_3068"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_7702",
+          "length": 4,
+          "tail_target": "getAttachment",
+          "inserted_into": "createStream",
+          "lock_used": "attachments",
+          "chain": [
+            "mockMethod_0_7702",
+            "mockMethod_1_6397",
+            "mockMethod_2_333",
+            "mockMethod_3_8316"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\protocols\\ssl\\SslConduit.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\ssl\\SslConduit.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_7116"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_7116",
+          "sleep": 282
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_6649",
+          "sleep": 134
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_2698",
+          "sleep": 223
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getReadThread",
+          "depth": 4,
+          "locks": [
+            "__crossLock_7116",
+            "__crossLock_2698",
+            "__crossLock_6649",
+            "__crossLock_6447"
+          ],
+          "sleep_ms": 122
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "transferFrom",
+          "depth": 3,
+          "locks": [
+            "__crossLock_7116",
+            "__crossLock_2698",
+            "__crossLock_6649"
+          ],
+          "sleep_ms": 498
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_6649"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2698",
+          "new": "__crossLock_6649"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6649",
+          "new": "__crossLock_2698"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7116",
+          "new": "__crossLock_6447"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_6447"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7116",
+          "new": "__crossLock_2698"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2698",
+          "new": "__crossLock_6447"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6649",
+          "new": "__crossLock_2698"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6447",
+          "new": "__crossLock_2698"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7116",
+          "new": "__crossLock_6649"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2698",
+          "new": "__crossLock_7116"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_6649",
+          "new": "__crossLock_6447"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_6649"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_6447"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_6649"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_7116"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_6001",
+          "length": 4,
+          "tail_target": "transferFrom",
+          "inserted_into": "transferFrom",
+          "lock_used": "__crossLock_7116",
+          "chain": [
+            "mockMethod_0_6001",
+            "mockMethod_1_3866",
+            "mockMethod_2_2068",
+            "mockMethod_3_570"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\security\\impl\\SimpleNonceManager.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\security\\impl\\SimpleNonceManager.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "forwardMapping"
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "lookupHash",
+          "depth": 3,
+          "locks": [
+            "forwardMapping",
+            "knownNonces",
+            "__crossLock_7095"
+          ],
+          "sleep_ms": 490
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "associateHash",
+          "depth": 2,
+          "locks": [
+            "forwardMapping",
+            "knownNonces"
+          ],
+          "sleep_ms": 303
+        },
+        {
+          "op": "replace_lock",
+          "old": "forwardMapping",
+          "new": "__crossLock_7095"
+        },
+        {
+          "op": "replace_lock",
+          "old": "knownNonces",
+          "new": "forwardMapping"
+        },
+        {
+          "op": "replace_lock",
+          "old": "knownNonces",
+          "new": "__crossLock_7095"
+        },
+        {
+          "op": "replace_lock",
+          "old": "forwardMapping",
+          "new": "__crossLock_7095"
+        },
+        {
+          "op": "replace_lock",
+          "old": "knownNonces",
+          "new": "__crossLock_7095"
+        },
+        {
+          "op": "replace_lock",
+          "old": "forwardMapping",
+          "new": "knownNonces"
+        },
+        {
+          "op": "replace_lock",
+          "old": "knownNonces",
+          "new": "forwardMapping"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7095",
+          "new": "forwardMapping"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_7095",
+          "name": "syncBlock___crossLock_7095_8488"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_1292",
+          "length": 3,
+          "tail_target": "lookupHash",
+          "inserted_into": "validateNonce",
+          "lock_used": "forwardMapping",
+          "chain": [
+            "mockMethod_0_1292",
+            "mockMethod_1_8501",
+            "mockMethod_2_5669"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\DefaultByteBufferPool.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\DefaultByteBufferPool.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "threadLocalDataList"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "threadLocalDataList",
+          "inner_lock": "__crossLock_5961",
+          "sleep": 164
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "threadLocalDataList",
+          "inner_lock": "__crossLock_9740",
+          "sleep": 414
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "threadLocalDataList",
+          "inner_lock": "__crossLock_9234",
+          "sleep": 147
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "close",
+          "depth": 4,
+          "locks": [
+            "threadLocalDataList",
+            "__crossLock_9234",
+            "__crossLock_9740",
+            "__crossLock_5961"
+          ],
+          "sleep_ms": 178
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "close",
+          "depth": 4,
+          "locks": [
+            "threadLocalDataList",
+            "__crossLock_9234",
+            "__crossLock_9740",
+            "__crossLock_5961"
+          ],
+          "sleep_ms": 272
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "threadLocalDataList",
+            "__crossLock_9234",
+            "__crossLock_9740"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_9449",
+            "crossLock_g0_ring1_4336",
+            "crossLock_g0_ring2_3453"
+          ],
+          "fake": false,
+          "sleep_ms": 264,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_5961",
+            "__crossLock_3589",
+            "__crossLock_8202",
+            "__crossLock_7809"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_7609",
+            "crossLock_g1_ring1_3342",
+            "crossLock_g1_ring2_5573",
+            "crossLock_g1_ring3_9939"
+          ],
+          "fake": false,
+          "sleep_ms": 223,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "threadLocalDataList",
+            "__crossLock_9234",
+            "__crossLock_9740"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_6850",
+            "crossLock_g2_ring1_4067",
+            "crossLock_g2_ring2_2616"
+          ],
+          "fake": true,
+          "sleep_ms": 198,
+          "topos": [
+            "chain_to_lock",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_9740",
+          "name": "syncBlock___crossLock_9740_8108"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_5992",
+          "length": 3,
+          "tail_target": "close",
+          "inserted_into": "getArrayBackedPool",
+          "lock_used": "__crossLock_9740",
+          "chain": [
+            "mockMethod_0_5992",
+            "mockMethod_1_2194",
+            "mockMethod_2_7060"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\RoutingHandler.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\RoutingHandler.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "routingHandler"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "routingHandler",
+          "inner_lock": "__crossLock_4189",
+          "sleep": 126
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "routingHandler",
+          "inner_lock": "__crossLock_5728",
+          "sleep": 285
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "routingHandler",
+          "inner_lock": "__crossLock_7329",
+          "sleep": 137
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "add",
+          "depth": 4,
+          "locks": [
+            "routingHandler",
+            "__crossLock_7329",
+            "__crossLock_5728",
+            "__crossLock_4189"
+          ],
+          "sleep_ms": 419
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "post",
+          "depth": 2,
+          "locks": [
+            "routingHandler",
+            "__crossLock_7329"
+          ],
+          "sleep_ms": 149
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_7726",
+          "length": 4,
+          "tail_target": "post",
+          "inserted_into": "add",
+          "lock_used": "__crossLock_5728",
+          "chain": [
+            "mockMethod_0_7726",
+            "mockMethod_1_6723",
+            "mockMethod_2_3340",
+            "mockMethod_3_6765"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\GracefulShutdownHandler.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\GracefulShutdownHandler.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "lock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "lock",
+          "inner_lock": "__crossLock_8837",
+          "sleep": 439
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "lock",
+          "inner_lock": "__crossLock_7173",
+          "sleep": 369
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "lock",
+          "inner_lock": "__crossLock_3837",
+          "sleep": 260
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "start",
+          "depth": 4,
+          "locks": [
+            "lock",
+            "__crossLock_3837",
+            "__crossLock_7173",
+            "__crossLock_8837"
+          ],
+          "sleep_ms": 379
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "addShutdownListener",
+          "depth": 4,
+          "locks": [
+            "lock",
+            "__crossLock_3837",
+            "__crossLock_7173",
+            "__crossLock_8837"
+          ],
+          "sleep_ms": 429
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "lock",
+            "__crossLock_3837",
+            "__crossLock_7173"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_4571",
+            "crossLock_g0_ring1_9143",
+            "crossLock_g0_ring2_4890"
+          ],
+          "fake": false,
+          "sleep_ms": 163,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_8837",
+            "__crossLock_7220",
+            "__crossLock_7464",
+            "__crossLock_6654"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_2399",
+            "crossLock_g1_ring1_4758",
+            "crossLock_g1_ring2_689",
+            "crossLock_g1_ring3_4712"
+          ],
+          "fake": true,
+          "sleep_ms": 297,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "lock",
+            "__crossLock_3837",
+            "__crossLock_7173"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_6771",
+            "crossLock_g2_ring1_5411",
+            "crossLock_g2_ring2_7739"
+          ],
+          "fake": true,
+          "sleep_ms": 125,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_3052",
+          "length": 4,
+          "tail_target": "addShutdownListener",
+          "inserted_into": "addShutdownListener",
+          "lock_used": "lock",
+          "chain": [
+            "mockMethod_0_3052",
+            "mockMethod_1_8116",
+            "mockMethod_2_595",
+            "mockMethod_3_2880"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\LearningPushHandler.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\LearningPushHandler.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "cache"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "cache",
+          "inner_lock": "__crossLock_2758",
+          "sleep": 252
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "cache",
+          "inner_lock": "__crossLock_5662",
+          "sleep": 271
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "cache",
+          "inner_lock": "__crossLock_9901",
+          "sleep": 332
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "handleRequest",
+          "depth": 2,
+          "locks": [
+            "cache",
+            "__crossLock_9901"
+          ],
+          "sleep_ms": 239
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "handleRequest",
+          "depth": 2,
+          "locks": [
+            "cache",
+            "__crossLock_9901"
+          ],
+          "sleep_ms": 183
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "cache",
+            "__crossLock_9901",
+            "__crossLock_5662",
+            "__crossLock_2758"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_5523",
+            "crossLock_g0_ring1_4833",
+            "crossLock_g0_ring2_9302",
+            "crossLock_g0_ring3_3164"
+          ],
+          "fake": false,
+          "sleep_ms": 103,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "AB_BA",
+          "locks": [
+            "cache",
+            "__crossLock_9901"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_4374",
+            "crossLock_g1_ring1_5400"
+          ],
+          "fake": false,
+          "sleep_ms": 292,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "cache",
+            "__crossLock_9901",
+            "__crossLock_5662"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_6642",
+            "crossLock_g2_ring1_8233",
+            "crossLock_g2_ring2_5095"
+          ],
+          "fake": false,
+          "sleep_ms": 140,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_5927",
+          "length": 1,
+          "tail_target": "handleRequest",
+          "inserted_into": "handleRequest",
+          "lock_used": "__crossLock_9901",
+          "chain": [
+            "mockMethod_0_5927"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\PathTemplateHandler.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\PathTemplateHandler.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "lock"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "lock",
+          "inner_lock": "__crossLock_9972",
+          "sleep": 131
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "lock",
+          "inner_lock": "__crossLock_4312",
+          "sleep": 358
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "lock",
+          "inner_lock": "__crossLock_9792",
+          "sleep": 393
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "add",
+          "depth": 4,
+          "locks": [
+            "lock",
+            "__crossLock_9792",
+            "__crossLock_4312",
+            "__crossLock_9972"
+          ],
+          "sleep_ms": 467
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_6868",
+          "length": 2,
+          "tail_target": "add",
+          "inserted_into": "remove",
+          "lock_used": "__crossLock_9792",
+          "chain": [
+            "mockMethod_0_6868",
+            "mockMethod_1_1848"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\RequestLimit.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\RequestLimit.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_4376"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "RequestLimit.this",
+          "inner_lock": "__crossLock_4376",
+          "sleep": 328
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "RequestLimit.this",
+          "inner_lock": "__crossLock_1797",
+          "sleep": 406
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "RequestLimit.this",
+          "inner_lock": "__crossLock_1724",
+          "sleep": 225
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "setFailureHandler",
+          "depth": 2,
+          "locks": [
+            "__crossLock_4376",
+            "__crossLock_1724"
+          ],
+          "sleep_ms": 211
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getMaximumConcurrentRequests",
+          "depth": 2,
+          "locks": [
+            "__crossLock_4376",
+            "__crossLock_1724"
+          ],
+          "sleep_ms": 357
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_4376",
+            "__crossLock_1724",
+            "__crossLock_1797"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_5224",
+            "crossLock_g0_ring1_9461",
+            "crossLock_g0_ring2_9796"
+          ],
+          "fake": false,
+          "sleep_ms": 247,
+          "topos": [
+            "chain_to_lock",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_4376",
+            "__crossLock_1724"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_6244",
+            "crossLock_g1_ring1_8592"
+          ],
+          "fake": false,
+          "sleep_ms": 188,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_4376",
+            "__crossLock_1724",
+            "__crossLock_1797"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_4927",
+            "crossLock_g2_ring1_2365",
+            "crossLock_g2_ring2_7586"
+          ],
+          "fake": false,
+          "sleep_ms": 157,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_1724",
+          "name": "syncBlock___crossLock_1724_6179"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4967",
+          "length": 3,
+          "tail_target": "getMaximumConcurrentRequests",
+          "inserted_into": "setFailureHandler",
+          "lock_used": "__crossLock_4376",
+          "chain": [
+            "mockMethod_0_4967",
+            "mockMethod_1_3422",
+            "mockMethod_2_7854"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\StuckThreadDetectionHandler.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\StuckThreadDetectionHandler.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_4470"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "StuckThreadDetectionHandler.this",
+          "inner_lock": "__crossLock_4470",
+          "sleep": 482
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "StuckThreadDetectionHandler.this",
+          "inner_lock": "__crossLock_8846",
+          "sleep": 486
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "StuckThreadDetectionHandler.this",
+          "inner_lock": "__crossLock_4350",
+          "sleep": 224
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getStuckThreadIds",
+          "depth": 2,
+          "locks": [
+            "__crossLock_4470",
+            "__crossLock_4350"
+          ],
+          "sleep_ms": 264
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4350",
+          "new": "__crossLock_8846"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_8846",
+          "new": "__crossLock_4350"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4470",
+          "new": "__crossLock_4350"
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_8846"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4470",
+          "new": "__crossLock_8846"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4350",
+          "new": "__crossLock_8846"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_8591",
+          "length": 5,
+          "tail_target": "getStuckThreadIds",
+          "inserted_into": "getStuckThreadIds",
+          "lock_used": "__crossLock_4350",
+          "chain": [
+            "mockMethod_0_8591",
+            "mockMethod_1_1753",
+            "mockMethod_2_2937",
+            "mockMethod_3_7054",
+            "mockMethod_4_8228"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\accesslog\\DefaultAccessLogReceiver.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\accesslog\\DefaultAccessLogReceiver.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_4144"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_4144",
+          "sleep": 281
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_7502",
+          "sleep": 236
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_7112",
+          "sleep": 140
+        },
+        {
+          "op": "replace_lock",
+          "old": "this",
+          "new": "__crossLock_7502"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7112",
+          "new": "__crossLock_7502"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_7502",
+          "new": "__crossLock_7112"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4144",
+          "new": "__crossLock_7112"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4037",
+          "length": 3,
+          "tail_target": null,
+          "inserted_into": "close",
+          "lock_used": "__crossLock_7112",
+          "chain": [
+            "mockMethod_0_4037",
+            "mockMethod_1_4839",
+            "mockMethod_2_1404"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\proxy\\mod_cluster\\MCMPAdvertiseTask.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\proxy\\mod_cluster\\MCMPAdvertiseTask.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "md"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "md",
+          "inner_lock": "__crossLock_3527",
+          "sleep": 464
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "md",
+          "inner_lock": "__crossLock_7383",
+          "sleep": 478
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "md",
+          "inner_lock": "__crossLock_6909",
+          "sleep": 262
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "run",
+          "depth": 2,
+          "locks": [
+            "md",
+            "__crossLock_6909"
+          ],
+          "sleep_ms": 327
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "run",
+          "depth": 3,
+          "locks": [
+            "md",
+            "__crossLock_6909",
+            "__crossLock_7383"
+          ],
+          "sleep_ms": 167
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "md",
+            "__crossLock_6909",
+            "__crossLock_7383",
+            "__crossLock_3527"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_6685",
+            "crossLock_g0_ring1_1692",
+            "crossLock_g0_ring2_430",
+            "crossLock_g0_ring3_1468"
+          ],
+          "fake": false,
+          "sleep_ms": 231,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "AB_BA",
+          "locks": [
+            "md",
+            "__crossLock_6909"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_4933",
+            "crossLock_g1_ring1_4397"
+          ],
+          "fake": false,
+          "sleep_ms": 168,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "md",
+            "__crossLock_6909"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_4040",
+            "crossLock_g2_ring1_8123"
+          ],
+          "fake": false,
+          "sleep_ms": 164,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_7848",
+          "length": 4,
+          "tail_target": "run",
+          "inserted_into": "run",
+          "lock_used": "__crossLock_3527",
+          "chain": [
+            "mockMethod_0_7848",
+            "mockMethod_1_3290",
+            "mockMethod_2_9883",
+            "mockMethod_3_5253"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\resource\\CachingResourceManager.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\resource\\CachingResourceManager.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_3910"
+        },
+        {
+          "op": "wrap_method_with_sync",
+          "method": "invalidate",
+          "lock": "__crossLock_3910",
+          "sleep": 394
+        },
+        {
+          "op": "wrap_method_with_sync",
+          "method": "invalidate",
+          "lock": "cacheAccessLock",
+          "sleep": 266
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "cacheAccessLock",
+          "inner_lock": "__crossLock_2865",
+          "sleep": 286
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "cacheAccessLock",
+          "inner_lock": "__crossLock_4273",
+          "sleep": 388
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "cacheAccessLock",
+          "inner_lock": "__crossLock_9939",
+          "sleep": 403
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getResource",
+          "depth": 4,
+          "locks": [
+            "__crossLock_3910",
+            "__crossLock_9939",
+            "__crossLock_4273",
+            "__crossLock_2865"
+          ],
+          "sleep_ms": 472
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "removeResourceChangeListener",
+          "depth": 4,
+          "locks": [
+            "__crossLock_3910",
+            "__crossLock_9939",
+            "__crossLock_4273",
+            "__crossLock_2865"
+          ],
+          "sleep_ms": 324
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_3910",
+            "__crossLock_9939",
+            "__crossLock_4273"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_4961",
+            "crossLock_g0_ring1_3965",
+            "crossLock_g0_ring2_4139"
+          ],
+          "fake": true,
+          "sleep_ms": 135,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_2865",
+            "readLock",
+            "writeLock"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_8796",
+            "crossLock_g1_ring1_9729",
+            "crossLock_g1_ring2_1392"
+          ],
+          "fake": true,
+          "sleep_ms": 279,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_3910",
+            "__crossLock_9939",
+            "__crossLock_4273"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_8499",
+            "crossLock_g2_ring1_9142",
+            "crossLock_g2_ring2_9511"
+          ],
+          "fake": true,
+          "sleep_ms": 230,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 143
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 159
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 473
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_4273",
+          "name": "syncBlock___crossLock_4273_5620"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4919",
+          "length": 2,
+          "tail_target": "removeResourceChangeListener",
+          "inserted_into": "removeResourceChangeListener",
+          "lock_used": "__crossLock_2865",
+          "chain": [
+            "mockMethod_0_4919",
+            "mockMethod_1_5225"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\resource\\PathResourceManager.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\resource\\PathResourceManager.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_2885"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "PathResourceManager.this",
+          "inner_lock": "__crossLock_2885",
+          "sleep": 431
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "PathResourceManager.this",
+          "inner_lock": "__crossLock_3692",
+          "sleep": 155
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "PathResourceManager.this",
+          "inner_lock": "__crossLock_4996",
+          "sleep": 479
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "setBase",
+          "depth": 4,
+          "locks": [
+            "__crossLock_2885",
+            "__crossLock_4996",
+            "__crossLock_3692",
+            "__crossLock_3623"
+          ],
+          "sleep_ms": 386
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "setBase",
+          "depth": 3,
+          "locks": [
+            "__crossLock_2885",
+            "__crossLock_4996",
+            "__crossLock_3692"
+          ],
+          "sleep_ms": 307
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2885",
+          "new": "__crossLock_3623"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4996",
+          "new": "__crossLock_3623"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_3692",
+          "new": "__crossLock_3623"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2885",
+          "new": "__crossLock_3623"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4996",
+          "new": "__crossLock_2885"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_3692",
+          "new": "__crossLock_3623"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_3623",
+          "new": "__crossLock_2885"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_4996",
+          "new": "__crossLock_3692"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_3692",
+          "new": "__crossLock_4996"
+        },
+        {
+          "op": "replace_lock",
+          "old": "__crossLock_2885",
+          "new": "__crossLock_4996"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_6809",
+          "length": 3,
+          "tail_target": "setBase",
+          "inserted_into": "registerResourceChangeListener",
+          "lock_used": "__crossLock_3623",
+          "chain": [
+            "mockMethod_0_6809",
+            "mockMethod_1_8056",
+            "mockMethod_2_6703"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\handlers\\sse\\ServerSentEventConnection.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\sse\\ServerSentEventConnection.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_8272"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ServerSentEventConnection.this",
+          "inner_lock": "__crossLock_8272",
+          "sleep": 389
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ServerSentEventConnection.this",
+          "inner_lock": "__crossLock_4613",
+          "sleep": 115
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ServerSentEventConnection.this",
+          "inner_lock": "__crossLock_1535",
+          "sleep": 249
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getRequestURI",
+          "depth": 4,
+          "locks": [
+            "__crossLock_8272",
+            "__crossLock_1535",
+            "__crossLock_4613",
+            "__crossLock_5729"
+          ],
+          "sleep_ms": 499
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "removeAttachment",
+          "depth": 4,
+          "locks": [
+            "__crossLock_8272",
+            "__crossLock_1535",
+            "__crossLock_4613",
+            "__crossLock_5729"
+          ],
+          "sleep_ms": 492
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_8272",
+            "__crossLock_1535",
+            "__crossLock_4613",
+            "__crossLock_5729"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_8898",
+            "crossLock_g0_ring1_6010",
+            "crossLock_g0_ring2_8880",
+            "crossLock_g0_ring3_681"
+          ],
+          "fake": false,
+          "sleep_ms": 168,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "chain_to_lock",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABCD_CYCLE",
+          "locks": [
+            "__crossLock_8272",
+            "__crossLock_1535",
+            "__crossLock_4613",
+            "__crossLock_5729"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_5744",
+            "crossLock_g1_ring1_9998",
+            "crossLock_g1_ring2_7015",
+            "crossLock_g1_ring3_2719"
+          ],
+          "fake": false,
+          "sleep_ms": 276,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_8272",
+            "__crossLock_1535",
+            "__crossLock_4613"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_4543",
+            "crossLock_g2_ring1_2078",
+            "crossLock_g2_ring2_2174"
+          ],
+          "fake": false,
+          "sleep_ms": 115,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_8756",
+          "length": 4,
+          "tail_target": "getRequestURI",
+          "inserted_into": "send",
+          "lock_used": "__crossLock_4613",
+          "chain": [
+            "mockMethod_0_8756",
+            "mockMethod_1_5869",
+            "mockMethod_2_7511",
+            "mockMethod_3_1526"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\protocol\\framed\\ShutdownFallbackExecutor.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\protocol\\framed\\ShutdownFallbackExecutor.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_4568"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ShutdownFallbackExecutor.class",
+          "inner_lock": "__crossLock_4568",
+          "sleep": 353
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ShutdownFallbackExecutor.class",
+          "inner_lock": "__crossLock_6289",
+          "sleep": 237
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "ShutdownFallbackExecutor.class",
+          "inner_lock": "__crossLock_6533",
+          "sleep": 245
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_4568",
+            "__crossLock_6533",
+            "__crossLock_6289"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_793",
+            "crossLock_g0_ring1_752",
+            "crossLock_g0_ring2_1631"
+          ],
+          "fake": false,
+          "sleep_ms": 295,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_4568",
+            "__crossLock_6533",
+            "__crossLock_6289"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_1529",
+            "crossLock_g1_ring1_5905",
+            "crossLock_g1_ring2_4102"
+          ],
+          "fake": false,
+          "sleep_ms": 170,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_4568",
+            "__crossLock_6533",
+            "__crossLock_6289"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_9726",
+            "crossLock_g2_ring1_3705",
+            "crossLock_g2_ring2_8510"
+          ],
+          "fake": true,
+          "sleep_ms": 133,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_6533",
+          "name": "syncBlock___crossLock_6533_4902"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_9228",
+          "length": 2,
+          "tail_target": null,
+          "inserted_into": null,
+          "lock_used": "__crossLock_4568",
+          "chain": [
+            "mockMethod_0_9228",
+            "mockMethod_1_1120"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\protocol\\http\\AlpnOpenListener.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\protocol\\http\\AlpnOpenListener.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_3688"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_3688",
+          "sleep": 421
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_3480",
+          "sleep": 483
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_8248",
+          "sleep": 310
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "setRootHandler",
+          "depth": 2,
+          "locks": [
+            "__crossLock_3688",
+            "__crossLock_8248"
+          ],
+          "sleep_ms": 171
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getConnectorStatistics",
+          "depth": 4,
+          "locks": [
+            "__crossLock_3688",
+            "__crossLock_8248",
+            "__crossLock_3480",
+            "__crossLock_7291"
+          ],
+          "sleep_ms": 319
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 142
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 258
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 140
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_1083",
+          "length": 1,
+          "tail_target": "setRootHandler",
+          "inserted_into": "getUndertowOptions",
+          "lock_used": "__crossLock_3480",
+          "chain": [
+            "mockMethod_0_1083"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\session\\InMemorySessionManager.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\session\\InMemorySessionManager.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "sessionManager"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "SessionImpl.this",
+          "inner_lock": "__crossLock_5005",
+          "sleep": 129
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "SessionImpl.this",
+          "inner_lock": "__crossLock_8118",
+          "sleep": 144
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "SessionImpl.this",
+          "inner_lock": "__crossLock_8428",
+          "sleep": 159
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getTransientSessions",
+          "depth": 2,
+          "locks": [
+            "__crossLock_8428",
+            "__crossLock_8118"
+          ],
+          "sleep_ms": 441
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getSession",
+          "depth": 4,
+          "locks": [
+            "__crossLock_8428",
+            "__crossLock_8118",
+            "__crossLock_5005",
+            "sessionManager"
+          ],
+          "sleep_ms": 161
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_4067",
+          "length": 1,
+          "tail_target": "getSession",
+          "inserted_into": "removeSessionListener",
+          "lock_used": "__crossLock_8118",
+          "chain": [
+            "mockMethod_0_4067"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\server\\session\\SslSessionConfig.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\session\\SslSessionConfig.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_5444"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "SslSessionConfig.this",
+          "inner_lock": "__crossLock_5444",
+          "sleep": 161
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "SslSessionConfig.this",
+          "inner_lock": "__crossLock_1862",
+          "sleep": 357
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "SslSessionConfig.this",
+          "inner_lock": "__crossLock_4656",
+          "sleep": 191
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "sessionCookieSource",
+          "depth": 2,
+          "locks": [
+            "__crossLock_5444",
+            "__crossLock_4656"
+          ],
+          "sleep_ms": 135
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "findSessionId",
+          "depth": 3,
+          "locks": [
+            "__crossLock_5444",
+            "__crossLock_4656",
+            "__crossLock_1862"
+          ],
+          "sleep_ms": 267
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_5444",
+            "__crossLock_4656",
+            "__crossLock_1862"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_9237",
+            "crossLock_g0_ring1_4979",
+            "crossLock_g0_ring2_3974"
+          ],
+          "fake": false,
+          "sleep_ms": 174,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_5444",
+            "__crossLock_4656",
+            "__crossLock_1862"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_157",
+            "crossLock_g1_ring1_5488",
+            "crossLock_g1_ring2_23"
+          ],
+          "fake": false,
+          "sleep_ms": 277,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_5444",
+            "__crossLock_4656"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_8515",
+            "crossLock_g2_ring1_6767"
+          ],
+          "fake": false,
+          "sleep_ms": 159,
+          "topos": [
+            "in_method_nested",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_1862",
+          "name": "syncBlock___crossLock_1862_2141"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_3827",
+          "length": 2,
+          "tail_target": "findSessionId",
+          "inserted_into": "findSessionId",
+          "lock_used": "__crossLock_4656",
+          "chain": [
+            "mockMethod_0_3827",
+            "mockMethod_1_7417"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\util\\Methods.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\util\\Methods.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_4321"
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "ABC_CYCLE",
+          "locks": [
+            "__crossLock_4321",
+            "__crossLock_8591",
+            "__crossLock_5341"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_1481",
+            "crossLock_g0_ring1_2582",
+            "crossLock_g0_ring2_4984"
+          ],
+          "fake": false,
+          "sleep_ms": 130,
+          "topos": [
+            "chain_to_lock",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_4321",
+            "__crossLock_1509",
+            "__crossLock_7625"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_9108",
+            "crossLock_g1_ring1_9013",
+            "crossLock_g1_ring2_4093"
+          ],
+          "fake": false,
+          "sleep_ms": 215,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_4321",
+            "__crossLock_2228",
+            "__crossLock_1357",
+            "__crossLock_2056"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_7265",
+            "crossLock_g2_ring1_2110",
+            "crossLock_g2_ring2_1506",
+            "crossLock_g2_ring3_5432"
+          ],
+          "fake": false,
+          "sleep_ms": 150,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 414
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 417
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 415
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_4321",
+          "name": "syncBlock___crossLock_4321_8173"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_2248",
+          "length": 4,
+          "tail_target": null,
+          "inserted_into": null,
+          "lock_used": "__crossLock_4321",
+          "chain": [
+            "mockMethod_0_2248",
+            "mockMethod_1_6275",
+            "mockMethod_2_1437",
+            "mockMethod_3_999"
+          ]
+        }
+      ]
+    },
+    {
+      "project": "undertow-main",
+      "file": "D:\\Projects3\\undertow-main\\core\\src\\main\\java\\io\\undertow\\util\\ReferenceCountedPooled.java",
+      "out": "mutated-1791599538938\\undertow-main\\io\\undertow\\util\\ReferenceCountedPooled.java",
+      "mutations": [
+        {
+          "op": "ensure_class_lock",
+          "lock": "__crossLock_4267"
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_4267",
+          "sleep": 422
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_1319",
+          "sleep": 378
+        },
+        {
+          "op": "nest_inside_sync",
+          "outer_lock": "this",
+          "inner_lock": "__crossLock_6883",
+          "sleep": 295
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "createView",
+          "depth": 3,
+          "locks": [
+            "__crossLock_4267",
+            "__crossLock_6883",
+            "__crossLock_1319"
+          ],
+          "sleep_ms": 389
+        },
+        {
+          "op": "add_deep_nesting",
+          "host_method": "getBuffer",
+          "depth": 3,
+          "locks": [
+            "__crossLock_4267",
+            "__crossLock_6883",
+            "__crossLock_1319"
+          ],
+          "sleep_ms": 192
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 0,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_4267",
+            "__crossLock_6883"
+          ],
+          "entry_methods": [
+            "crossLock_g0_ring0_4602",
+            "crossLock_g0_ring1_959"
+          ],
+          "fake": false,
+          "sleep_ms": 299,
+          "topos": [
+            "chain_to_lock",
+            "chain_to_lock"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 1,
+          "mode": "NESTED_CROSS",
+          "locks": [
+            "__crossLock_1319",
+            "__crossLock_4594",
+            "__crossLock_7363"
+          ],
+          "entry_methods": [
+            "crossLock_g1_ring0_2846",
+            "crossLock_g1_ring1_2885",
+            "crossLock_g1_ring2_3875"
+          ],
+          "fake": false,
+          "sleep_ms": 190,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "add_cross_lock",
+          "group": 2,
+          "mode": "AB_BA",
+          "locks": [
+            "__crossLock_4267",
+            "__crossLock_6883"
+          ],
+          "entry_methods": [
+            "crossLock_g2_ring0_1478",
+            "crossLock_g2_ring1_920"
+          ],
+          "fake": false,
+          "sleep_ms": 109,
+          "topos": [
+            "in_method_nested",
+            "in_method_nested"
+          ]
+        },
+        {
+          "op": "skip_replace_lock",
+          "reason": "cross_lock_hit"
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 467
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 190
+        },
+        {
+          "op": "insert_sleep",
+          "ms": 265
+        },
+        {
+          "op": "add_sync_block",
+          "field": "__crossLock_4267",
+          "name": "syncBlock___crossLock_4267_9611"
+        },
+        {
+          "op": "add_mock_chain",
+          "head": "mockMethod_0_1188",
+          "length": 1,
+          "tail_target": "getBuffer",
+          "inserted_into": "isFreed",
+          "lock_used": "__crossLock_4267",
+          "chain": [
+            "mockMethod_0_1188"
+          ]
+        }
+      ]
+    }
+  ],
+  "harnesses": [
+    {
+      "project": "kryonet-master",
+      "class": "Client",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\ClientHarness.java"
+    },
+    {
+      "project": "kryonet-master",
+      "class": "Connection",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\ConnectionHarness.java"
+    },
+    {
+      "project": "kryonet-master",
+      "class": "Listener",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\ListenerHarness.java"
+    },
+    {
+      "project": "kryonet-master",
+      "class": "Server",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\ServerHarness.java"
+    },
+    {
+      "project": "kryonet-master",
+      "class": "TcpConnection",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\TcpConnectionHarness.java"
+    },
+    {
+      "project": "kryonet-master",
+      "class": "UdpConnection",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\UdpConnectionHarness.java"
+    },
+    {
+      "project": "kryonet-master",
+      "class": "ObjectSpace",
+      "harness": "mutated-1791599538938\\kryonet-master\\com\\esotericsoftware\\kryonet\\rmi\\ObjectSpaceHarness.java"
+    },
+    {
+      "project": "rapidoid-master",
+      "class": "DefaultSessionManager",
+      "harness": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\customize\\defaults\\DefaultSessionManagerHarness.java"
+    },
+    {
+      "project": "rapidoid-master",
+      "class": "HttpRoutesImpl",
+      "harness": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\HttpRoutesImplHarness.java"
+    },
+    {
+      "project": "rapidoid-master",
+      "class": "ReqImpl",
+      "harness": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\ReqImplHarness.java"
+    },
+    {
+      "project": "rapidoid-master",
+      "class": "RespImpl",
+      "harness": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\RespImplHarness.java"
+    },
+    {
+      "project": "rapidoid-master",
+      "class": "LowLevelHttpIO",
+      "harness": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\http\\impl\\lowlevel\\LowLevelHttpIOHarness.java"
+    },
+    {
+      "project": "rapidoid-master",
+      "class": "My",
+      "harness": "mutated-1791599538938\\rapidoid-master\\org\\rapidoid\\setup\\MyHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "ReadTimeoutStreamSourceConduit",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\conduits\\ReadTimeoutStreamSourceConduitHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "WriteTimeoutStreamSinkConduit",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\conduits\\WriteTimeoutStreamSinkConduitHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "AjpClientChannel",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\ajp\\AjpClientChannelHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "OpenSSLAlpnProvider",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\alpn\\OpenSSLAlpnProviderHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "Http2Channel",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\http2\\Http2ChannelHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "SslConduit",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\protocols\\ssl\\SslConduitHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "SimpleNonceManager",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\security\\impl\\SimpleNonceManagerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "DefaultByteBufferPool",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\DefaultByteBufferPoolHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "RoutingHandler",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\RoutingHandlerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "GracefulShutdownHandler",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\GracefulShutdownHandlerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "LearningPushHandler",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\LearningPushHandlerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "PathTemplateHandler",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\PathTemplateHandlerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "RequestLimit",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\RequestLimitHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "StuckThreadDetectionHandler",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\StuckThreadDetectionHandlerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "DefaultAccessLogReceiver",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\accesslog\\DefaultAccessLogReceiverHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "MCMPAdvertiseTask",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\proxy\\mod_cluster\\MCMPAdvertiseTaskHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "CachingResourceManager",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\resource\\CachingResourceManagerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "PathResourceManager",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\resource\\PathResourceManagerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "ServerSentEventConnection",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\handlers\\sse\\ServerSentEventConnectionHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "ShutdownFallbackExecutor",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\protocol\\framed\\ShutdownFallbackExecutorHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "AlpnOpenListener",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\protocol\\http\\AlpnOpenListenerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "InMemorySessionManager",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\session\\InMemorySessionManagerHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "SslSessionConfig",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\server\\session\\SslSessionConfigHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "Methods",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\util\\MethodsHarness.java"
+    },
+    {
+      "project": "undertow-main",
+      "class": "ReferenceCountedPooled",
+      "harness": "mutated-1791599538938\\undertow-main\\io\\undertow\\util\\ReferenceCountedPooledHarness.java"
+    }
+  ],
+  "errors": []
+}
