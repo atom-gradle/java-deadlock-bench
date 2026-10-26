@@ -15,9 +15,11 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 ## 🗂️ Repository layout
 
 ```
+aggregated/             Outputs of `aggregate_seeds.py`
 dataset/                    Nocturne benchmark (.txt files)
 output/                     Outputs of the 15 experiments (the three with "abl" suffix include GNN ablation study)
 projects/                   The eight mutated projects
+aggregate_seeds.py            
 mutation_generator.py       Performs lock-related mutations on Java projects to generate reproducible samples.
 Parser.java                 Uses Static Analysis to analyze Java programs and export CYCLEs.
 pipeliner.py                Automatically runs Parser.java and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
