@@ -8,7 +8,7 @@ It contains the training/evaluation code for all model families evaluated in the
 together with the dataset construction pipeline and scripts for every configuration.
 
 ## Pipeline & Overview
-Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseling/LR/Random Forest/SVM/XGBoost/HeteroGNN)
+Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseline/Rule-LR/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
 
@@ -16,13 +16,14 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 
 ```
 dataset/                    Nocturne benchmark (.txt files)
-output/                     Outputs of the 15 experiments
-projects/                   The eight mutated porjects
+output/                     Outputs of the 15 experiments (the three with "abl" suffix include GNN ablation study)
+projects/                   The eight mutated projects
 mutation_generator.py       Performs lock-related mutations on Java projects to generate reproducible samples.
 Parser.java                 Uses Static Analysis to analyze Java programs and export CYCLEs.
 pipeliner.py                Automatically runs Parser.java and then merges output(.txt) into one single txt file while automatically correcting the index of data into sequence
-evaluate.py                 ML (RF, XGBoost, LogReg, SVM, Random Forest) vs. GNN, ablation study
-run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
+evaluate.py                 ML (LogReg, SVM, Random Forest, XGBoost) vs. GNN, ablation study
+run15.sh                  automatically runs 5 * 3 = 15 regime-seed evaluations
+run3ablation.sh                  automatically runs 3 evaluations including GNN ablation study under seeds 42-44
 ```
 
 ---
@@ -33,7 +34,7 @@ run_all.sh                  automatically runs 5 * 3 = 15 regime-seed evaluation
 All experiments run 5 seeds (42-46) over the same fixed split. Please ensure that `evaluate.py`, `train/`(directory), and `test`(directory) are placed in the same directory.
 
 ```bash
-./run_all.sh
+./run15.sh
 ```
 
 If you want to run one single evaluation, please use the following command:

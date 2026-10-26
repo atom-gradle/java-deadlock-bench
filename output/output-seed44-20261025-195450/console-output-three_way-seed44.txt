@@ -1,0 +1,154 @@
+Unified comparison of rule-based / random forest / heterogeneous GNN
+  data_dir   = dataset/train
+  test_dir   = dataset/test
+  out_dir    = ./output/output-seed44-20261025-195450
+  label_mode = three_way
+  n_splits   = 5
+  gnn        = hidden=32, layers=1, lr=0.001, dropout=0.3, epochs=100
+  loss       = cross-entropy (no class weights)
+  gnn_ablation = False  kinds=['node', 'edge', 'arch']
+
+[data] Total samples=4170  Unique structure=1759
+[data] y Distribution = {2: 2590, 1: 1243, 0: 337}
+
+
+
+Data quality assessment
+
+[label_real raw distribution]
+label_real
+0     337
+1    1243
+2    2590
+Name: count, dtype: int64
+
+[y Distribution (after label_mode)]
+y
+0     337
+1    1243
+2    2590
+Name: count, dtype: int64
+
+[Duplicate structures] unique struct_hash = 1759 / total samples: 4170
+
+[Missing values]
+  No missing values
+
+[save] ./output/output-seed44-20261025-195450/features.csv
+
+[fold] GroupKFold n_splits=5  (After merging train+test, group by `struct_hash`)
+
+
+
+1. Rule Baseline (reference: hard-coded isReal)
+  [Three-class classification] Acc=0.0808  macro-F1=0.0498
+  The rule can only output 0/2 and cannot distinguish label 1.
+  [NOTE] This is the analyzer's hard-coded isReal heuristic; it is reported as a reference, not as a competitive baseline.
+
+
+
+1b. Rule-LR (learned on CYCLE_FEATS only)
+  [Rule-LR GroupCV] {'f1_macro': 0.5238701142549854, 'f1_macro_ci95': 0.10330362622688749, 'acc': 0.6326139088729017, 'acc_ci95': 0.18362655186844012}
+
+
+
+2. Statistical Models
+2a. Logistic Regression
+  [LR GroupCV] {'f1_macro': 0.5187666804258486, 'f1_macro_ci95': 0.08303510562182614, 'acc': 0.6247002398081535, 'acc_ci95': 0.15386647198020775}
+
+
+
+2b. SVM (RBF)
+  [SVM GroupCV] {'f1_macro': 0.5468274506392166, 'f1_macro_ci95': 0.08978997666043753, 'acc': 0.6501199040767387, 'acc_ci95': 0.11865417585360494}
+
+
+
+2c. Random Forest
+  fold 0: {'f1_macro': 0.6225178686291195, 'acc': 0.8225419664268585}
+  fold 1: {'f1_macro': 0.5666086116383658, 'acc': 0.657074340527578}
+  fold 2: {'f1_macro': 0.5785129138696098, 'acc': 0.7338129496402878}
+  fold 3: {'f1_macro': 0.5992066687200749, 'acc': 0.7565947242206235}
+  fold 4: {'f1_macro': 0.6609580416348976, 'acc': 0.8597122302158273}
+
+  [Top15 importance @rf]
+    avg_call_dist                0.2206
+    avg_lock_dist                0.1306
+    avg_nesting                  0.1038
+    nested_ratio                 0.1013
+    n_call_edge                  0.0990
+    n_lock                       0.0508
+    n_lock_edge                  0.0498
+    acq_static_ratio             0.0376
+    static_ratio                 0.0376
+    n_cross_atl                  0.0295
+    n_cross_lta                  0.0279
+    n_acq                        0.0269
+    n_cross                      0.0268
+    sync_ratio                   0.0220
+    alias_ratio                  0.0180
+  [RF GroupCV average] {'f1_macro': 0.6055608208984136, 'f1_macro_ci95': 0.046647717886704965, 'acc': 0.765947242206235, 'acc_ci95': 0.09809975983669295}
+
+
+
+2d. XGBoost
+  [XGB GroupCV] {'f1_macro': 0.57267892779557, 'f1_macro_ci95': 0.061202598937251884, 'acc': 0.8187050359712231, 'acc_ci95': 0.037181414731848994}
+
+
+
+3. Heterogeneous GNN
+  fold 0: {'f1_macro': 0.5949863039064917, 'acc': 0.8489208633093526}
+  fold 1: {'f1_macro': 0.49861370301253, 'acc': 0.7817745803357314}
+  fold 2: {'f1_macro': 0.5470562049389854, 'acc': 0.7685851318944844}
+  fold 3: {'f1_macro': 0.6243847104245651, 'acc': 0.8033573141486811}
+  fold 4: {'f1_macro': 0.6022460736277252, 'acc': 0.8573141486810552}
+  [GNN GroupCV average] {'f1_macro': 0.5734573991820595, 'f1_macro_ci95': 0.06265322130013729, 'acc': 0.811990407673861, 'acc_ci95': 0.049236496725277856}
+
+
+
+5. Cross-project generalization (train on train_dir, test on test_dir)
+
+[cross-project] train samples = 3942, test samples = 228
+[cross-project] train y = {2: 2444, 1: 1177, 0: 321}
+[cross-project] test  y = {2: 146, 1: 66, 0: 16}
+  [rule] {'f1_macro': 0.04371584699453552, 'acc': 0.07017543859649122}
+  [rf] {'f1_macro': 0.4935167347202533, 'acc': 0.5789473684210527}
+  [lr] {'f1_macro': 0.5173237753882916, 'acc': 0.6140350877192983}
+  [xgb] {'f1_macro': 0.5449409982130652, 'acc': 0.8157894736842105}
+  [svm] {'f1_macro': 0.4881518292367102, 'acc': 0.5526315789473685}
+  [gnn] {'f1_macro': 0.5150473810267625, 'acc': 0.7324561403508771}
+
+[cross-project summary]
+  rule     {'f1_macro': 0.04371584699453552, 'acc': 0.07017543859649122}
+  rf       {'f1_macro': 0.4935167347202533, 'acc': 0.5789473684210527}
+  lr       {'f1_macro': 0.5173237753882916, 'acc': 0.6140350877192983}
+  xgb      {'f1_macro': 0.5449409982130652, 'acc': 0.8157894736842105}
+  svm      {'f1_macro': 0.4881518292367102, 'acc': 0.5526315789473685}
+  gnn      {'f1_macro': 0.5150473810267625, 'acc': 0.7324561403508771}
+
+
+
+Final comparison (GroupKFold by struct_hash)
+  Model                    macroF1 (95% CI)      Acc
+  Rule baseline    0.0498 ± 0.0000          0.0808
+  Rule-LR          0.5239 ± 0.1033          0.6326
+  LogisticReg      0.5188 ± 0.0830          0.6247
+  SVM-RBF          0.5468 ± 0.0898          0.6501
+  Random Forest    0.6056 ± 0.0466          0.7659
+  XGBoost          0.5727 ± 0.0612          0.8187
+  HeteroGNN        0.5735 ± 0.0627          0.8120
+
+
+
+Triage analysis (binary only; needs oof_prob)
+
+
+
+GNN vs baselines: paired significance tests
+  metric = f1_macro   (paired by fold, n=5)
+  Baseline          mean(GNN)    mean(B)     diff        t-p        w-p        c-p   sig
+  LogisticReg          0.5735     0.5188   0.0547     0.1402     0.3125     0.2881      
+  SVM-RBF              0.5735     0.5468   0.0266     0.4368      0.625     0.5958      
+  XGBoost              0.5735     0.5727   0.0008     0.9818          1     0.9879      
+  Random Forest        0.5735     0.6056  -0.0321     0.1198      0.125     0.2589      
+
+[save] ./output/output-seed44-20261025-195450/summary-three_way-seed44.json

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import argparse, glob, hashlib, json, os, re, warnings, joblib, time, sys
+import argparse, glob, hashlib, json, os, re, warnings, joblib, time, sys, random
 from collections import Counter
 
 import numpy as np
@@ -27,12 +27,13 @@ warnings.filterwarnings("ignore")
 RANDOM_SEED = 42
 np.random.seed(RANDOM_SEED)
 torch.manual_seed(RANDOM_SEED)
+random.seed(RANDOM_SEED)
 
 LOCK_FEAT_DIM = 5
 ACQ_FEAT_DIM = 6
 LOCK_EDGE_FEAT_DIM = 3
 CALL_EDGE_FEAT_DIM = 3
-GLOBAL_FEAT_DIM = 18  # 对应 GRAPH_FEATS 的维度
+GLOBAL_FEAT_DIM = 18
 
 GRAPH_FEATS = [
     "n_lock", "n_acq", "n_lock_edge", "n_call_edge",
@@ -67,8 +68,13 @@ def _normalize(x: torch.Tensor, key: str):
     return (x - mean) / std.clamp_min(1e-6)
 
 
+def reset_feat_stats():
+    for k in FEAT_STATS:
+        FEAT_STATS[k]["mean"] = None
+        FEAT_STATS[k]["std"] = None
+
+
 def compute_feat_stats(data_list):
-    # node features
     for key, dim in [("lock", LOCK_FEAT_DIM), ("acq", ACQ_FEAT_DIM)]:
         vecs = []
         for d in data_list:
@@ -79,7 +85,6 @@ def compute_feat_stats(data_list):
             FEAT_STATS[key]["mean"] = allx.mean(dim=0).tolist()
             FEAT_STATS[key]["std"] = allx.std(dim=0).clamp_min(1e-6).tolist()
 
-    # global features
     vecs = [d.global_feat for d in data_list]
     if vecs:
         allx = torch.cat(vecs, dim=0)
@@ -243,6 +248,8 @@ def apply_label_mode(df, label_mode):
         df["y"] = (df["label_real"] >= 1).astype(int)
     elif label_mode == "three_way":
         df["y"] = df["label_real"].astype(int)
+    else:
+        raise ValueError(f"unknown label_mode: {label_mode}")
     return df
 
 
@@ -251,6 +258,8 @@ def make_folds(df, n_splits=5):
     y = df["y"].values
     n_groups = len(np.unique(groups))
     n_splits = min(n_splits, n_groups)
+    if n_splits < 2:
+        raise ValueError(f"Too few unique structure ({n_groups})")
     gkf = GroupKFold(n_splits=n_splits)
     return list(gkf.split(np.zeros(len(df)), y, groups))
 
@@ -370,9 +379,11 @@ def eval_sklearn_on_folds(df, feat_cols, folds, tag="lr", out_dir=None):
     return mean_metrics, oof_prob, oof_pred
 
 
-def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=False, drop_line=False, abl_node="full", abl_edge="full"):
+def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=False,
+                    drop_line=False, abl_node="full", abl_edge="full", abl_global="full"):
+
     data = HeteroData()
-    n_lock = len(c["lock_nodes"]);
+    n_lock = len(c["lock_nodes"])
     n_acq = len(c["acq_nodes"])
 
     f = c["features"]
@@ -393,30 +404,43 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
 
     global_feat = [
         n_lock, n_acq, n_le, n_ce, n_cross,
-        sum(1 for x in c["cross"] if x[0] == "ACQ_TO_LOCK"), sum(1 for x in c["cross"] if x[0] == "LOCK_TO_ACQ"),
+        sum(1 for x in c["cross"] if x[0] == "ACQ_TO_LOCK"),
+        sum(1 for x in c["cross"] if x[0] == "LOCK_TO_ACQ"),
         static_ratio, nonnull_ratio, avg_lock_dist, alias_ratio, same_obj_ratio,
-        sync_ratio, acq_static_ratio, avg_nesting, avg_pts, avg_call_dist, nested_ratio
+        sync_ratio, acq_static_ratio, avg_nesting, avg_pts, avg_call_dist, nested_ratio,
     ]
+    if abl_global == "zero":
+        global_feat = [0.0] * GLOBAL_FEAT_DIM
     data.global_feat = torch.tensor([global_feat], dtype=torch.float)
 
-    # node features
     lock_in, lock_out = Counter(), Counter()
-    for e in c["lock_edges"]: lock_out[e["from"]] += 1; lock_in[e["to"]] += 1
+    for e in c["lock_edges"]:
+        lock_out[e["from"]] += 1
+        lock_in[e["to"]] += 1
     for (t, a, b) in c["cross"]:
         if t == "ACQ_TO_LOCK":
             lock_in[b] += 1
         else:
             lock_out[a] += 1
+
     if n_lock > 0:
         lf = []
         for n in c["lock_nodes"]:
             nid = n["id"]
-            feat = [float(n["is_static"]), float(n["obj_nonnull"]), float(lock_in.get(nid, 0)),
-                    float(lock_out.get(nid, 0)), float(lock_in.get(nid, 0) + lock_out.get(nid, 0))]
+            feat = [
+                float(n["is_static"]),
+                float(n["obj_nonnull"]),
+                float(lock_in.get(nid, 0)),
+                float(lock_out.get(nid, 0)),
+                float(lock_in.get(nid, 0) + lock_out.get(nid, 0)),
+            ]
             if abl_node == "no_static":
-                feat[0] = 0.0; feat[1] = 0.0
+                feat[0] = 0.0
+                feat[1] = 0.0
             elif abl_node == "no_degree":
-                feat[2] = 0.0; feat[3] = 0.0; feat[4] = 0.0
+                feat[2] = 0.0
+                feat[3] = 0.0
+                feat[4] = 0.0
             elif abl_node == "zero":
                 feat = [0.0] * LOCK_FEAT_DIM
             lf.append(feat)
@@ -425,66 +449,82 @@ def cycle_to_hetero(c, drop_lock_edge=False, drop_call_edge=False, drop_cross=Fa
         data["lock"].x = torch.zeros((0, LOCK_FEAT_DIM), dtype=torch.float)
 
     acq_in, acq_out = Counter(), Counter()
-    for e in c["call_edges"]: acq_out[e["src"]] += 1; acq_in[e["dst"]] += 1
+    for e in c["call_edges"]:
+        acq_out[e["src"]] += 1
+        acq_in[e["dst"]] += 1
     for (t, a, b) in c["cross"]:
         if t == "ACQ_TO_LOCK":
             acq_out[a] += 1
         else:
             acq_in[b] += 1
+
     if n_acq > 0:
         af = []
         for a in c["acq_nodes"]:
             aid = a["id"]
-            feat = [float(a["line"] if a["line"] >= 0 else 0), float(a["is_static"]), float(a["is_sync"]),
-                    float(a["nesting"]), float(a["pts_size"]), float(acq_in.get(aid, 0) + acq_out.get(aid, 0))]
+            feat = [
+                float(a["line"] if a["line"] >= 0 else 0),
+                float(a["is_static"]),
+                float(a["is_sync"]),
+                float(a["nesting"]),
+                float(a["pts_size"]),
+                float(acq_in.get(aid, 0) + acq_out.get(aid, 0)),
+            ]
             if abl_node == "no_static":
-                feat[1] = 0.0; feat[2] = 0.0
+                feat[1] = 0.0
+                feat[2] = 0.0
             elif abl_node == "no_degree":
                 feat[5] = 0.0
             elif abl_node == "zero":
                 feat = [0.0] * ACQ_FEAT_DIM
-            if drop_line: feat[0] = 0.0
+            if drop_line:
+                feat[0] = 0.0
             af.append(feat)
         data["acq"].x = torch.tensor(af, dtype=torch.float)
     else:
         data["acq"].x = torch.zeros((0, ACQ_FEAT_DIM), dtype=torch.float)
 
-    # edges (注意：我们已经废弃了 GINEConv，转为 SAGEConv，因此不用传 edge_attr 了)
-    if c["lock_edges"] and not drop_lock_edge:
+    if abl_edge == "zero":
+        eff_drop_lock_edge = True
+        eff_drop_call_edge = True
+        eff_drop_cross = True
+    else:
+        eff_drop_lock_edge = drop_lock_edge
+        eff_drop_call_edge = drop_call_edge
+        eff_drop_cross = drop_cross
+
+    if c["lock_edges"] and not eff_drop_lock_edge:
         data["lock", "lock_edge", "lock"].edge_index = torch.tensor(
-            [[e["from"] for e in c["lock_edges"]], [e["to"] for e in c["lock_edges"]]], dtype=torch.long)
+            [[e["from"] for e in c["lock_edges"]],
+             [e["to"] for e in c["lock_edges"]]],
+            dtype=torch.long,
+        )
     else:
         data["lock", "lock_edge", "lock"].edge_index = torch.zeros((2, 0), dtype=torch.long)
 
-    if c["call_edges"] and not drop_call_edge:
+    if c["call_edges"] and not eff_drop_call_edge:
         data["acq", "call_edge", "acq"].edge_index = torch.tensor(
-            [[e["src"] for e in c["call_edges"]], [e["dst"] for e in c["call_edges"]]], dtype=torch.long)
+            [[e["src"] for e in c["call_edges"]],
+             [e["dst"] for e in c["call_edges"]]],
+            dtype=torch.long,
+        )
     else:
         data["acq", "call_edge", "acq"].edge_index = torch.zeros((2, 0), dtype=torch.long)
 
-    atl = [(a, b) for (t, a, b) in c["cross"] if t == "ACQ_TO_LOCK"] if not drop_cross else []
-    lta = [(a, b) for (t, a, b) in c["cross"] if t == "LOCK_TO_ACQ"] if not drop_cross else []
-    data["acq", "acq_to_lock", "lock"].edge_index = torch.tensor([[a for a, b in atl], [b for a, b in atl]],
-                                                                 dtype=torch.long) if atl else torch.zeros((2, 0),
-                                                                                                           dtype=torch.long)
-    data["lock", "lock_to_acq", "acq"].edge_index = torch.tensor([[a for a, b in lta], [b for a, b in lta]],
-                                                                 dtype=torch.long) if lta else torch.zeros((2, 0),
-                                                                                                           dtype=torch.long)
+    atl = [(a, b) for (t, a, b) in c["cross"] if t == "ACQ_TO_LOCK"] if not eff_drop_cross else []
+    lta = [(a, b) for (t, a, b) in c["cross"] if t == "LOCK_TO_ACQ"] if not eff_drop_cross else []
+
+    data["acq", "acq_to_lock", "lock"].edge_index = (
+        torch.tensor([[a for a, b in atl], [b for a, b in atl]], dtype=torch.long)
+        if atl else torch.zeros((2, 0), dtype=torch.long)
+    )
+    data["lock", "lock_to_acq", "acq"].edge_index = (
+        torch.tensor([[a for a, b in lta], [b for a, b in lta]], dtype=torch.long)
+        if lta else torch.zeros((2, 0), dtype=torch.long)
+    )
 
     data.y = torch.tensor([c["labels"].get("real", 0)], dtype=torch.long)
     return data
-
-def apply_label_mode(df, label_mode):
-    df = df[df["label_real"].isin([0, 1, 2])].copy()
-    if label_mode == "binary_strong":
-        df["y"] = (df["label_real"] == 2).astype(int)
-    elif label_mode == "binary_loose":
-        df["y"] = (df["label_real"] >= 1).astype(int)
-    elif label_mode == "three_way":
-        df["y"] = df["label_real"].astype(int)
-    else:
-        raise ValueError(f"unknown label_mode: {label_mode}")
-    return df
 
 def quality_report(df, out_dir):
     print("\n\n")
@@ -538,10 +578,8 @@ def quality_report(df, out_dir):
     df.to_csv(os.path.join(out_dir, "features.csv"), index=False)
     print(f"\n[save] {out_dir}/features.csv")
 
+
 def rule_baseline(df):
-    # [FIX] reference-only baseline: the analyzer's hard-coded isReal heuristic.
-    #       It predicts almost no positives by construction; kept for reference,
-    #       not as a competitive baseline. See Rule-LR below for a learned version.
     pred = (
         (df["all_edges_same_thread"] == 1)
         & (df["all_edges_reachable"] == 1)
@@ -562,8 +600,8 @@ def rule_baseline(df):
         except Exception:
             auc = float("nan")
         f1 = f1_score(y, pred, zero_division=0)
-        p  = precision_score(y, pred, zero_division=0)
-        r  = recall_score(y, pred, zero_division=0)
+        p = precision_score(y, pred, zero_division=0)
+        r = recall_score(y, pred, zero_division=0)
         print(f"  Acc={acc:.4f}  AUC={auc:.4f}  F1={f1:.4f}  P={p:.4f}  R={r:.4f}")
         print(f"  Predicted positive class ratio={pred.mean():.4f}  True positive class ratio={y.mean():.4f}")
         print("  [NOTE] This is the analyzer's hard-coded isReal heuristic; it is reported as a reference, not as a competitive baseline.")
@@ -578,16 +616,6 @@ def rule_baseline(df):
         print("  [NOTE] This is the analyzer's hard-coded isReal heuristic; it is reported as a reference, not as a competitive baseline.")
         return {"acc": float(acc), "f1_macro": float(f1m)}
 
-def make_folds(df, n_splits=5):
-    groups = df["struct_hash"].values
-    y = df["y"].values
-    n_groups = len(np.unique(groups))
-    n_splits = min(n_splits, n_groups)
-    if n_splits < 2:
-        raise ValueError(f"Too few unique structure ({n_groups})")
-
-    gkf = GroupKFold(n_splits=n_splits)
-    return list(gkf.split(np.zeros(len(df)), y, groups))
 
 def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None):
     X = df[feat_cols].fillna(0).values.astype(np.float32)
@@ -617,7 +645,6 @@ def eval_rf_on_folds(df, feat_cols, folds, tag="rf", do_grid=False, out_dir=None
     fold_metrics = []
 
     for k, (tr, te) in enumerate(folds):
-        # [FIX] guard against single-class test folds
         if len(np.unique(y[te])) < 2:
             print(f"  fold {k}: test set has only one class, recorded as NaN")
             if is_binary:
@@ -788,11 +815,20 @@ def _split_train_val(train_ds, val_ratio=0.15, seed=RANDOM_SEED):
 
 
 def train_and_eval_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=32, num_layers=1, dropout=0.3, lr=1e-3,
-                       patience=15, model_cls=HeteroGNN, use_focal=False, fold_seed=None, **model_kwargs):
+                       patience=15, model_cls=HeteroGNN, use_focal=False, fold_seed=None,
+                       reset_stats=True, cross_project_mode=False, **model_kwargs):
+
     if fold_seed is None: fold_seed = RANDOM_SEED
-    torch.manual_seed(fold_seed);
+
+    random.seed(fold_seed)
+    torch.manual_seed(fold_seed)
     np.random.seed(fold_seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(fold_seed)
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if reset_stats:
+        reset_feat_stats()
     compute_feat_stats(train_ds)
 
     model = model_cls(hidden=hidden, num_classes=num_classes, num_layers=num_layers, dropout=dropout,
@@ -800,22 +836,30 @@ def train_and_eval_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=32, 
     opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-3)
     criterion = FocalLoss(gamma=2.0) if use_focal else torch.nn.CrossEntropyLoss()
 
-    tr_ds, val_ds = _split_train_val(train_ds, val_ratio=0.15, seed=RANDOM_SEED)
-    train_loader = DataLoader(tr_ds, batch_size=16, shuffle=True, collate_fn=collate_hetero, num_workers=0)
-    val_loader = DataLoader(val_ds, batch_size=16, shuffle=False, collate_fn=collate_hetero) if val_ds else None
+    tr_ds, val_ds = _split_train_val(train_ds, val_ratio=0.15, seed=fold_seed)
+
+    g = torch.Generator()
+    g.manual_seed(fold_seed)
+    train_loader = DataLoader(tr_ds, batch_size=16, shuffle=True,
+                              collate_fn=collate_hetero, num_workers=0,
+                              generator=g)
+    val_loader = DataLoader(val_ds, batch_size=16, shuffle=False,
+                            collate_fn=collate_hetero) if val_ds else None
+
+    effective_patience = epochs + 1 if cross_project_mode else patience
 
     best_score, best_state, no_improve = -np.inf, None, 0
     for epoch in range(1, epochs + 1):
         model.train()
         for batch in train_loader:
-            batch = batch.to(device);
+            batch = batch.to(device)
             opt.zero_grad()
-            out = model(batch);
-            loss = criterion(out, batch.y.view(-1));
-            loss.backward();
+            out = model(batch)
+            loss = criterion(out, batch.y.view(-1))
+            loss.backward()
             opt.step()
 
-        if val_loader is not None:
+        if val_loader is not None and not cross_project_mode:
             model.eval()
             all_prob, all_y = [], []
             with torch.no_grad():
@@ -824,16 +868,17 @@ def train_and_eval_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=32, 
                     all_prob.append(F.softmax(model(batch), dim=-1).cpu().numpy())
                     all_y.append(batch.y.view(-1).cpu().numpy())
             if all_prob:
-                all_prob = np.concatenate(all_prob);
+                all_prob = np.concatenate(all_prob)
                 all_y = np.concatenate(all_y)
-                score = roc_auc_score(all_y, all_prob[:, 1]) if num_classes == 2 else f1_score(all_y,
-                                                                                               all_prob.argmax(axis=1),
-                                                                                               average="macro",
-                                                                                               zero_division=0)
+                if len(np.unique(all_y)) < 2:
+                    score = 0.0
+                else:
+                    score = roc_auc_score(all_y, all_prob[:, 1]) if num_classes == 2 else f1_score(
+                        all_y, all_prob.argmax(axis=1), average="macro", zero_division=0)
             else:
-                score = 0
+                score = 0.0
         else:
-            score = -epoch
+            score = float(epoch)
 
         if score > best_score + 1e-5:
             best_score = score
@@ -841,12 +886,15 @@ def train_and_eval_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=32, 
             no_improve = 0
         else:
             no_improve += 1
-            if no_improve >= patience: break
+            if no_improve >= effective_patience:
+                break
 
-    if best_state is not None: model.load_state_dict({k: v.to(device) for k, v in best_state.items()})
+    if best_state is not None:
+        model.load_state_dict({k: v.to(device) for k, v in best_state.items()})
 
     model.eval()
-    test_loader = DataLoader(test_ds, batch_size=16, shuffle=False, collate_fn=collate_hetero)
+    test_loader = DataLoader(test_ds, batch_size=16, shuffle=False,
+                             collate_fn=collate_hetero)
     all_prob, all_y = [], []
     with torch.no_grad():
         for batch in test_loader:
@@ -859,9 +907,9 @@ def train_and_eval_gnn(train_ds, test_ds, num_classes=2, epochs=100, hidden=32, 
 def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=32,
                       num_layers=1, dropout=0.3, lr=1e-3,
                       drop_lock_edge=False, drop_call_edge=False, drop_cross=False, drop_line=False,
-                      abl_node="full", abl_edge="full",
+                      abl_node="full", abl_edge="full", abl_global="full",
                       tag="gnn", model_cls=HeteroGNN, use_focal=False,
-                      use_coral=False, model_kwargs=None):
+                      model_kwargs=None):
 
     valid_idx = df.index.values
     valid_cycles = [cycles[i] for i in valid_idx]
@@ -872,7 +920,8 @@ def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=32,
                                  drop_cross=drop_cross,
                                  drop_line=drop_line,
                                  abl_node=abl_node,
-                                 abl_edge=abl_edge)
+                                 abl_edge=abl_edge,
+                                 abl_global=abl_global)
                  for c in valid_cycles]
 
     y_eff = df["y"].values.astype(int)
@@ -890,7 +939,9 @@ def eval_gnn_on_folds(cycles, df, folds, num_classes=2, epochs=100, hidden=32,
 
         _, prob, _ = train_and_eval_gnn(tr_ds, te_ds, num_classes=num_classes, epochs=epochs, hidden=hidden,
                                         num_layers=num_layers, dropout=dropout, lr=lr, model_cls=model_cls,
-                                        use_focal=use_focal, fold_seed=RANDOM_SEED + k, **(model_kwargs or {}))
+                                        use_focal=use_focal, fold_seed=RANDOM_SEED + k,
+                                        reset_stats=True, cross_project_mode=False,
+                                        **(model_kwargs or {}))
         if prob is None:
             fold_metrics.append({"auc": float("nan"), "f1": float("nan"), "acc": float("nan")});
             continue
@@ -961,8 +1012,10 @@ def triage_at_precision(df, prob_col="oof_prob", y_col="y", target_precision=0.8
     recall = float(cum_tp[k - 1] / n_pos)
     return {"target_precision": target_precision, "recall": recall, "k": k}
 
+
 def eval_rule_lr_on_folds(df, folds, tag="lr", out_dir=None):
     return eval_sklearn_on_folds(df, CYCLE_FEATS, folds, tag=tag, out_dir=out_dir)
+
 
 def wilcoxon_test(a, b):
     a = np.asarray(a, dtype=float)
@@ -979,6 +1032,7 @@ def wilcoxon_test(a, b):
         return float(stat), float(p_val), float(np.mean(diff))
     except Exception:
         return float("nan"), float("nan"), float(np.mean(diff))
+
 
 def triage_report(oof_path, tag, label_mode):
     if not label_mode.startswith("binary"):
@@ -1088,10 +1142,8 @@ def eval_cross_project(df_train, df_test, cycles_train, cycles_test,
         results[tag] = res
         print(f"  [{tag}] {res}")
 
-    valid_tr = df_tr["label_real"].isin([0, 1, 2]).values
-    valid_te = df_te["label_real"].isin([0, 1, 2]).values
-    cycles_tr = [c for c, m in zip(cycles_train, valid_tr) if m]
-    cycles_te = [c for c, m in zip(cycles_test, valid_te) if m]
+    cycles_tr = [cycles_train[i] for i in df_tr.index.values]
+    cycles_te = [cycles_test[i] for i in df_te.index.values]
 
     num_classes = 2 if is_binary else 3
     data_tr = [cycle_to_hetero(c) for c in cycles_tr]
@@ -1107,7 +1159,8 @@ def eval_cross_project(df_train, df_test, cycles_train, cycles_test,
     _, prob_gnn, _ = train_and_eval_gnn(
         data_tr, data_te, num_classes=num_classes,
         epochs=gnn_epochs, hidden=gnn_hidden, num_layers=gnn_layers,
-        dropout=gnn_dropout, lr=gnn_lr, model_cls=HeteroGNN)
+        dropout=gnn_dropout, lr=gnn_lr, model_cls=HeteroGNN,
+        reset_stats=True, cross_project_mode=True)
 
     if prob_gnn is not None:
         if num_classes == 2:
@@ -1163,27 +1216,30 @@ def eval_cross_project(df_train, df_test, cycles_train, cycles_test,
 
 
 GNN_ABLATIONS = {
-    "node_full":      dict(abl_node="full",      model_cls=HeteroGNN),
+    "node_full": dict(abl_node="full", model_cls=HeteroGNN),
     "node_no_static": dict(abl_node="no_static", model_cls=HeteroGNN),
     "node_no_degree": dict(abl_node="no_degree", model_cls=HeteroGNN),
-    "node_no_line":   dict(abl_node="full", drop_line=True, model_cls=HeteroGNN),
-    "node_zero":      dict(abl_node="zero",      model_cls=HeteroGNN),
+    "node_no_line": dict(abl_node="full", drop_line=True, model_cls=HeteroGNN),
+    "node_zero": dict(abl_node="zero", model_cls=HeteroGNN),
 
-    "edge_full":      dict(abl_edge="full",      model_cls=HeteroGNN),
-    "edge_zero":      dict(abl_edge="zero",      model_cls=HeteroGNN),
-    "edge_no_attr":   dict(abl_edge="no_attr",   model_cls=HeteroGNN),
+    "edge_full": dict(abl_edge="full", model_cls=HeteroGNN),
+    "edge_zero": dict(abl_edge="zero", model_cls=HeteroGNN),
 
-    "arch_full":      dict(model_cls=HeteroGNN),
-    "arch_no_cross":  dict(model_cls=HeteroGNN, drop_cross=True),
-    "arch_no_lock":   dict(model_cls=HeteroGNN, drop_lock_edge=True),
-    "arch_no_call":   dict(model_cls=HeteroGNN, drop_call_edge=True),
+    "arch_full": dict(model_cls=HeteroGNN),
+    "arch_no_cross": dict(model_cls=HeteroGNN, drop_cross=True),
+    "arch_no_lock": dict(model_cls=HeteroGNN, drop_lock_edge=True),
+    "arch_no_call": dict(model_cls=HeteroGNN, drop_call_edge=True),
+
+    "global_zero": dict(abl_global="zero", model_cls=HeteroGNN),
 }
 
 ABL_KIND_MAP = {
     "node": ["node_full", "node_no_static", "node_no_degree", "node_no_line", "node_zero"],
-    "edge": ["edge_full", "edge_zero", "edge_no_attr"],
+    "edge": ["edge_full", "edge_zero"],
     "arch": ["arch_full", "arch_no_cross", "arch_no_lock", "arch_no_call"],
+    "global": ["global_zero"],
 }
+
 
 def run_gnn_ablation(cycles, df, folds, num_classes, args, kinds=None):
     if kinds is None:
@@ -1257,7 +1313,6 @@ def run_gnn_ablation(cycles, df, folds, num_classes, args, kinds=None):
 
 
 def record_seed_metrics(tag, fold_metrics, metric_keys):
-    """Average per-fold metrics into one seed-level value per metric."""
     if not fold_metrics:
         return
     SEED_METRICS[tag] = {}
@@ -1269,7 +1324,6 @@ def record_seed_metrics(tag, fold_metrics, metric_keys):
 
 
 def paired_ttest_across_seeds(a, b):
-    """Paired t-test on per-seed means. a, b: equal-length lists."""
     a = np.asarray(a, dtype=float)
     b = np.asarray(b, dtype=float)
     mask = ~(np.isnan(a) | np.isnan(b))
@@ -1296,16 +1350,15 @@ def main():
     ap.add_argument("--gnn_lr", type=float, default=1e-3)
     ap.add_argument("--gnn_dropout", type=float, default=0.3)
     ap.add_argument("--use_focal", action="store_true", default=False)
-    ap.add_argument("--use_coral", action="store_true", default=False)
     ap.add_argument("--do_rf", action="store_true", default=True)
     ap.add_argument("--do_gnn", action="store_true", default=True)
     ap.add_argument("--do_grid", action="store_true")
     ap.add_argument("--do_gnn_ablation", action="store_true",
                     help="Run GNN node/edge/arch ablation study")
     ap.add_argument("--abl_kinds", nargs="+", default=["node", "edge", "arch"],
-                    choices=["node", "edge", "arch"],
+                    choices=["node", "edge", "arch", "global"],
                     help="Which ablation groups to run")
-    ap.add_argument("--do_lr",  action="store_true", default=True)
+    ap.add_argument("--do_lr", action="store_true", default=True)
     ap.add_argument("--do_xgb", action="store_true", default=True)
     ap.add_argument("--do_svm", action="store_true", default=True)
     args = ap.parse_args()
@@ -1314,6 +1367,7 @@ def main():
     RANDOM_SEED = args.seed
     np.random.seed(RANDOM_SEED)
     torch.manual_seed(RANDOM_SEED)
+    random.seed(RANDOM_SEED)
 
     timestamp = time.strftime("%Y%m%d-%H%M%S")
     run_tag = f"output-seed{RANDOM_SEED}-{timestamp}"
@@ -1326,10 +1380,12 @@ def main():
     class Tee:
         def __init__(self, *streams):
             self.streams = streams
+
         def write(self, data):
             for s in self.streams:
                 s.write(data)
                 s.flush()
+
         def flush(self):
             for s in self.streams:
                 s.flush()
@@ -1346,11 +1402,10 @@ def main():
     print(f"  gnn        = hidden={args.gnn_hidden}, layers={args.gnn_layers}, "
           f"lr={args.gnn_lr}, dropout={args.gnn_dropout}, epochs={args.gnn_epochs}")
     print(f"  loss       = {'focal' if args.use_focal else 'cross-entropy (no class weights)'}")
-    print(f"  coral      = {args.use_coral}")
     print(f"  gnn_ablation = {args.do_gnn_ablation}  kinds={args.abl_kinds}")
 
     cycles_train = load_all(args.data_dir)
-    cycles_test  = load_all(args.test_dir)
+    cycles_test = load_all(args.test_dir)
     cycles = cycles_train + cycles_test
     if not cycles:
         print("[ERROR] no data found")
@@ -1370,10 +1425,8 @@ def main():
     print("1. Rule Baseline (reference: hard-coded isReal)")
     rule_res = rule_baseline(df)
 
-    # [FIX] Rule-LR: learned baseline on CYCLE_FEATS only
     print("\n\n")
     print("1b. Rule-LR (learned on CYCLE_FEATS only)")
-    rule_lr_res = None
     rule_lr_res, rule_lr_oof_prob, rule_lr_oof_pred = eval_rule_lr_on_folds(
         df, folds, tag="lr", out_dir=args.out_dir)
     print(f"  [Rule-LR GroupCV] {rule_lr_res}")
@@ -1449,7 +1502,7 @@ def main():
     print("\n\n")
     print("5. Cross-project generalization (train on train_dir, test on test_dir)")
     df_train_only = build_feature_table(cycles_train)
-    df_test_only  = build_feature_table(cycles_test)
+    df_test_only = build_feature_table(cycles_test)
 
     cross_res = eval_cross_project(
         df_train_only, df_test_only,
@@ -1487,14 +1540,14 @@ def main():
         rows.append(("Rule baseline", rule_res))
     if rule_lr_res:
         rows.append(("Rule-LR", rule_lr_res))
-    if rf_res:
-        rows.append(("Random Forest", rf_res))
     if lr_res:
         rows.append(("LogisticReg", lr_res))
-    if xgb_res:
-        rows.append(("XGBoost", xgb_res))
     if svm_res:
         rows.append(("SVM-RBF", svm_res))
+    if rf_res:
+        rows.append(("Random Forest", rf_res))
+    if xgb_res:
+        rows.append(("XGBoost", xgb_res))
     if gnn_res:
         rows.append(("HeteroGNN", gnn_res))
 
@@ -1502,7 +1555,7 @@ def main():
         print(f"  {'Model':16s} {'AUC (95% CI)':>22s} {'F1':>8s} {'Acc':>8s}")
         for name, m in rows:
             auc = m.get("auc", float("nan"))
-            hw  = m.get("auc_ci95", 0.0)
+            hw = m.get("auc_ci95", 0.0)
             print(f"  {name:16s} {auc:.4f} ± {hw:.4f}       "
                   f"{m.get('f1', float('nan')):8.4f} "
                   f"{m.get('acc', float('nan')):8.4f}")
@@ -1521,10 +1574,10 @@ def main():
         triage_targets = [
             ("Rule baseline", None),
             ("Rule-LR", os.path.join(args.out_dir, "rule_lr_oof.csv")),
-            ("Random Forest", os.path.join(args.out_dir, "rf_oof.csv")),
             ("LogisticReg", os.path.join(args.out_dir, "lr_oof.csv")),
-            ("XGBoost", os.path.join(args.out_dir, "xgb_oof.csv")),
             ("SVM-RBF", os.path.join(args.out_dir, "svm_oof.csv")),
+            ("Random Forest", os.path.join(args.out_dir, "rf_oof.csv")),
+            ("XGBoost", os.path.join(args.out_dir, "xgb_oof.csv")),
             ("HeteroGNN", os.path.join(args.out_dir, "gnn_oof.csv")),
         ]
         for name, path in triage_targets:
@@ -1570,11 +1623,11 @@ def main():
     metric = "auc" if is_binary else "f1_macro"
     gnn_tag = "gnn_full"
     baseline_tags = [
-        ("Rule-LR",       "rule_lr"),
+        ("Rule-LR", "rule_lr"),
+        ("LogisticReg", "lr"),
+        ("SVM-RBF", "svm"),
+        ("XGBoost", "xgb"),
         ("Random Forest", "rf"),
-        ("LogisticReg",   "lr"),
-        ("XGBoost",       "xgb"),
-        ("SVM-RBF",       "svm"),
     ]
 
     sig_res = {}
@@ -1658,6 +1711,7 @@ def main():
     sys.stderr = sys.__stderr__
     console_file.close()
     print(f"[save] {console_path}")
+
 
 if __name__ == "__main__":
     main()
