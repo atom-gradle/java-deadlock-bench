@@ -10,7 +10,6 @@ together with the dataset construction pipeline scripts for every configuration.
 ## 🔍 Pipeline & Overview
 Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseline/Rule-LR/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
----
 
 ## 🗂️ Repository layout
 
@@ -28,8 +27,6 @@ compareGNNs.py              Runs comparisons between GIN, GCN, GAT, GraphSAGE (b
 run15.sh                    Automatically runs 5 * 3 = 15 regime-seed evaluations
 run3ablation.sh             Automatically runs 3 evaluations including GNN ablation study under seeds 42-44
 ```
-
----
 
 
 ## 📊 Running the paper's experiment configurations
@@ -83,7 +80,6 @@ If you want to retain all original classes in Java project for convenience in re
 python mutation_generator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
 ```
 
----
 
 ### Parser.java
 
@@ -136,7 +132,6 @@ plugins: [ Parser ] # | [ pluginClass, ... ]
 python pipeliner.py --input-dir "YOUR_INPUT_DIR"
 ```
 
----
 
 ## 📦 Dataset
 
@@ -149,7 +144,6 @@ L2(strong): 2590
 L1(weak): 1243
 L0(negative): 337
 
----
 
 ## 📂 The open-source projects we mutated
 | Project & Link | Version |
@@ -163,7 +157,6 @@ L0(negative): 337
 | [Rapidoid](https://github.com/rapidoid/rapidoid) | 5.1.0 |
 | [Vert.x Core](https://github.com/eclipse-vertx/vert.x) | 5.2.2 |
 
----
 
 ## 💐 Acknowledgements
 This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the static analysis framework.
