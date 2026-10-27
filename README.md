@@ -15,7 +15,7 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 ## 🗂️ Repository layout
 
 ```
-aggregated/             Outputs of `aggregate_seeds.py`
+aggregated/                 Outputs of `aggregate_seeds.py`
 dataset/                    Nocturne benchmark (8 .txt files)
 output/                     Outputs of 10 experiments (the three with "abl" suffix include GNN ablation study)
 projects/                   The eight mutated projects (see The open-source projects we mutated)
@@ -34,7 +34,7 @@ run3ablation.sh             Automatically runs 3 evaluations including GNN ablat
 
 ## 📊 Running the paper's experiment configurations
 
-All experiments run 5 seeds (42-46) over the same fixed split. Please ensure that `evaluate.py`, `train/`(directory), and `test`(directory) are placed in the same directory.
+Major experiments run 5 seeds (42-46) over the same fixed split. Please ensure that `evaluate.py` and `dataset/`(directory) are placed in the same directory.
 
 ```bash
 nohup bash run15.sh > run15.log 2>&1 &
