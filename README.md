@@ -7,7 +7,7 @@ Artifact and dataset for the paper *"Nocturne: A Reproducible Mutation Pipeline 
 It contains the training/evaluation code for all model families evaluated in the paper (classical ML, HeteroGNN),
 together with the dataset construction pipeline scripts for every configuration.
 
-## Pipeline & Overview
+## 🔍 Pipeline & Overview
 Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseline/Rule-LR/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 ---
@@ -78,6 +78,7 @@ Note: `mutation_generator.py` only detects "standard src directory structure" in
 or "src" is not directly settled in project root folder, please manually add the path to the script.
 
 If you want to retain all original classes in Java project for convenience in replacement and compile, then add this param `--retain-all-classes`
+
 ```bash
 python mutation_generator.py --working-dir "YOUR_WORKING_DIR" --retain-all-classes
 ```
@@ -150,7 +151,7 @@ L0(negative): 337
 
 ---
 
-## The open-source projects we mutated
+## 📂 The open-source projects we mutated
 | Project & Link | Version |
 |-------|-------|
 | [Apache Commons Collections](https://github.com/apache/commons-collections) | 4.6.0 |
@@ -164,7 +165,7 @@ L0(negative): 337
 
 ---
 
-## Acknowledgements
+## 💐 Acknowledgements
 This project uses [Tai-e](https://tai-e.pascal-lab.net/) (LGPL 3.0) as the static analysis framework.
 
 `Parser.java` is built based on [tai-e-0.5.4.jar](https://github.com/pascal-lab/Tai-e/tree/v0.5.4/).
