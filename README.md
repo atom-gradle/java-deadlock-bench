@@ -24,7 +24,7 @@ Parser.java                 Analyzes Java programs (.class) and export CYCLEs us
 pipeliner.py                Automatically runs Parser.java, merges output (.txt) into one single txt file and then label each CYCLE
 evaluate.py                 ML (LogReg, SVM, Random Forest, XGBoost) vs. GNN, ablation study
 compareGNNs.py              Runs comparisons between GIN, GCN, GAT, GraphSAGE (binary_strong regime, seed 42)
-run15.sh                    Automatically runs 5 * 3 = 15 regime-seed evaluations
+run10.sh                    Automatically runs 2 * 5 = 10 regime-seed evaluations
 run3ablation.sh             Automatically runs 3 evaluations including GNN ablation study under seeds 42-44
 ```
 
@@ -34,7 +34,7 @@ run3ablation.sh             Automatically runs 3 evaluations including GNN ablat
 Major experiments run 5 seeds (42-46) over the same fixed split. Please ensure that `evaluate.py` and `dataset/`(directory) are placed in the same directory.
 
 ```bash
-nohup bash run15.sh > run15.log 2>&1 &
+nohup bash run10.sh > run10.log 2>&1 &
 nohup bash run3ablation.sh > run3ablation.log 2>&1 &
 ```
 
