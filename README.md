@@ -49,7 +49,7 @@ python evaluate.py --label_mode binary_strong --seed YOUR_SEED --do_gnn_ablation
 ```
 
 > [!NOTE]
-> Exact values may vary by GPU and run.
+> Exact values possibly varies by GPU and run.
 
 ## 🚀 Detailed usage instructions for Mutation Engine and Static Parser
 
