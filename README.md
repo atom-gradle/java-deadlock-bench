@@ -2,6 +2,7 @@
 
 [![Dataset](https://img.shields.io/badge/Dataset-Request_Access-4285F4?logo=googledrive&logoColor=white)](https://forms.gle/U73oakGxk3YrmNyu9)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23751727.svg)](https://doi.org/10.5281/zenodo.23751727)
 
 Artifact and dataset for the paper *"Nocturne: A Reproducible Mutation Pipeline and Empirical Study of Statistical Models versus GNNs for Java Deadlock Triage"*.
 It contains the training/evaluation code for all model families evaluated in the paper (classical ML, HeteroGNN),
