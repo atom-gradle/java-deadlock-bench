@@ -8,8 +8,8 @@ Artifact and dataset for the paper *"Nocturne: A Reproducible Mutation Pipeline 
 It contains the training/evaluation code for all model families evaluated in the paper (classical ML, HeteroGNN),
 together with the dataset construction pipeline scripts for every configuration.
 
-## 🔍 Pipeline & Overview
-Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Comparison(Baseline/Rule-LR/LR/Random Forest/SVM/XGBoost/HeteroGNN)
+## 🔍 Overview of the Pipeline
+Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Training & Comparison(Rule/Rule-LR/LR/Random Forest/SVM/XGBoost/HeteroGNN)
 
 
 ## 🗂️ Repository layout
@@ -17,13 +17,14 @@ Mutation Engine -> Static Parser -> Pipeliner -> (dataset) -> Evaluation & Compa
 ```
 aggregated/                 Outputs of `aggregate_seeds.py`
 dataset/                    Nocturne benchmark (8 .txt files)
-output/                     Outputs of 10 experiments (the three with "abl" suffix include GNN ablation study)
+output/                     Outputs of 10 experiments
+output-abl/                 Outputs of 3 GNN ablation experiments (seed 42,43,44)
 projects/                   The eight mutated projects (see The open-source projects we mutated)
 aggregate_seeds.py          Aggregates multi-seed summary JSONs, computes metric statistics, and runs paired significance tests comparing HeteroGNN to baselines.
 mutation_generator.py       Performs lock-related mutations on Java projects to generate reproducible samples.
 Parser.java                 Analyzes Java programs (.class) and export CYCLEs using Static Analysis.
 pipeliner.py                Automatically runs Parser.java, merges output (.txt) into one single txt file and then label each CYCLE
-evaluate.py                 ML (LogReg, SVM, Random Forest, XGBoost) vs. GNN, ablation study
+evaluate.py                 ML (LogReg, SVM, Random Forest, XGBoost) vs. GNN, GNN ablation study
 compareGNNs.py              Runs comparisons between GIN, GCN, GAT, GraphSAGE (binary_strong regime, seed 42)
 run10.sh                    Automatically runs 2 * 5 = 10 regime-seed evaluations
 run3ablation.sh             Automatically runs 3 evaluations including GNN ablation study under seeds 42-44
