@@ -1341,8 +1341,7 @@ def main():
     ap.add_argument("--out_dir", default="./output")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--label_mode", default="binary_strong",
-                    choices=["binary_strong", "binary_loose", "three_way"],
-                    help="Label modes: strong = train only on L2; loose = both L2+L1 count as positive; three_way = L0/L1/L2.")
+                    choices=["binary_strong", "binary_loose", "three_way"])
     ap.add_argument("--n_splits", type=int, default=5)
     ap.add_argument("--gnn_epochs", type=int, default=100)
     ap.add_argument("--gnn_hidden", type=int, default=32)
@@ -1355,7 +1354,7 @@ def main():
     ap.add_argument("--do_grid", action="store_true")
     ap.add_argument("--do_gnn_ablation", action="store_true",
                     help="Run GNN node/edge/arch ablation study")
-    ap.add_argument("--abl_kinds", nargs="+", default=["node", "edge", "arch"],
+    ap.add_argument("--abl_kinds", nargs="+", default=["node", "edge", "arch", "global"],
                     choices=["node", "edge", "arch", "global"],
                     help="Which ablation groups to run")
     ap.add_argument("--do_lr", action="store_true", default=True)
